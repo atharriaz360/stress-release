@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:F;font-weight:100 900;src:url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2)}
+@font-face{font-family:F;font-style:italic;font-weight:100 900;src:url(../node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-italic.woff2)}
+@font-face{font-family:I;font-weight:100 900;src:url(../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2)}
+@page{size:A4;margin:0}*{box-sizing:border-box}body{margin:0;font:9.6pt/1.45 I;color:#f4ecdc}
+.pg{width:210mm;height:297mm;padding:14mm 16mm;position:relative;overflow:hidden;page-break-after:always;background:#0a0907}
+h1,h2{font-family:F;font-weight:500;margin:0;letter-spacing:-.01em}h1{font-size:24pt;line-height:1.1;margin:5mm 0 2.5mm}h1 em{color:#d4af6a}h2{font-size:13.5pt;margin:0 0 2.5mm;color:#d4af6a}
+.glow{position:absolute;border-radius:50%;background:radial-gradient(circle,rgba(212,175,106,.16),transparent 70%);width:150mm;height:150mm;right:-55mm;top:-65mm}
+.box{background:#14120e;border:1px solid rgba(212,175,106,.18);border-radius:5mm;padding:3.4mm 5mm;margin-bottom:3.2mm;position:relative}.row{display:grid;grid-template-columns:1fr 1fr;gap:4.5mm}
+ol,ul{margin:1mm 0 0;padding-left:5mm}li{margin-bottom:1.2mm}.muted{color:#a1957f}b{color:#fff7e6}
+.link{background:linear-gradient(135deg,#1d1a14,#14120e);border:1px solid rgba(212,175,106,.45);border-radius:5mm;padding:5mm 6mm;margin-bottom:4.5mm;position:relative}.link a{color:#d4af6a;font-weight:700;font-size:14pt;text-decoration:none;word-break:break-all}
+.cap{font-size:7pt;letter-spacing:.2em;text-transform:uppercase;color:#d4af6a;font-weight:700;margin-bottom:2mm}
+.warn{border-color:rgba(212,175,106,.5);background:#1a160e}.q b.h{display:block;margin-top:2.5mm}
+.logo{display:flex;align-items:center;gap:3.5mm;position:relative}.logo svg{width:14mm;height:14mm}.logo .n{font:500 22pt/1 F}.logo .t{font-size:7pt;letter-spacing:.2em;text-transform:uppercase;color:#a1957f;font-weight:700;margin-top:1mm}
+.foot{position:absolute;left:16mm;right:16mm;bottom:10mm;font-size:8.5pt;color:#a1957f;display:flex;justify-content:space-between}
+.thanks{margin-top:4mm;padding:5mm 6mm;border-radius:5mm;background:linear-gradient(135deg,#1d1a14,#14120e);border:1px solid rgba(212,175,106,.3);text-align:center}
+.thanks .ttl{font-family:F;font-size:15pt;color:#d4af6a;margin-bottom:2mm}.thanks .body{font-size:9pt;color:#cfc4ae;max-width:150mm;margin:0 auto;line-height:1.5}.thanks .stars{font-size:11pt;color:#d4af6a;letter-spacing:2mm;margin-top:2.5mm}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 1 ============ -->
+<div class="pg">
+  <div class="glow"></div>
+  <div class="logo">
+    <svg viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="#0a0907" stroke="rgba(212,175,106,.35)" stroke-width=".6"/><path d="M7 16h18" stroke="#d4af6a" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="16" r="3" fill="#d4af6a"/></svg>
+    <div><div class="n">CalmStudio Desk</div><div class="t">Freelance business dashboard</div></div>
+  </div>
+  <h1>Welcome to CalmStudio Desk.<br>Let's run your studio <em>calmly.</em></h1>
+  <p class="muted" style="margin:0 0 4.5mm;font-size:10pt">Thank you for your purchase. You'll be looking at your dashboard in about a minute. There's no account, no subscription, no bank connection and nothing to install.</p>
+
+  <div class="row">
+    <div class="box"><h2>On your computer</h2>
+      <ol>
+        <li>Unzip the download, then move <b>CalmStudio Desk.html</b> somewhere it will stay, such as Documents. Don't open it from inside the zip.</li>
+        <li>Double-click it. It opens in your web browser.</li>
+        <li>Bookmark it so it's one click away.</li>
+      </ol>
+    </div>
+    <div class="box"><h2>On your phone or tablet</h2>
+      <ol>
+        <li>Open your private link (below) in Safari (iPhone/iPad) or Chrome (Android).</li>
+        <li>iPhone: Share → <b>Add to Home Screen</b>. Android: ⋮ → <b>Install app</b>.</li>
+        <li>CalmStudio Desk now opens like an app and works offline.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="link">
+    <div class="cap">Your private link</div>
+    {{LINK}}
+    <p class="muted" style="margin:2.5mm 0 0;font-size:8.8pt">Even on the link, your numbers are saved only on your own device. Nothing is uploaded. Please don't share the link; it's part of your personal licence.</p>
+  </div>
+
+  <div class="box"><h2>Your first minute</h2>
+    <ol>
+      <li><b>Settings</b>: add your business name, pick your <b>currency first</b> (it locks once money records exist) and set your tax reserve rate.</li>
+      <li><b>Clients → Projects</b>: add a client, then a project with a budget and due date. Add tasks right on the project card.</li>
+      <li><b>Time</b>: pick a project and press <b>Start timer</b>. Stop and save logs the hours to that project.</li>
+      <li><b>Invoices</b>: create one, then press <b>Payment</b> to record full or partial payments. Overdue ones are flagged for you.</li>
+      <li><b>Tax reserve</b>: log expenses by category and watch the reserve estimate update.</li>
+    </ol>
+    <p class="muted" style="margin:1.5mm 0 0">Just exploring? Settings → <b>Open sample workspace</b>. The sample never touches your own data.</p>
+  </div>
+
+  <div class="box warn"><h2>The one rule: your data lives in your browser</h2>
+    <p style="margin:0">CalmStudio Desk saves automatically, privately, on this device only. So <b>use the same browser each time</b> and <b>export a backup weekly</b> (Settings → Export backup, or the Export button in the top bar). <b>iPhone:</b> Safari can clear website data you haven't opened for about a week, and private tabs erase everything when closed. Adding CalmStudio Desk to your Home Screen and backing up weekly keeps your records safe.</p>
+  </div>
+  <div class="foot"><span>CalmStudio Desk — Freelance Business Dashboard</span><span>Page 1 of 2</span></div>
+</div>
+
+<!-- ============ PAGE 2 ============ -->
+<div class="pg">
+  <div class="glow"></div>
+  <h2 style="font-size:20pt;margin-bottom:4mm">Good to know</h2>
+  <div class="row">
+    <div>
+      <div class="box"><h2>What's inside</h2>
+        <ul>
+          <li><b>Studio at a glance</b>: collected, outstanding, tax reserve, net cash, 6-month cash trend, studio pulse rings, next tasks, upcoming events, active projects</li>
+          <li><b>Calendar</b>: month view with tasks, events and invoice due dates. Tap any day to add a task or event</li>
+          <li><b>To-dos</b>: open, overdue, today, done; priorities and repeating tasks</li>
+          <li><b>Projects</b>: client, budget, due date, status, cover image, progress and tasks</li>
+          <li><b>Clients</b>: Lead, Active and Past with notes</li>
+          <li><b>Invoices</b>: full and partial payments, overdue flags, charts, print or save as PDF</li>
+          <li><b>Events</b>: meetings, calls, deadlines, personal blocks, repeating</li>
+          <li><b>Time</b>: focus timer and manual entries</li>
+          <li><b>Tax reserve</b>: categorised expenses, profit &amp; loss, reserve estimate</li>
+          <li><b>Settings</b>: 10 currencies, 6 colour palettes, light &amp; dark, backup &amp; restore, privacy blur</li>
+        </ul>
+      </div>
+      <div class="box"><h2>Works with</h2>
+        <p style="margin:0">Chrome, Safari, Edge and Firefox on Mac, Windows, Chromebook, iPhone, iPad and Android.</p>
+      </div>
+    </div>
+    <div>
+      <div class="box q"><h2>Troubleshooting</h2>
+        <b class="h">"My records are gone!"</b>
+        You probably opened CalmStudio Desk in a different browser or moved the file. Open it the way you did before, or restore your latest backup.
+        <b class="h">New phone or computer?</b>
+        Old device: Settings → <b>Export backup</b>. New device: open CalmStudio Desk → Settings → <b>Restore backup</b> and pick that file. There is no automatic sync; that's what keeps your data private.
+        <b class="h">How do I save an invoice as PDF?</b>
+        Invoices → the ⎙ print button → choose "Save as PDF" as the printer.
+        <b class="h">Can I change the look?</b>
+        Use the palette menu and the Light/Dark button in the top bar, any time.
+        <b class="h">Showing your screen?</b>
+        Settings → <b>Toggle privacy blur</b> hides amounts.
+      </div>
+      <div class="box"><h2>Updates</h2>
+        <p style="margin:0">New versions appear in your Etsy purchases. Before switching, export a backup from your current copy, then restore it in the new one.</p>
+      </div>
+    </div>
+  </div>
+  <div class="box" style="font-size:8.8pt">
+    <b style="color:#d4af6a">Not professional advice.</b> CalmStudio Desk is a business planning tool. Tax reserve figures and invoice totals are estimates based on the numbers you enter. It is not financial, legal or tax advice, does not connect to any bank or accounting software, and does not move money.
+  </div>
+  <div class="thanks">
+    <div class="ttl">Thank you</div>
+    <div class="body">Thank you for choosing CalmStudio Desk. We hope it gives your freelance business a little more calm and clarity. If it has helped you, an honest review on Etsy helps other freelancers find it, and it means the world to a small studio like ours.</div>
+    <div class="stars">★★★★★</div>
+  </div>
+  <div class="foot"><span>CalmStudio Desk v2.0 · DigiDesignLab1</span><span>Page 2 of 2</span></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+ "noir": "#0a0907",
+ "panel": "#14120e",
+ "raise": "#1d1a14",
+ "ivory": "#f4ecdc",
+ "muted": "#a1957f",
+ "gold": "#d4af6a",
+ "gold2": "#f1e0b5",
+ "goldDeep": "#a67c2e",
+ "paper": "#f6f1e6",
+ "paperPanel": "#fffcf5",
+ "ink": "#1b1710",
+ "ok": "#7bae96",
+ "warn": "#d4b06a",
+ "bad": "#e08a80"
+}

@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-palette="gold" data-motion="gentle">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="CalmStudio Desk — offline workspace for makers. Less admin, clearer priorities.">
+<title>CalmStudio Desk</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230a0907'/%3E%3Cpath d='M7 16h18' stroke='%23d4af6a' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23d4af6a'/%3E%3C/svg%3E">
+<script>
+(function(){
+  try{
+    var raw=localStorage.getItem("calmstudio.desk.v2");
+    if(!raw)return;
+    var s=(JSON.parse(raw)||{}).settings||{};
+    var pal=["gold","jet","emerald","violet","rose","azure"];
+    var el=document.documentElement;
+    el.dataset.theme   = (s.theme==="light")?"light":"dark";
+    el.dataset.palette = (pal.indexOf(s.palette)>=0?s.palette:"gold");
+    el.dataset.motion  = (s.motion===false)?"calm":"gentle";
+  }catch(e){}
+})();
+</script>
+<style>
+:root{--bg:#f6f1e6;--panel:#fffcf5;--raise:#f0e8d6;--line:#e2d6b9;--text:#1b1710;--muted:#7a6f58;--gold:#a67c2e;--gold2:#d2ad63;--on-gold:#1a1408;--ok:#3f7a5a;--warn:#a5741c;--bad:#a83c2e;--glow:rgba(166,124,46,.10);--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--r:14px}
+[data-theme=dark]{--bg:#0a0907;--panel:#14120e;--raise:#1d1a14;--line:rgba(212,175,106,.16);--text:#f4ecdc;--muted:#a1957f;--gold:#d4af6a;--gold2:#f1e0b5;--ok:#7bae96;--warn:#d4b06a;--bad:#e08a80;--glow:rgba(212,175,106,.10)}
+[data-theme=dark][data-palette=jet]{--bg:#000000;--panel:#080808;--raise:#131313;--line:rgba(255,255,255,.11);--text:#f5f5f5;--muted:#8b8b8b;--gold:#e8e8e8;--gold2:#ffffff;--on-gold:#000000;--glow:rgba(255,255,255,.06);--ok:#8fd6b4;--warn:#e0c98a;--bad:#f0a09a}
+[data-theme=light][data-palette=jet]{--gold:#111111;--gold2:#3a3a3a;--on-gold:#ffffff;--glow:rgba(0,0,0,.07)}
+[data-theme=dark][data-palette=emerald]{--gold:#59c08d;--gold2:#9fe4c0;--on-gold:#04150c;--glow:rgba(89,192,141,.12)}
+[data-theme=light][data-palette=emerald]{--gold:#1f7a4d;--gold2:#3fa876;--on-gold:#ffffff;--glow:rgba(31,122,77,.10)}
+[data-theme=dark][data-palette=violet]{--gold:#a98bf0;--gold2:#d6c6ff;--on-gold:#120a22;--glow:rgba(169,139,240,.12)}
+[data-theme=light][data-palette=violet]{--gold:#6b47c8;--gold2:#9a7ee8;--on-gold:#ffffff;--glow:rgba(107,71,200,.10)}
+[data-theme=dark][data-palette=rose]{--gold:#e58fa8;--gold2:#ffc9d8;--on-gold:#26070f;--glow:rgba(229,143,168,.12)}
+[data-theme=light][data-palette=rose]{--gold:#b8435f;--gold2:#d97f96;--on-gold:#ffffff;--glow:rgba(184,67,95,.10)}
+[data-theme=dark][data-palette=azure]{--gold:#63a8e8;--gold2:#a8d3ff;--on-gold:#03121f;--glow:rgba(99,168,232,.12)}
+[data-theme=light][data-palette=azure]{--gold:#1f6bb0;--gold2:#4f97d6;--on-gold:#ffffff;--glow:rgba(31,107,176,.10)}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:radial-gradient(1000px 500px at 90% -10%,var(--glow),transparent 60%) fixed,var(--bg);color:var(--text);font:15px/1.55 var(--sans);min-height:100vh}
+h1,h2,h3{font-family:var(--serif);font-weight:500;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(26px,3.4vw,38px)}h2{font-size:19px}h3{font-size:15px}
+small,.muted{color:var(--muted)}small{font-size:12.5px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;min-height:40px;padding:8px 16px;border:1px solid var(--line);border-radius:10px;background:var(--panel);transition:border-color .15s,background .15s}
+button:hover{border-color:var(--gold)}button.gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--on-gold);border-color:transparent;font-weight:600}
+button.gold:hover{filter:brightness(1.07)}button.bad{color:var(--bad)}
+button.ico{min-height:32px;width:32px;padding:0;border-color:transparent;background:none;color:var(--muted)}
+.link{border:0;background:none;min-height:0;padding:0;color:var(--gold);text-decoration:underline;text-underline-offset:4px;font-size:13px;font-weight:600;cursor:pointer}.link:hover{color:var(--gold2)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+label{display:grid;gap:6px;font-size:13px;font-weight:600;margin-bottom:14px}
+input,select,textarea{width:100%;min-height:42px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--raise);font-weight:400}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold);box-shadow:0 0 0 3px var(--glow)}
+select.mini{width:auto;min-height:40px;padding:8px 10px;border-radius:10px;background:var(--panel);border:1px solid var(--line);font-weight:600;font-size:13px;cursor:pointer}
+select.mini:hover{border-color:var(--gold)}
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:24px 14px;border-right:1px solid var(--line);background:linear-gradient(180deg,var(--panel),var(--bg));display:flex;flex-direction:column;gap:22px;overflow-y:auto}
+.brand{font:600 21px var(--serif);display:flex;gap:10px;align-items:center;padding:0 8px}
+.brand i{width:30px;height:30px;border-radius:9px;background:var(--bg);box-shadow:inset 0 0 0 1px var(--gold);display:grid;place-items:center}
+.brand i:after{content:"";width:8px;height:8px;border-radius:50%;background:var(--gold)}
+.brand i:after{transform-origin:center;transition:transform .35s ease,opacity .35s ease}
+html[data-motion=gentle] body.timer-on .brand i:after{animation:brandBreathe 3.2s ease-in-out infinite}
+html[data-motion=gentle] .brand i.ping:after{animation:brandPing .6s cubic-bezier(.2,.7,.3,1)}
+@keyframes brandBreathe{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.18);opacity:1}}
+@keyframes brandPing{0%{transform:scale(1);opacity:1}35%{transform:scale(1.4);opacity:1}100%{transform:scale(1);opacity:.85}}
+nav{display:grid;gap:2px}
+nav a{display:block;padding:9px 12px;border-radius:9px;color:var(--muted);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--text);background:var(--raise)}
+nav a[aria-current]{color:var(--gold);background:var(--glow);box-shadow:inset 2px 0 0 var(--gold)}
+main{padding:26px clamp(16px,3.5vw,48px) 60px;max-width:1400px;width:100%;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;padding-bottom:18px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px;margin-bottom:16px}
+.stats{grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr))}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;min-width:0}
+.card>header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.stat b{display:block;font:500 clamp(22px,2.4vw,30px) var(--serif);color:var(--gold2);margin:6px 0 2px;overflow-wrap:anywhere}
+[data-theme=light] .stat b{color:var(--gold)}
+.row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}.grow{flex:1;min-width:0}.grow b{display:block;font-weight:600;overflow-wrap:break-word}
+.ptasks .pill{padding:3px 8px}.ptasks .row{gap:8px}.ptasks .ico{width:28px}.ptasks .grow{min-width:auto}
+.row.done .grow b{text-decoration:line-through;color:var(--muted)}
+.ck{min-height:20px;width:20px;padding:0;border-radius:6px;border:1.5px solid var(--muted);flex:none}
+.ck[aria-pressed=true]{background:var(--gold);border-color:var(--gold);box-shadow:inset 0 0 0 3px var(--panel)}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:600;background:var(--raise);color:var(--muted);white-space:nowrap}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}.pill.bad{color:var(--bad)}
+.amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.bar{height:6px;border-radius:9px;background:var(--raise);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+/* ===== bar chart: y-axis, gridlines, month labels ===== */
+.bchart{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-top:8px;animation:chartIn .35s ease-out both}
+.byaxis{position:relative;width:58px;height:200px;padding-bottom:24px}
+.byaxis span{position:absolute;right:6px;font-size:10px;color:var(--muted);line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.byaxis span:nth-child(1){top:0;transform:translateY(-1px)}
+.byaxis span:nth-child(2){top:50%;transform:translateY(-50%)}
+.byaxis span:nth-child(3){top:100%;transform:translateY(-100%)}
+.bplot{position:relative;height:200px}
+.bgrid{position:absolute;left:0;right:0;top:0;bottom:24px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.bgrid span{height:1px;background:var(--line);opacity:.4}
+.bgrid span:nth-child(2){opacity:.55}
+.bgrid span:nth-child(3){background:var(--text);opacity:.22}
+.bbars{position:absolute;inset:0;display:flex;gap:8px}
+.bcol{flex:1;display:flex;flex-direction:column;min-width:0}
+.bbar{flex:1;display:flex;align-items:flex-end;gap:3px;justify-content:center}
+.bbar i{width:42%;max-width:22px;min-height:2px;border-radius:5px 5px 0 0;background:linear-gradient(180deg,var(--gold2),var(--gold));transition:filter .15s}
+.bbar i:hover{filter:brightness(1.12)}
+.bbar i.o{background:color-mix(in srgb,var(--raise) 72%,var(--line));box-shadow:inset 0 0 0 1px var(--line)}
+.bcol small{height:24px;display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+@keyframes chartIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chips button[aria-pressed=true]{background:var(--glow);border-color:var(--gold);color:var(--gold)}
+.empty{text-align:center;padding:30px 12px;color:var(--muted)}.empty b{display:block;font:500 17px var(--serif);color:var(--text);margin-bottom:6px}
+.clock{font:500 clamp(38px,6vw,54px) var(--serif);font-variant-numeric:tabular-nums;margin:6px 0}
+.ring-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:12px}
+.orbit{width:88px;height:88px;margin:0 auto 8px;border-radius:50%;padding:7px;background:conic-gradient(var(--gold) var(--pct),var(--raise) 0)}
+.orbit>div{height:100%;border-radius:50%;background:var(--panel);display:grid;place-items:center}
+.orbit strong{font:500 20px var(--serif)}.orbit small{font-size:11px;color:var(--muted)}
+.metric{text-align:center}.metric h3{font-size:12px;margin:0 0 4px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.cal-head,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line)}
+.cal-head div{background:var(--raise);padding:8px 2px;text-align:center;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.cal-cell{background:var(--panel);min-height:78px;padding:6px;display:flex;flex-direction:column;gap:3px;border:0;border-radius:0;text-align:left;cursor:pointer;font-weight:400;transition:background .15s}
+.cal-cell:hover{background:var(--raise)}.cal-cell.out{opacity:.4}.cal-cell.today .cal-num{background:var(--gold);color:var(--on-gold)}
+.cal-num{font-size:12px;font-weight:600;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;flex-shrink:0}
+.cal-ev{font-size:10px;padding:1px 4px;border-radius:4px;background:var(--raise);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-left:2px solid var(--gold)}
+.cal-ev.t-task{border-left-color:var(--warn)}.cal-ev.t-inv{border-left-color:var(--bad)}.cal-ev.done{text-decoration:line-through;opacity:.55}
+.event-card{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.event-card:last-child{border:0}
+.event-date{flex-shrink:0;width:52px;text-align:center;background:var(--glow);border-radius:10px;padding:6px 2px;color:var(--gold)}
+.event-date .d{font:600 20px var(--serif);line-height:1}.event-date .m{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-top:2px}
+/* ===== donut: crisp SVG strokes + percentages in legend ===== */
+.donut-wrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap;animation:chartIn .35s ease-out both}
+.donut{position:relative;flex-shrink:0}
+.donut svg{display:block}
+.donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none;padding:0 18px}
+.donut-center strong{font:600 1.02rem var(--serif);letter-spacing:-.01em;line-height:1.15;overflow-wrap:anywhere}
+.donut-center span{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
+.legend{display:flex;flex-direction:column;gap:2px;flex:1;min-width:180px}
+.legend>span{display:grid;grid-template-columns:10px 1fr auto auto;gap:10px;align-items:center;padding:5px 0;font-size:13px}
+.legend i{width:10px;height:10px;border-radius:3px;display:block}
+.legend .lbl{color:var(--text);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.legend .pct{color:var(--muted);font-size:11.5px;font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+.legend .val{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums;text-align:right;min-width:72px}
+dialog{width:min(560px,calc(100% - 20px));max-height:90dvh;padding:0;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);color:var(--text);box-shadow:0 30px 80px rgba(0,0,0,.6);overflow:auto}
+dialog.wide{width:min(860px,calc(100% - 20px))}
+dialog::backdrop{background:rgba(0,0,0,.6);backdrop-filter:blur(4px)}
+dialog>header{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2}
+#db{padding:20px 22px}.foot{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.err{color:var(--bad);margin:0 0 10px;font-size:13.5px}
+.banner{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 16px;margin-bottom:16px;border:1px solid var(--gold);border-radius:10px;background:var(--glow)}
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--on-gold);padding:11px 20px;border-radius:12px;font-weight:600;z-index:99;max-width:calc(100vw - 28px)}
+.blur .amt,.blur .stat b,.blur .ring-val,.blur .legend .val,.blur .donut-center strong,.blur .byaxis span,.blur .clock{filter:blur(6px)}
+#print{display:none}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.imgfield{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.imgfield input[type=file]{flex:1;min-width:0;min-height:42px;padding:7px 9px;font-size:12.5px;background:var(--raise)}
+.imgprev img{width:58px;height:58px;border-radius:10px;object-fit:cover;border:1px solid var(--line);display:block}
+.proj-hero{position:relative;margin:-20px -20px 14px;height:150px;border-radius:var(--r) var(--r) 0 0;overflow:hidden;background:var(--raise)}
+.proj-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.proj-hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg, rgba(0,0,0,.28) 0%, rgba(0,0,0,0) 38%, color-mix(in srgb,var(--panel) 82%,transparent) 78%, var(--panel) 100%);}
+[data-theme=light] .proj-hero::after{background:linear-gradient(180deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,0) 36%, color-mix(in srgb,var(--panel) 86%,transparent) 80%, var(--panel) 100%);}
+.proj-hero .hero-title{position:absolute;left:20px;right:20px;bottom:8px;z-index:2;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.proj-hero .hero-title h2{font-size:20px;line-height:1.15;text-shadow:0 1px 12px rgba(0,0,0,.45)}
+[data-theme=light] .proj-hero .hero-title h2{text-shadow:0 1px 8px rgba(255,255,255,.75)}
+.card.proj{border:1px solid transparent;background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(150deg,color-mix(in srgb,var(--gold) 85%,transparent),color-mix(in srgb,var(--gold) 18%,var(--line)) 38%,var(--line) 62%,color-mix(in srgb,var(--gold) 60%,transparent)) border-box;box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 6%,transparent),0 22px 44px -26px rgba(0,0,0,.75);transition:transform .25s ease,box-shadow .25s ease}
+.card.proj:hover{transform:translateY(-3px);box-shadow:0 0 0 4px color-mix(in srgb,var(--gold) 12%,transparent),0 30px 60px -28px color-mix(in srgb,var(--gold) 38%,rgba(0,0,0,.8))}
+.card.proj .proj-hero{margin:-19px -19px 14px;border-radius:calc(var(--r) - 1px) calc(var(--r) - 1px) 0 0}
+.ptasks{margin-top:12px;padding-top:6px;border-top:1px solid var(--line)}
+.ptasks>header{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+.ptasks h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+/* ===== asset download row ===== */
+
+@media(max-width:800px){.app{display:block}aside{position:sticky;height:auto;z-index:5;flex-direction:row;align-items:center;padding:10px 12px;border:0;border-bottom:1px solid var(--line);backdrop-filter:blur(12px);background:color-mix(in srgb,var(--panel) 92%,transparent)}.brand span{display:none}nav{display:flex;overflow-x:auto;scrollbar-width:none}nav a{white-space:nowrap}.two{grid-template-columns:1fr}.cal-cell{min-height:64px}}
+@media print{body>*:not(#print){display:none!important}#print{display:block;color:#000;background:#fff;padding:24px;font-family:var(--sans)}#print table{width:100%;border-collapse:collapse;margin:28px 0}#print td,#print th{padding:10px 0;border-bottom:1px solid #ccc;text-align:left}#print .r{text-align:right}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><i></i><span>CalmStudio Desk</span></div>
+  <nav id="nav" aria-label="Main"></nav>
+</aside>
+<main>
+  <div class="top"><h1 id="title"></h1><div class="acts" id="acts"></div></div>
+  <div id="banner"></div>
+  <div id="view"></div>
+</main>
+</div>
+<dialog id="dlg" aria-labelledby="dt"><header><h2 id="dt"></h2><button class="ico" data-act="close" aria-label="Close">✕</button></header><div id="db"></div></dialog>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+<div id="print"></div>
+<script>
+"use strict";
+
+
+const CONFIG = {
+  IMG_MAX_BYTES:   8e6,
+  IMG_MAX_DIM:     1400,
+  IMG_QUALITY:     0.85,
+  BACKUP_MAX_BYTES:1e7,
+  RECUR_CAP:       400,
+  TOAST_MS:        3800
+};
+
+const $=(s,r=document)=>r.querySelector(s);
+const E=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=()=>crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2);
+const iso=(d=new Date())=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const shift=(s,n,u="d")=>{const d=new Date(s+"T00:00");if(u==="m"){const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+n);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()))}else d.setDate(d.getDate()+n);return iso(d)};
+const dayDiff=(a,b)=>Math.round((Date.parse(b+"T00:00Z")-Date.parse(a+"T00:00Z"))/864e5);
+const fdate=s=>s?new Date(s+"T00:00").toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}):"—";
+const fshort=s=>s?new Date(s+"T00:00").toLocaleDateString(undefined,{day:"numeric",month:"short"}):"—";
+const sum=(a,f)=>a.reduce((x,y)=>x+(+f(y)||0),0);
+const fm=c=>{try{return new Intl.NumberFormat(undefined,{style:"currency",currency:S.settings.currency}).format((c||0)/100)}catch(e){return((c||0)/100).toFixed(2)}};
+const nm=(c,id,alt="—")=>(S[c].find(x=>x.id===id)||{}).name||alt;
+const hrs=s=>(s/3600).toFixed(2)+" h";
+const pad2=n=>String(n).padStart(2,"0");
+const monthStart=s=>s.slice(0,7)+"-01";
+const weekStart=(s,ws=0)=>{const d=new Date(s+"T00:00");const day=d.getDay();return shift(s,-((day-ws+7)%7))};
+const slug=s=>String(s||"untitled").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,60)||"untitled";
+
+const KEY="calmstudio.desk.v2",DBN="calmstudio",STN="desk",VER=1;
+const BKEY="calmstudio.banner.hidden";
+const CUR=["USD","GBP","EUR","PKR","CAD","AUD","AED","INR","NZD","SGD"];
+const COLS=["clients","projects","invoices","expenses","entries","tasks","events"];
+const RECS={none:"Does not repeat",daily:"Daily",weekly:"Weekly",biweekly:"Every 2 weeks",monthly:"Monthly",yearly:"Yearly"};
+const PALETTES={
+  gold:{label:"Gold (classic)"},
+  jet:{label:"Jet black"},
+  emerald:{label:"Emerald"},
+  violet:{label:"Violet"},
+  rose:{label:"Rose"},
+  azure:{label:"Azure"}
+};
+
+let idbP=null;
+const idb=()=>idbP||(idbP=new Promise((ok,no)=>{const r=indexedDB.open(DBN,VER);r.onupgradeneeded=()=>r.result.createObjectStore(STN);r.onsuccess=()=>{const db=r.result;db.onversionchange=()=>{db.close();idbP=null};ok(db)};r.onerror=()=>{idbP=null;no(r.error)}}));
+const idbGet=async()=>{try{const db=await idb(),tx=db.transaction(STN,"readonly"),st=tx.objectStore(STN);return await new Promise((ok,no)=>{const q=st.get(KEY);q.onsuccess=()=>ok(q.result||null);q.onerror=()=>no(q.error)})}catch(e){return null}};
+const idbSet=async d=>{try{const db=await idb(),tx=db.transaction(STN,"readwrite");tx.objectStore(STN).put(d,KEY);await new Promise((ok,no)=>{tx.oncomplete=ok;tx.onerror=tx.onabort=()=>no(tx.error)});return true}catch(e){idbP=null;return false}};
+const lsGet=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}};
+const lsSet=d=>{try{localStorage.setItem(KEY,JSON.stringify(d));return true}catch(e){return false}};
+
+const blank=()=>({schema:2,settings:{business:"My Studio",email:"",details:"",currency:"USD",taxRate:25,theme:"dark",palette:"gold",motion:true},clients:[],projects:[],invoices:[],expenses:[],entries:[],tasks:[],events:[],timer:null,lastBackup:null});
+function norm(r){
+  const b=blank(),s={...b,...r,settings:{...b.settings,...(r.settings||{})}};
+  if(!PALETTES[s.settings.palette])s.settings.palette="gold";
+  if(s.settings.theme!=="light")s.settings.theme="dark";
+  if(s.settings.motion===undefined)s.settings.motion=true;
+  const okId=v=>typeof v==="string"&&/^[A-Za-z0-9_-]{1,64}$/.test(v),ref=v=>okId(v)?v:"",str=v=>typeof v==="string"?v:v==null?"":String(v),num=v=>{v=Math.round(+v);return Number.isFinite(v)&&v>0?v:0};
+  COLS.forEach(k=>{s[k]=(Array.isArray(s[k])?s[k]:[]).filter(x=>x&&typeof x==="object").map(x=>({...x,id:okId(x.id)?x.id:uid()}))});
+  const sd=s.settings;sd.business=str(sd.business).slice(0,250)||"My Studio";sd.email=str(sd.email);sd.details=str(sd.details);
+  if(!CUR.includes(sd.currency))sd.currency="USD";sd.taxRate=Math.min(100,Math.max(0,+sd.taxRate||0));
+  ["clients","projects","invoices","expenses","tasks","events"].forEach(k=>s[k].forEach(x=>{x.name=str(x.name)}));
+  ["projects","invoices"].forEach(k=>s[k].forEach(x=>{x.clientId=ref(x.clientId||(x.clientIds||[])[0])}));
+  ["tasks","expenses","entries"].forEach(k=>s[k].forEach(x=>{x.projectId=ref(x.projectId)}));
+  ["due","issued"].forEach(f=>[...s.projects,...s.invoices,...s.tasks].forEach(x=>{if(f in x)x[f]=str(x[f])}));
+  s.events.forEach(e=>{e.date=str(e.date);e.time=str(e.time)});s.expenses.forEach(x=>{x.date=str(x.date);x.amount=num(x.amount)});
+  s.entries.forEach(x=>{x.date=str(x.date);x.seconds=num(x.seconds)});s.projects.forEach(p=>{p.budget=num(p.budget)});
+  s.invoices.forEach(i=>{i.number=str(i.number);i.amount=num(i.amount)});
+  if(s.timer&&(typeof s.timer!=="object"||!Number.isFinite(+s.timer.start)))s.timer=null;else if(s.timer){s.timer.projectId=ref(s.timer.projectId);s.timer.start=+s.timer.start}
+  s.projects.forEach(p=>{p.clientId=p.clientId||(p.clientIds||[])[0]||"";delete p.clientIds;p.image=p.image||""});
+  s.invoices.forEach(i=>{i.payments=(Array.isArray(i.payments)?i.payments:[]).filter(p=>p&&typeof p==="object").map(p=>({id:okId(p.id)?p.id:uid(),amount:num(p.amount),date:str(p.date)}));i.desc=str(i.desc||i.description)});
+  s.tasks.forEach(t=>{
+    if(!["none","daily","weekly","biweekly","monthly","yearly"].includes(t.repeat))
+      t.repeat=["daily","weekly","biweekly","monthly","yearly"].includes(t.recurrence)?t.recurrence:"none";
+    t.doneAt=t.doneAt||t.completedAt||null;t.done=!!t.done;if(!PRIOS.includes(t.priority))t.priority="Medium";
+  });
+  s.events.forEach(e=>{if(!RECS[e.recurrence])e.recurrence="none"});
+  return s;
+}
+async function load(){let r=await idbGet();if(!r)r=lsGet();return r&&r.settings?norm(r):blank()}
+let sampleHintShown=false;
+const save=async()=>{
+  if(real){if(!sampleHintShown){sampleHintShown=true;toast("Sample edits aren't saved. Your own workspace is untouched.");}return}
+  const snap={...S},a=await idbSet(snap),b=lsSet(snap);
+  if(!a&&!b)toast("Could not save. Export a backup now.");
+};
+
+let S=blank(),real=null,view="overview",tf="open",calAnchor=iso(),toastT;
+let bannerHidden=false;
+try{bannerHidden=localStorage.getItem(BKEY)==="1"}catch(e){}
+function toast(m){const t=$("#toast");t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,CONFIG.TOAST_MS)}
+
+const paid=i=>sum(i.payments,p=>p.amount),bal=i=>Math.max(0,i.amount-paid(i));
+const status=i=>!bal(i)?"Paid":i.due<iso()?"Overdue":paid(i)?"Partial":"Open";
+const pillOf={Paid:"ok",Overdue:"bad",Partial:"warn",Open:"warn"};
+const byDue=(a,b)=>(a.due||"9").localeCompare(b.due||"9");
+const nextNo=()=>{let n=S.invoices.length+1;while(S.invoices.some(i=>i.number==="INV-"+String(n).padStart(3,"0")))n++;return"INV-"+String(n).padStart(3,"0")};
+const year=()=>iso().slice(0,4);
+const collected=p=>sum(S.invoices,i=>sum(i.payments.filter(x=>String(x.date).startsWith(p)),x=>x.amount));
+const spent=p=>sum(S.expenses.filter(x=>String(x.date).startsWith(p)),x=>x.amount);
+const reserve=()=>Math.round(Math.max(0,collected(year())-spent(year()))*S.settings.taxRate/100);
+const pct=p=>{const t=S.tasks.filter(x=>x.projectId===p.id);return t.length?Math.round(t.filter(x=>x.done).length/t.length*100):0};
+
+function nextOcc(d,rec){
+  if(!d||!rec||rec==="none")return null;
+  switch(rec){case"daily":return shift(d,1);case"weekly":return shift(d,7);case"biweekly":return shift(d,14);case"monthly":return shift(d,1,"m");case"yearly":return shift(d,12,"m");default:return null}
+}
+const STEP_D={daily:1,weekly:7,biweekly:14},STEP_M={monthly:1,yearly:12};
+function expandRec(start,rec,from,to){
+  const out=[];if(!start||from>to)return out;
+  if(!STEP_D[rec]&&!STEP_M[rec]){if(start>=from&&start<=to)out.push(start);return out}
+  if(STEP_D[rec]){
+    const st=STEP_D[rec];let k=Math.max(0,Math.ceil(dayDiff(start,from)/st));
+    for(let d=shift(start,k*st);d<=to&&out.length<CONFIG.RECUR_CAP;d=shift(start,++k*st))out.push(d);
+  }else{
+    const st=STEP_M[rec],a=start.split("-"),b=from.split("-");
+    let k=Math.max(0,Math.floor(((b[0]-a[0])*12+(b[1]-a[1]))/st)-1);
+    for(let d=shift(start,k*st,"m");d<=to&&out.length<CONFIG.RECUR_CAP;d=shift(start,++k*st,"m"))if(d>=from)out.push(d);
+  }
+  return out;
+}
+const nextOn=e=>expandRec(e.date,e.recurrence,iso(),shift(iso(),731))[0]||null;
+const eventsOn=d=>{const out=[];S.events.forEach(e=>{if(expandRec(e.date,e.recurrence,d,d).length)out.push(e)});return out};
+const tasksOn=d=>S.tasks.filter(t=>t.due===d);
+const invsDueOn=d=>S.invoices.filter(i=>i.due===d&&bal(i)>0);
+
+function applyTheme(){
+  const el=document.documentElement;
+  el.dataset.theme=S.settings.theme==="light"?"light":"dark";
+  el.dataset.palette=PALETTES[S.settings.palette]?S.settings.palette:"gold";
+  el.dataset.motion=S.settings.motion===false?"calm":"gentle";
+}
+
+function shrink(file){
+  return new Promise((ok,no)=>{
+    const img=new Image(),url=URL.createObjectURL(file);
+    img.onload=()=>{
+      URL.revokeObjectURL(url);
+      try{
+        const max=CONFIG.IMG_MAX_DIM;
+        const s=Math.min(1,max/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+        const w=Math.max(1,Math.round((img.naturalWidth||max)*s)),h=Math.max(1,Math.round((img.naturalHeight||max)*s));
+        const c=document.createElement("canvas");c.width=w;c.height=h;
+        const x=c.getContext("2d");
+        x.fillStyle="#fff";x.fillRect(0,0,w,h);
+        x.drawImage(img,0,0,w,h);
+        ok(c.toDataURL("image/jpeg",CONFIG.IMG_QUALITY));
+      }catch(err){no(Error("Could not process that image."))}
+    };
+    img.onerror=()=>{URL.revokeObjectURL(url);no(Error("That file isn't a readable image."))};
+    img.src=url;
+  });
+}
+
+function saveBlobURL(url,filename){
+  const a=document.createElement("a");
+  a.href=url;a.download=filename;
+  document.body.appendChild(a);a.click();a.remove();
+}
+function svgToDataURI(svg){
+  return "data:image/svg+xml;utf8,"+svg.replace(/#/g,"%23").replace(/</g,"%3C").replace(/>/g,"%3E");
+}
+
+/* ========== charts ========== */
+function barTrend(months){
+  if(!months.length)return`<p class="muted">No data.</p>`;
+  const max=Math.max(1,...months.flatMap(m=>[m.a,m.b])),showOut=months.some(m=>m.b>0);
+  const cols=months.map(m=>`<div class="bcol">
+    <div class="bbar">
+      <i style="height:${Math.max(1.5,m.a/max*100)}%" title="In ${fm(m.a)}"></i>
+      ${showOut?`<i class="o" style="height:${Math.max(1.5,m.b/max*100)}%" title="Out ${fm(m.b)}"></i>`:""}
+    </div>
+    <small>${E(m.l)}</small>
+  </div>`).join("");
+  return `<div class="bchart" role="img" aria-label="${showOut?"Cash in versus out":"Cash collected"}, ${months.length} months">
+    <div class="byaxis"><span>${fm(max)}</span><span>${fm(max/2)}</span><span>0</span></div>
+    <div class="bplot">
+      <div class="bgrid"><span></span><span></span><span></span></div>
+      <div class="bbars">${cols}</div>
+    </div>
+  </div>`;
+}
+function donut(segs,title,sub,size=170,thick=26){
+  const data=(segs||[]).filter(s=>s.value>0),total=sum(data,s=>s.value);
+  if(!total)return`<p class="muted small">No data.</p>`;
+  const cx=size/2,cy=size/2,r=(size-thick)/2,C=2*Math.PI*r;
+  let off=0;
+  const arcs=data.map(s=>{
+    const frac=s.value/total,len=C*frac;
+    const el=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="${thick}" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"><title>${E(s.label)} — ${E(s.fmt||fm(s.value))} · ${Math.round(frac*100)}%</title></circle>`;
+    off+=len;
+    return el;
+  }).join("");
+  const leg=data.map(s=>{
+    const p=Math.round(s.value/total*100);
+    return `<span><i style="background:${s.color}"></i><span class="lbl">${E(s.label)}</span><span class="pct">${p}%</span><span class="val">${E(s.fmt||fm(s.value))}</span></span>`;
+  }).join("");
+  return `<div class="donut-wrap">
+    <div class="donut" style="width:${size}px;height:${size}px">
+      <svg viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" aria-hidden="true">
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="var(--raise)" stroke-width="${thick}"/>
+        ${arcs}
+      </svg>
+      <div class="donut-center"><strong>${E(title)}</strong><span>${E(sub)}</span></div>
+    </div>
+    <div class="legend">${leg}</div>
+  </div>`;
+}
+
+const CATS=["Software","Marketing","Office","Travel","Services","Hardware","Other"];
+const PRIOS=["Low","Medium","High","Urgent"];
+const ETYPES=["Meeting","Call","Deadline","Personal","Workshop","Other"];
+const SCH={
+  clients:{one:"client",f:[["name","Name","text",1],["company","Company"],["email","Email","email"],["status","Status","select",0,["Lead","Active","Past"]],["notes","Notes","textarea"]]},
+  projects:{one:"project",f:[["name","Project name","text",1],["clientId","Client","ref:clients",1],["budget","Budget","money"],["due","Due date","date"],["status","Status","select",0,["Active","On hold","Completed"]],["notes","Notes","textarea"],["image","Cover image","image"]]},
+  tasks:{one:"task",f:[["name","Task","text",1],["projectId","Project","ref:projects"],["due","Due date","date"],["priority","Priority","select",0,PRIOS],["repeat","Repeats","select",0,Object.keys(RECS)]]},
+  invoices:{one:"invoice",f:[["number","Number","text",1],["clientId","Client","ref:clients",1],["desc","Description","text"],["amount","Amount","money",1],["issued","Issued","date",1],["due","Due","date",1]]},
+  expenses:{one:"expense",f:[["name","Expense","text",1],["category","Category","select",0,CATS],["projectId","Project","ref:projects"],["amount","Amount","money",1],["date","Date","date",1]]},
+  entries:{one:"time entry",f:[["projectId","Project","ref:projects"],["hours","Hours","number",1],["date","Date","date",1],["note","Note"]]},
+  events:{one:"event",f:[["name","Event name","text",1],["date","Date","date",1],["time","Time","time"],["type","Type","select",0,ETYPES],["recurrence","Repeats","select",0,Object.keys(RECS)],["location","Location"],["notes","Notes","textarea"]]}
+};
+const DEF={
+  clients:()=>({status:"Active"}),
+  projects:()=>({status:"Active",image:""}),
+  tasks:()=>({done:false,priority:"Medium",repeat:"none"}),
+  invoices:()=>({payments:[],number:nextNo(),issued:iso(),due:shift(iso(),14)}),
+  expenses:()=>({category:"Software",date:iso()}),
+  entries:()=>({date:iso()}),
+  events:()=>({date:iso(),type:"Meeting",recurrence:"none"})
+};
+
+function input([k,l,t="text",req,opts],v){
+  let el;
+  if(t==="select"){
+    const o=opts||[];
+    const labels=k==="repeat"||k==="recurrence"?RECS:{};
+    el=`<select name="${k}">${o.map(x=>`<option value="${E(x)}" ${x===v?"selected":""}>${E(labels[x]||x)}</option>`).join("")}</select>`;
+  }else if(t.startsWith("ref:")){
+    const c=t.slice(4);
+    el=`<select name="${k}" ${req?"required":""}><option value="">${req?"Choose…":"None"}</option>${S[c].map(x=>`<option value="${E(x.id)}" ${x.id===v?"selected":""}>${E(x.name||x.number)}</option>`).join("")}</select>`;
+  }else if(t==="textarea")el=`<textarea name="${k}" rows="3" maxlength="3000">${E(v)}</textarea>`;
+  else if(t==="image"){
+    el=`<div class="imgfield">
+      <input type="hidden" name="${k}" value="${E(v||"")}">
+      <input type="file" accept="image/*" class="imgpick" aria-label="${E(l)}">
+      <div class="imgprev">${v?`<img src="${E(v)}" alt="">`:""}</div>
+      <button type="button" class="ico imgclear" data-act="imgclear" ${v?"":"hidden"} aria-label="Remove image">✕</button>
+    </div>`;
+  }else{
+    const num=t==="money"||t==="number";
+    el=`<input name="${k}" type="${num?"number":t}" ${num?'step="0.01" min="0"':'maxlength="250"'} value="${E(v)}" ${req?"required":""}>`;
+  }
+  return`<label>${l}${req?" *":""}${el}</label>`;
+}
+
+function openDlg(title,body,onSave,wide=false,opts={}){
+  $("#dt").textContent=title;
+  const foot=opts.footer!==undefined?opts.footer:`<div class="foot"><button type="button" data-act="close">Cancel</button><button class="gold">Save</button></div>`;
+  $("#db").innerHTML=`<form ${opts.noValidate?"novalidate":""}>${body}<p class="err" role="alert"></p>${foot}</form>`;
+  $("#dlg").classList.toggle("wide",!!wide);
+  if(!opts.noValidate){
+    $("#db form").onsubmit=e=>{
+      e.preventDefault();
+      const f=e.target;
+      if(!f.checkValidity()){f.reportValidity();return}
+      try{onSave(Object.fromEntries(new FormData(f)));save();$("#dlg").close();render();toast("Saved.")}
+      catch(x){$(".err",f).textContent=x.message}
+    };
+  }
+  const d=$("#dlg");if(!d.open)d.showModal();
+}
+
+function confirmDlg(message,onYes,opts={}){
+  const d=$("#dlg");
+  $("#dt").textContent=opts.title||"Please confirm";
+  $("#db").innerHTML=`<p style="margin:0 0 18px;font-size:14.5px;line-height:1.55">${E(message)}</p>
+    <div class="foot">
+      <button type="button" data-act="close">Cancel</button>
+      <button class="gold" id="cfy">${E(opts.yes||"Confirm")}</button>
+    </div>`;
+  d.classList.remove("wide");
+  const yes=$("#cfy");
+  yes.onclick=()=>{d.close();onYes()};
+  if(!d.open)d.showModal();
+  yes.focus();
+}
+
+function edit(col,id,preset={}){
+  const sc=SCH[col],rec=S[col].find(r=>r.id===id),v={...DEF[col](),...rec,...preset};
+  sc.f.forEach(([k,,t])=>{if(t==="money")v[k]=v[k]?v[k]/100:""});
+  if(col==="entries")v.hours=v.seconds?+(v.seconds/3600).toFixed(3):"";
+  openDlg((id?"Edit ":"New ")+sc.one,sc.f.map(f=>input(f,v[f[0]])).join(""),d=>{
+    sc.f.forEach(([k,,t])=>{if(t==="money")d[k]=Math.round(parseFloat(d[k]||0)*100)});
+    if(col==="entries"){d.seconds=Math.round(d.hours*3600);delete d.hours;if(d.seconds<1)throw Error("Enter at least a few seconds.")}
+    if(col==="invoices"){
+      d.number=d.number.trim();if(!d.number)throw Error("Enter an invoice number.");
+      if(d.due<d.issued)throw Error("Due date must be on or after the issue date.");
+      if(d.amount<1)throw Error("Enter an amount above zero.");
+      if(S.invoices.some(i=>i.id!==id&&i.number.toLowerCase()===d.number.trim().toLowerCase()))throw Error("That invoice number is already used.");
+      if(rec&&d.amount<paid(rec))throw Error("Total can't be lower than payments already recorded.");
+    }
+    if(col==="expenses"&&d.amount<1)throw Error("Enter an amount above zero.");
+    if(col==="events"&&!d.name.trim())throw Error("Enter an event name.");
+    if(rec)Object.assign(rec,d);else S[col].push({...DEF[col](),...d,id:uid()});
+  });
+}
+
+function pay(id){
+  const i=S.invoices.find(x=>x.id===id),b=bal(i);
+  openDlg("Record payment",`<p class="muted">${E(i.number)}: ${fm(b)} remaining</p><label>Amount received<input name="amount" type="number" step="0.01" min="0.01" max="${(b/100).toFixed(2)}" value="${(b/100).toFixed(2)}" required></label><label>Date<input name="date" type="date" max="${iso()}" value="${iso()}" required></label>`,d=>{
+    const a=Math.round(d.amount*100);if(a<1||a>b)throw Error("Amount must be within the remaining balance.");
+    i.payments.push({id:uid(),amount:a,date:d.date});
+  });
+}
+
+function printInv(id){
+  const i=S.invoices.find(x=>x.id===id),c=S.clients.find(x=>x.id===i.clientId)||{};
+  $("#print").innerHTML=`<h1>${E(S.settings.business)}</h1><p>${E(S.settings.email||"")}</p><h2>Invoice ${E(i.number)}</h2><p><b>Bill to:</b> ${E(c.name)} ${E(c.company||"")} ${E(c.email||"")}<br>Issued ${fdate(i.issued)} · Due ${fdate(i.due)}</p><table><tr><th>Description</th><th class="r">Total</th></tr><tr><td>${E(i.desc)}</td><td class="r">${fm(i.amount)}</td></tr></table><p class="r">Paid ${fm(paid(i))}</p><h2 class="r">Balance due ${fm(bal(i))}</h2><p>${E(S.settings.details||"")}</p>`;
+  window.print();
+}
+
+function dayModal(d){
+  const tasks=tasksOn(d),evs=eventsOn(d),invs=invsDueOn(d);
+  const done=S.tasks.filter(t=>t.done&&t.doneAt===d);
+  const html=
+    block("Tasks due",tasks.map(t=>taskRow(t)).join(""),"No tasks due.")+
+    block("Completed",done.map(t=>taskRow(t)).join(""),"Nothing completed.")+
+    block("Events",evs.map(e=>eventLine(e,d)).join(""),"No events.")+
+    block("Invoices due",invs.map(invRow).join(""),"No invoices due.");
+  const footer=`<div class="foot">
+    <button type="button" data-act="close">Close</button>
+    <button class="gold" type="button" data-act="edit" data-col="tasks" data-preset-due="${d}">+ Task</button>
+    <button type="button" data-act="edit" data-col="events" data-preset-date="${d}">+ Event</button>
+  </div>`;
+  openDlg(fdate(d),html,()=>{},true,{footer,noValidate:true});
+}
+function block(title,inner,emptyMsg){
+  return`<section class="card" style="margin-bottom:12px;padding:14px"><header><h2 style="font-size:15px">${E(title)}</h2></header>${inner||`<p class="muted small" style="margin:0">${E(emptyMsg)}</p>`}</section>`;
+}
+
+function taskRow(t,opt={}){
+  const late=!t.done&&t.due&&t.due<iso();
+  const meta=[];
+  if(!opt.hideProject)meta.push(E(nm("projects",t.projectId,"No project")));
+  if(t.repeat&&t.repeat!=="none")meta.push(RECS[t.repeat]||t.repeat);
+  meta.push(t.done?"Completed":"Open");
+  return`<div class="row ${t.done?"done":""}">
+    <button class="ck" data-act="toggle" data-id="${t.id}" aria-pressed="${!!t.done}" aria-label="Mark ${E(t.name)} ${t.done?"open":"done"}"></button>
+    <div class="grow"><b>${E(t.name)}</b><small>${meta.join(" · ")}</small></div>
+    ${t.due?`<span class="pill ${late?"bad":""}">${fshort(t.due)}</span>`:""}
+    <span class="pill ${t.done?"ok":t.priority==="Urgent"?"bad":t.priority==="High"?"warn":""}">${t.done?"Done":E(t.priority||"Medium")}</span>
+    ${ed("tasks",t.id)}</div>`;
+}
+const invRow=i=>{const s=status(i);return`<div class="row"><div class="grow"><b>${E(i.number)} · ${E(nm("clients",i.clientId,"Unknown"))}</b><small>${E(i.desc)} · due ${fdate(i.due)}</small></div><span class="pill ${pillOf[s]}">${s}</span><span class="amt">${fm(bal(i))}</span></div>`};
+function eventLine(e,on){
+  return`<div class="row"><div class="grow"><b>${E(e.name)}</b><small>${fdate(on||e.date)}${e.time?" · "+E(e.time):""}${e.location?" · "+E(e.location):""}${e.recurrence&&e.recurrence!=="none"?" · "+(RECS[e.recurrence]||e.recurrence):""}</small></div><span class="pill">${E(e.type||"Event")}</span>${ed("events",e.id)}</div>`;
+}
+const ed=(col,id)=>`<button class="ico" data-act="edit" data-col="${col}" data-id="${id}" aria-label="Edit">✎</button><button class="ico" data-act="del" data-col="${col}" data-id="${id}" aria-label="Delete">✕</button>`;
+const empty=(t,s)=>`<div class="empty"><b>${t}</b>${s}</div>`;
+const stat=(l,v,s)=>`<div class="card stat"><small>${l}</small><b>${v}</b><small>${s}</small></div>`;
+
+const V={
+overview(){
+  const y=year(),unpaid=S.invoices.filter(i=>bal(i)).sort(byDue);
+  const m0=iso().slice(0,7)+"-01";
+  const ms=[...Array(6)].map((_,n)=>{const m=shift(m0,n-5,"m").slice(0,7);return{l:new Date(m+"-01T00:00").toLocaleDateString(undefined,{month:"short"}),a:collected(m),b:spent(m)}});
+  const tasks=S.tasks.filter(t=>!t.done).sort(byDue).slice(0,5);
+  const act=S.projects.filter(p=>p.status==="Active");
+  const allInv=S.invoices,totalAmt=sum(allInv,i=>i.amount),collectedAll=totalAmt-sum(allInv,bal);
+  const doneT=S.tasks.filter(t=>t.done).length,totT=S.tasks.length;
+  const avgProg=act.length?sum(act,p=>pct(p))/act.length:0;
+  const upcoming=S.events.map(e=>({e,d:nextOn(e)})).filter(x=>x.d).sort((a,b)=>a.d.localeCompare(b.d)).slice(0,4);
+  const overdueT=S.tasks.filter(t=>!t.done&&t.due&&t.due<iso());
+  return`<div class="grid stats">${stat("Collected · "+y,fm(collected(y)),"Recorded payments")}${stat("Outstanding",fm(sum(S.invoices,bal)),unpaid.length+" unpaid")}${stat("Tax reserve",fm(reserve()),S.settings.taxRate+"% of net")}${stat("Net cash · "+y,fm(collected(y)-spent(y)),"Collected − expenses")}</div>
+  <div class="grid"><section class="card"><header><h2>Cash trend · 6 months</h2><small>In vs out</small></header>${barTrend(ms)}</section>
+  <section class="card"><header><h2>Studio pulse</h2></header><div class="ring-grid">${ringPct(totalAmt?(collectedAll/totalAmt)*100:0,"Collected",fm(collectedAll),"All invoices")}${ringPct(avgProg,"Projects",act.length+" active","Avg progress")}${ringPct(totT?(doneT/totT)*100:0,"Tasks",doneT+" / "+totT,"Complete")}${ringPct(overdueT.length/Math.max(1,S.tasks.length-doneT)*100,"Overdue",String(overdueT.length),"Open tasks")}</div></section></div>
+  <div class="grid"><section class="card"><header><h2>Next tasks</h2><a class="link" href="#tasks">All to-dos</a></header>${tasks.map(t=>taskRow(t)).join("")||empty("You're clear.","Add a task to plan your next move.")}</section>
+  <section class="card"><header><h2>Waiting on payment</h2><a class="link" href="#invoices">Invoices</a></header>${unpaid.slice(0,4).map(invRow).join("")||empty("Nothing outstanding.","Paid invoices appear here as they're created.")}</section></div>
+  <div class="grid"><section class="card"><header><h2>Upcoming events</h2><a class="link" href="#events">Events</a></header>${upcoming.map(x=>eventLine(x.e,x.d)).join("")||empty("Room to focus.","No events pulling your attention.")}</section>
+  <section class="card"><header><h2>Active projects</h2><a class="link" href="#projects">Projects</a></header>${act.slice(0,4).map(p=>`<div class="row"><div class="grow"><b>${E(p.name)}</b><div class="bar"><i style="width:${pct(p)}%"></i></div><small>${pct(p)}% complete · due ${fdate(p.due)}</small></div></div>`).join("")||empty("No active projects.","Start one to track tasks and time.")}</section></div>`;
+},
+calendar(){
+  const anchor=calAnchor,y=new Date(anchor+"T00:00").getFullYear(),m=new Date(anchor+"T00:00").getMonth();
+  const first=iso(new Date(y,m,1)),gridStart=weekStart(first,0);
+  const cells=[];
+  for(let i=0;i<42;i++){
+    const d=shift(gridStart,i),outside=new Date(d+"T00:00").getMonth()!==m;
+    const t=tasksOn(d).filter(x=>!x.done),e=eventsOn(d),inv=invsDueOn(d);
+    const total=t.length+e.length+inv.length;
+    cells.push(`<button type="button" class="cal-cell ${outside?"out":""} ${d===iso()?"today":""}" data-act="day" data-id="${d}" aria-label="${fdate(d)}, ${total} items">
+      <span class="cal-num">${new Date(d+"T00:00").getDate()}</span>
+      ${t.slice(0,2).map(x=>`<span class="cal-ev t-task ${x.done?"done":""}">${E(x.name)}</span>`).join("")}
+      ${e.slice(0,1).map(x=>`<span class="cal-ev">${E(x.name)}</span>`).join("")}
+      ${inv.slice(0,1).map(x=>`<span class="cal-ev t-inv">${E(x.number)}</span>`).join("")}
+      ${total>Math.min(t.length,2)+Math.min(e.length,1)+Math.min(inv.length,1)?`<span class="cal-ev">+${total-Math.min(t.length,2)-Math.min(e.length,1)-Math.min(inv.length,1)} more</span>`:""}
+    </button>`);
+  }
+  const label=new Date(anchor+"T00:00").toLocaleDateString(undefined,{month:"long",year:"numeric"});
+  return`<div class="chips"><button data-act="cal-prev">‹ Prev</button><button data-act="cal-today">Today</button><button data-act="cal-next">Next ›</button><span class="muted" style="align-self:center;margin-left:auto">${E(label)}</span></div>
+  <section class="card" style="padding:0;overflow:hidden"><div style="padding:16px 18px 18px"><div class="cal-head">${["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d=>`<div>${d}</div>`).join("")}</div><div class="cal-grid">${cells.join("")}</div></div></section>`;
+},
+tasks(){
+  const f={open:t=>!t.done,overdue:t=>!t.done&&t.due&&t.due<iso(),today:t=>!t.done&&t.due===iso(),done:t=>t.done,all:()=>1};
+  const list=S.tasks.filter(f[tf]).sort((a,b)=>a.done-b.done||byDue(a,b));
+  const open=S.tasks.filter(t=>!t.done),od=S.tasks.filter(t=>!t.done&&t.due&&t.due<iso());
+  return`<div class="grid stats">${stat("Open",String(open.length),"Remaining")}${stat("Overdue",String(od.length),"Needs attention")}${stat("Due today",String(S.tasks.filter(t=>!t.done&&t.due===iso()).length),"Today")}${stat("Done",String(S.tasks.filter(t=>t.done).length),"All-time")}</div>
+  <div class="chips">${Object.keys(f).map(k=>`<button data-act="tf" data-id="${k}" aria-pressed="${tf===k}">${k[0].toUpperCase()+k.slice(1)}</button>`).join("")}</div>
+  <section class="card">${list.map(t=>taskRow(t)).join("")||empty("Nothing here.","Try another filter or add a task.")}</section>`;
+},
+projects(){
+  return S.projects.length?`<div class="grid">${S.projects.map(p=>{
+    const h=sum(S.entries.filter(e=>e.projectId===p.id),e=>e.seconds);
+    const ex=sum(S.expenses.filter(x=>x.projectId===p.id),x=>x.amount);
+    const ts=S.tasks.filter(t=>t.projectId===p.id);
+    const openN=ts.filter(t=>!t.done).length;
+    const hero=p.image?`<div class="proj-hero"><img src="${E(p.image)}" alt="" loading="lazy" decoding="async"><div class="hero-title"><h2>${E(p.name)}</h2><span class="pill">${E(p.status)}</span></div></div>`:"";
+    const head=p.image?"":`<header><h2>${E(p.name)}</h2><span class="pill">${E(p.status)}</span></header>`;
+    return`<article class="card proj">${hero}${head}
+      <small>${E(nm("clients",p.clientId,"No client"))} · due ${fdate(p.due)}</small>
+      <div class="bar"><i style="width:${pct(p)}%"></i></div>
+      <small>${pct(p)}% of tasks · ${hrs(h)} logged · ${ts.filter(t=>t.done).length}/${ts.length} tasks done</small>
+      <div class="row"><span class="grow"><small>Budget</small><b class="amt">${fm(p.budget||0)}</b></span><span class="grow"><small>Expenses</small><b class="amt">${fm(ex)}</b></span></div>
+      <p class="muted">${E(p.notes||"")}</p>
+      <div class="acts">
+        <button data-act="edit" data-col="projects" data-id="${p.id}">Edit</button>
+        <button class="bad" data-act="del" data-col="projects" data-id="${p.id}">Delete</button>
+      </div>
+      <div class="ptasks">
+        <header><h3>Tasks · ${openN} open</h3><button class="link" data-act="edit" data-col="tasks" data-preset-project="${p.id}">+ Add task</button></header>
+        ${ts.length?ts.slice().sort((a,b)=>a.done-b.done||byDue(a,b)).map(t=>taskRow(t,{hideProject:true})).join(""):`<p class="muted small" style="margin:6px 0 0">No tasks yet — add one to start tracking progress.</p>`}
+      </div>
+    </article>`}).join("")}</div>`:`<section class="card">${empty("Your first project starts here.","Add a client, then create the project.")}</section>`;
+},
+clients(){
+  return S.clients.length?`<div class="grid">${S.clients.map(c=>`<article class="card"><header><h2>${E(c.name)}</h2><span class="pill">${E(c.status)}</span></header>
+    <small>${E(c.company||"Independent")} · ${E(c.email||"no email")}</small>
+    <p class="muted">${E(c.notes||"")}</p>
+    <div class="row"><span class="grow">${S.projects.filter(p=>p.clientId===c.id).length} projects</span><b class="amt">${fm(sum(S.invoices.filter(i=>i.clientId===c.id),bal))} owed</b></div>
+    <div class="acts"><button data-act="edit" data-col="clients" data-id="${c.id}">Edit</button><button class="bad" data-act="del" data-col="clients" data-id="${c.id}">Delete</button></div>
+  </article>`).join("")}</div>`:`<section class="card">${empty("Every project starts with a name.","Add your first client.")}</section>`;
+},
+invoices(){
+  const all=S.invoices,o=sum(all,bal),od=sum(all.filter(i=>status(i)==="Overdue"),bal);
+  const paidAmt=sum(all,paid);
+  return`<div class="grid stats">${stat("Invoiced",fm(sum(all,i=>i.amount)),all.length+" invoices")}${stat("Received",fm(paidAmt),"Payments")}${stat("Open",fm(o-od),"Awaiting")}${stat("Overdue",fm(od),"Needs a nudge")}</div>
+  <div class="grid"><section class="card"><header><h2>Invoice status</h2></header>${donut([
+    {label:"Paid",value:paidAmt,color:"var(--ok)"},
+    {label:"Open",value:o-od,color:"var(--warn)"},
+    {label:"Overdue",value:od,color:"var(--bad)"}
+  ],fm(sum(all,i=>i.amount)),"Invoiced")}</section>
+  <section class="card"><header><h2>Cash collected · 6 months</h2></header>${(()=>{
+    const m0=iso().slice(0,7)+"-01";
+    const ms=[...Array(6)].map((_,n)=>{const m=shift(m0,n-5,"m").slice(0,7);return{l:new Date(m+"-01T00:00").toLocaleDateString(undefined,{month:"short"}),a:collected(m),b:0}});
+    return barTrend(ms);
+  })()}</section></div>
+  <section class="card">${[...all].sort(byDue).map(i=>{const s=status(i);return`<div class="row"><div class="grow"><b>${E(i.number)} · ${E(nm("clients",i.clientId,"Unknown"))}</b><small>${E(i.desc)} · due ${fdate(i.due)}</small></div><span class="pill ${pillOf[s]}">${s}</span><span class="amt">${fm(i.amount)}</span>${bal(i)?`<button data-act="pay" data-id="${i.id}">Payment</button>`:""}<button class="ico" data-act="print" data-id="${i.id}" aria-label="Print">⎙</button>${ed("invoices",i.id)}</div>`}).join("")||empty("Your work deserves a paper trail.","Create an invoice and record payments as they arrive.")}</section>`;
+},
+events(){
+  const all=S.events.slice().sort((a,b)=>a.date.localeCompare(b.date));
+  const nx=all.map(e=>({e,d:nextOn(e)}));
+  const up=nx.filter(x=>x.d).sort((a,b)=>a.d.localeCompare(b.d)),past=nx.filter(x=>!x.d).map(x=>x.e).reverse();
+  const card=(e,on)=>{
+    const i=new Date((on||e.date)+"T00:00");
+    return`<div class="event-card"><div class="event-date"><div class="d">${pad2(i.getDate())}</div><div class="m">${i.toLocaleDateString(undefined,{month:"short"})}</div></div>
+      <div class="grow"><b>${E(e.name)}</b><small>${e.time?E(e.time)+" · ":""}${E(e.type||"Event")}${e.location?" · "+E(e.location):""}${e.recurrence&&e.recurrence!=="none"?" · "+(RECS[e.recurrence]||e.recurrence):""}</small>${e.notes?`<p class="muted" style="margin:4px 0 0;font-size:13px">${E(e.notes)}</p>`:""}</div>
+      <span class="pill ${e.type==="Deadline"?"bad":e.type==="Meeting"?"warn":""}">${E(e.type||"Event")}</span>${ed("events",e.id)}</div>`;
+  };
+  return all.length?`<div class="grid"><section class="card"><header><h2>Upcoming</h2><span class="pill">${up.length}</span></header>${up.length?up.map(x=>card(x.e,x.d)).join(""):`<p class="muted">Nothing coming up.</p>`}</section>
+  <section class="card"><header><h2>Past</h2><span class="pill">${past.length}</span></header>${past.length?past.slice(0,10).map(e=>card(e)).join(""):`<p class="muted">No past events.</p>`}</section></div>`
+  :`<section class="card">${empty("Keep time for what matters.","Add a meeting, call, deadline or personal block.")}</section>`;
+},
+time(){
+  const t=S.timer;
+  return`<section class="card"><small>${t?"Timer running":"Ready when you are"}</small><div class="clock" id="clock">00:00:00</div>
+    ${t?`<p>${E(nm("projects",t.projectId,"General work"))}: ${E(t.note||"Focused work")}</p><div class="acts"><button class="gold" data-act="stop">Stop and save</button><button class="bad" data-act="discard">Discard</button></div>`
+    :`<label>Project<select id="tp"><option value="">General work</option>${S.projects.map(p=>`<option value="${E(p.id)}">${E(p.name)}</option>`).join("")}</select></label>
+      <label>What are you working on?<input id="tn" maxlength="250"></label>
+      <button class="gold" data-act="start">Start timer</button>`}
+  </section>
+  <section class="card"><header><h2>Time log</h2><span class="pill">${hrs(sum(S.entries,e=>e.seconds))} total</span></header>
+    ${[...S.entries].sort((a,b)=>b.date.localeCompare(a.date)).map(e=>`<div class="row"><div class="grow"><b>${E(nm("projects",e.projectId,"General work"))}</b><small>${fdate(e.date)} · ${E(e.note||"Focused work")}</small></div><span class="amt">${hrs(e.seconds)}</span>${ed("entries",e.id)}</div>`).join("")||empty("Make your effort visible.","Start the timer or add time you've already put in.")}
+  </section>`;
+},
+tax(){
+  const y=year(),ex=S.expenses.filter(x=>String(x.date).startsWith(y));
+  const catMap={};ex.forEach(x=>{const c=x.category||"Uncategorised";catMap[c]=(catMap[c]||0)+x.amount});
+  const cols=["var(--gold)","var(--ok)","var(--warn)","var(--bad)","var(--muted)","var(--gold2)"];
+  const segs=Object.keys(catMap).sort((a,b)=>catMap[b]-catMap[a]).map((c,i)=>({label:c,value:catMap[c],color:cols[i%cols.length]}));
+  const net=Math.max(0,collected(y)-spent(y));
+  return`<div class="grid stats">${stat("Tax reserve",fm(reserve()),S.settings.taxRate+"% of positive net")}${stat("Collected",fm(collected(y)),"This year")}${stat("Expenses",fm(spent(y)),"This year")}${stat("Positive net",fm(net),"Collected − expenses")}</div>
+  <div class="grid"><section class="card"><header><h2>Profit &amp; loss · ${y}</h2></header>${donut([{label:"Net",value:net,color:"var(--ok)"},{label:"Expenses",value:spent(y),color:"var(--bad)"}],fm(collected(y)),"Collected")}</section>
+  <section class="card"><header><h2>Expense breakdown</h2></header>${donut(segs,fm(spent(y)),"Expenses")}</section></div>
+  <section class="card"><header><h2>Expenses</h2><small>This is a planning estimate, not tax advice. Change the rate in Settings.</small></header>
+    ${[...S.expenses].sort((a,b)=>b.date.localeCompare(a.date)).map(x=>`<div class="row"><div class="grow"><b>${E(x.name)}</b><small>${fdate(x.date)} · ${E(x.category||"Uncategorised")}${x.projectId?" · "+E(nm("projects",x.projectId)):""}</small></div><span class="amt">${fm(x.amount)}</span>${ed("expenses",x.id)}</div>`).join("")||empty("Give your costs a place to land.","Record expenses to sharpen your reserve estimate.")}
+  </section>`;
+},
+settings(){
+  const s=S.settings,locked=S.invoices.length||S.expenses.length||S.projects.length;
+  const palOpts=Object.entries(PALETTES).map(([k,p])=>`<option value="${k}" ${k===s.palette?"selected":""}>${E(p.label)}</option>`).join("");
+  return`<div class="grid"><section class="card"><h2>Your business</h2><br>
+    <form id="set">
+      <label>Business name<input name="business" required maxlength="250" value="${E(s.business)}"></label>
+      <label>Email<input name="email" type="email" value="${E(s.email||"")}"></label>
+      <label>Invoice footer<textarea name="details" rows="3" maxlength="3000">${E(s.details||"")}</textarea></label>
+      <label>Currency<select name="currency" ${locked?"disabled":""}>${CUR.map(c=>`<option ${c===s.currency?"selected":""}>${c}</option>`).join("")}</select>${locked?"<small>Locked because this workspace has money records.</small>":""}</label>
+      <label>Tax reserve rate (%)<input name="taxRate" type="number" min="0" max="100" step="0.1" value="${s.taxRate}"></label>
+      <label>Theme<select name="theme"><option value="dark" ${s.theme!=="light"?"selected":""}>Dark</option><option value="light" ${s.theme==="light"?"selected":""}>Light</option></select></label>
+      <label>Colour palette<select name="palette">${palOpts}</select><small>Also switchable from the top bar at any time.</small></label>
+      <label>Brand mark motion<select name="motion"><option value="on" ${s.motion!==false?"selected":""}>Gentle — subtle life</option><option value="off" ${s.motion===false?"selected":""}>Calm — no motion</option></select><small>Timer-tied breathing and view-change pings on the sidebar logo.</small></label>
+      <button class="gold">Save details</button>
+    </form>
+  </section>
+  <section class="card"><h2>Your data</h2>
+    <p class="muted">Everything stays in this browser on this device. Storage: IndexedDB with localStorage fallback. Last export: ${S.lastBackup?new Date(S.lastBackup).toLocaleString():"never"}.</p>
+    <div class="acts"><button class="gold" data-act="export">Export backup</button><button data-act="import">Restore backup</button><button data-act="blur">Toggle privacy blur</button></div>
+    <hr style="border:0;border-top:1px solid var(--line);margin:22px 0">
+    <div class="acts"><button data-act="demo">${real?"Exit sample workspace":"Open sample workspace"}</button><button class="bad" data-act="erase">Erase all data</button></div>
+  </section></div>`;
+}
+};
+function ringPct(p,label,val,sub){
+  const n=Math.max(0,Math.min(100,p||0));
+  return`<div class="metric"><div class="orbit" style="--pct:${n.toFixed(1)}%"><div><strong>${Math.round(n)}<small>%</small></strong></div></div><h3>${E(label)}</h3><span class="ring-val amt">${E(val)}</span><small>${E(sub)}</small></div>`;
+}
+
+const TITLES={overview:"Studio at a glance",calendar:"Calendar",tasks:"To-dos",projects:"Projects",clients:"Clients",invoices:"Invoices",events:"Events",time:"Time",tax:"Tax reserve",settings:"Settings"};
+const ADD={overview:["tasks","Task"],calendar:["events","Event"],tasks:["tasks","Task"],projects:["projects","Project"],clients:["clients","Client"],invoices:["invoices","Invoice"],events:["events","Event"],time:["entries","Time"],tax:["expenses","Expense"]};
+
+function render(){
+  if(!V[view])view="overview";
+  applyTheme();
+  document.body.classList.toggle("timer-on",!!S.timer);
+  $("#nav").innerHTML=Object.keys(TITLES).map(k=>`<a href="#${k}" ${k===view?'aria-current="page"':""}>${TITLES[k]}</a>`).join("");
+  $("#title").textContent=TITLES[view];document.title=TITLES[view]+" · CalmStudio Desk";
+  const a=ADD[view];
+  $("#acts").innerHTML=`
+    <select id="palSel" class="mini" aria-label="Colour palette">${Object.entries(PALETTES).map(([k,p])=>`<option value="${k}" ${S.settings.palette===k?"selected":""}>${E(p.label)}</option>`).join("")}</select>
+    <button data-act="theme" aria-label="Toggle theme">${S.settings.theme==="light"?"Dark":"Light"}</button>
+    <button data-act="export">Export</button>
+    ${a?`<button class="gold" data-act="edit" data-col="${a[0]}">+ ${a[1]}</button>`:""}`;
+  $("#banner").innerHTML=(real&&!bannerHidden)?`<div class="banner"><span><b>Sample workspace.</b> Your own data stays untouched.</span><button data-act="demo">Back to my workspace</button><button class="ico" data-act="hidebanner" aria-label="Dismiss notice">✕</button></div>`:"";
+  $("#view").innerHTML=V[view]();tick();
+}
+function tick(){const c=$("#clock");if(c&&S.timer){const s=Math.max(0,Math.floor((Date.now()-S.timer.start)/1e3));c.textContent=[s/3600|0,s%3600/60|0,s%60].map(n=>String(n).padStart(2,"0")).join(":")}}
+setInterval(tick,1000);
+function pingBrand(){
+  const dot=$(".brand i");if(!dot)return;
+  dot.classList.remove("ping");void dot.offsetWidth;dot.classList.add("ping");
+  clearTimeout(pingBrand._t);pingBrand._t=setTimeout(()=>dot.classList.remove("ping"),700);
+}
+const dl=(txt,file,type)=>{
+  const u=URL.createObjectURL(new Blob([txt],{type}));
+  saveBlobURL(u,file);
+  setTimeout(()=>URL.revokeObjectURL(u),1e4);
+};
+const ask=(m,fn,opts)=>confirmDlg(m,()=>{fn();save();render()},opts);
+
+const A={
+  close:()=>$("#dlg").close(),
+  edit:(id,col,el)=>{
+    const preset={};
+    if(el?.dataset?.presetDue)preset.due=el.dataset.presetDue;
+    if(el?.dataset?.presetDate)preset.date=el.dataset.presetDate;
+    if(el?.dataset?.presetProject)preset.projectId=el.dataset.presetProject;
+    edit(col,id,preset);
+  },
+  pay,print:printInv,
+  tf:id=>{tf=id;render()},
+  theme:()=>{S.settings.theme=S.settings.theme==="light"?"dark":"light";save();render()},
+  blur:()=>document.body.classList.toggle("blur"),
+  hidebanner:()=>{bannerHidden=true;try{localStorage.setItem(BKEY,"1")}catch(e){};render()},
+  imgclear:(id,col,el)=>{
+    const field=el.closest(".imgfield");if(!field)return;
+    field.querySelector('input[type="hidden"]').value="";
+    field.querySelector(".imgprev").innerHTML="";
+    el.hidden=true;
+  },
+  day:id=>dayModal(id),
+  "cal-prev":()=>{calAnchor=shift(monthStart(calAnchor),-1,"m");render()},
+  "cal-next":()=>{calAnchor=shift(monthStart(calAnchor),1,"m");render()},
+  "cal-today":()=>{calAnchor=iso();render()},
+  toggle:id=>{
+    const t=S.tasks.find(x=>x.id===id);if(!t)return;t.done=!t.done;t.doneAt=t.done?iso():null;
+    if(!t.done&&t.nextId){S.tasks=S.tasks.filter(x=>!(x.id===t.nextId&&!x.done));delete t.nextId}
+    if(t.done&&t.repeat&&t.repeat!=="none"&&t.due){
+      const n=nextOcc(t.due,t.repeat);
+      if(n&&!S.tasks.some(x=>x.name===t.name&&x.due===n&&x.projectId===t.projectId&&!x.done)){
+        const nt={...t,id:uid(),done:false,doneAt:null,due:n};delete nt.nextId;t.nextId=nt.id;S.tasks.push(nt);
+        toast("Next one scheduled for "+fdate(n)+".");
+      }
+    }
+    save();render();
+  },
+  del:(id,col)=>{
+    if(col==="clients"&&(S.projects.some(p=>p.clientId===id)||S.invoices.some(i=>i.clientId===id)))return toast("This client still has projects or invoices.");
+    if(col==="projects"&&(S.timer&&S.timer.projectId===id))return toast("Stop the running timer for this project first.");
+    ask("Delete this "+SCH[col].one+"? This can't be undone.",()=>{
+      S[col]=S[col].filter(x=>x.id!==id);
+      if(col==="projects")["tasks","expenses","entries"].forEach(k=>S[k].forEach(x=>{if(x.projectId===id)x.projectId=""}));
+    },{title:"Delete "+SCH[col].one,yes:"Delete"});
+  },
+  start:()=>{S.timer={projectId:$("#tp").value,note:$("#tn").value.slice(0,250),start:Date.now()};save();render()},
+  stop:()=>{
+    const t=S.timer,s=Math.max(1,Math.round((Date.now()-t.start)/1e3));
+    S.entries.push({id:uid(),projectId:t.projectId,note:t.note,date:iso(new Date(t.start)),seconds:s});
+    S.timer=null;save();render();toast("Time saved.");
+  },
+  discard:()=>ask("Discard this timer? The time won't be saved.",()=>{S.timer=null},{yes:"Discard"}),
+  export:()=>{
+    const snap={...S,lastBackup:new Date().toISOString()};
+    dl(JSON.stringify(snap,null,2),`calmstudio-desk-${real?"sample-":""}backup-${iso()}.json`,"application/json");
+    if(!real){S.lastBackup=snap.lastBackup;save();render()}
+    toast("Backup downloaded.");
+  },
+  import:()=>real?toast("Leave the sample workspace before restoring."):$("#imp").click(),
+  demo:()=>{if(real){S=real;real=null}else{real=S;S=sample()}view="overview";location.hash="overview";render()},
+  erase:()=>ask("Erase everything in this workspace? Export a backup first if you need one.",()=>{
+    const th=S.settings.theme,pa=S.settings.palette,mo=S.settings.motion;
+    S=blank();S.settings.theme=th;S.settings.palette=pa;S.settings.motion=mo;
+  },{title:"Erase all data",yes:"Erase"}),
+
+
+};
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-act]");if(!t)return;
+  const{act,id,col}=t.dataset;
+  try{A[act]&&A[act](id,col,t)}catch(x){toast(x.message)}
+});
+document.addEventListener("change",e=>{
+  if(e.target.id==="palSel"){
+    S.settings.palette=PALETTES[e.target.value]?e.target.value:"gold";
+    save();render();
+  }
+});
+$("#db").addEventListener("change",async e=>{
+  const f=e.target;
+  if(!f.classList||!f.classList.contains("imgpick"))return;
+  const file=f.files&&f.files[0];if(!file)return;
+  try{
+    if(!/^image\//.test(file.type))throw Error("Choose an image file.");
+    if(file.size>CONFIG.IMG_MAX_BYTES)throw Error("Image is larger than "+Math.round(CONFIG.IMG_MAX_BYTES/1e6)+" MB.");
+    const data=await shrink(file);
+    const field=f.closest(".imgfield");
+    field.querySelector('input[type="hidden"]').value=data;
+    field.querySelector(".imgprev").innerHTML=`<img src="${data}" alt="">`;
+    const clr=field.querySelector(".imgclear");if(clr)clr.hidden=false;
+  }catch(x){toast(x.message)}
+});
+document.addEventListener("submit",e=>{
+  if(e.target.id!=="set")return;e.preventDefault();
+  const d=Object.fromEntries(new FormData(e.target)),r=parseFloat(d.taxRate);
+  if(!d.business.trim())return toast("Enter a business name.");
+  if(!(r>=0&&r<=100))return toast("Tax rate must be between 0 and 100.");
+  if(!PALETTES[d.palette])d.palette=S.settings.palette;
+  if(d.theme!=="light")d.theme="dark";
+  d.motion=(d.motion==="on");
+  S.settings={...S.settings,...d,business:d.business.trim(),taxRate:r};
+  save();render();toast("Saved.");
+});
+$("#imp").onchange=async e=>{
+  const f=e.target.files[0];e.target.value="";if(!f)return;
+  try{
+    if(f.size>CONFIG.BACKUP_MAX_BYTES)throw Error("Backup is larger than "+Math.round(CONFIG.BACKUP_MAX_BYTES/1e6)+" MB.");
+    const r=JSON.parse(await f.text());
+    if(!r||!r.settings||!CUR.includes(r.settings.currency))throw Error("That isn't a CalmStudio Desk backup.");
+    ask("Replace this workspace with the backup?",()=>{S=norm(r)},{title:"Restore backup",yes:"Replace"});
+  }catch(x){toast(x instanceof SyntaxError?"That file isn't valid JSON.":x.message)}
+};
+$("#dlg").addEventListener("click",e=>{if(e.target.id==="dlg")A.close()});
+addEventListener("hashchange",()=>{view=location.hash.slice(1)||"overview";render();pingBrand();scrollTo(0,0)});
+
+function sample(){
+  const s=blank(),t=iso(),d=n=>shift(t,n);
+  const COVER_AURA = svgToDataURI(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#f8e9df'/><stop offset='1' stop-color='#e9c4b1'/></linearGradient><linearGradient id='gl' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#c98f76'/><stop offset='.45' stop-color='#f3d2c1'/><stop offset='1' stop-color='#b97a62'/></linearGradient><linearGradient id='cap' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='#8c6a3d'/><stop offset='.5' stop-color='#e9cf96'/><stop offset='1' stop-color='#8c6a3d'/></linearGradient><radialGradient id='sun' cx='.78' cy='.2' r='.5'><stop offset='0' stop-color='#fff' stop-opacity='.95'/><stop offset='1' stop-color='#fff' stop-opacity='0'/></radialGradient></defs><rect width='800' height='400' fill='url(#bg)'/><circle cx='640' cy='70' r='260' fill='url(#sun)'/><path d='M0 330 H800 V400 H0Z' fill='#d7a892' opacity='.55'/><ellipse cx='330' cy='332' rx='120' ry='12' fill='#7a4a38' opacity='.22'/><ellipse cx='520' cy='334' rx='90' ry='10' fill='#7a4a38' opacity='.22'/><rect x='270' y='150' width='120' height='182' rx='26' fill='url(#gl)'/><rect x='300' y='96' width='60' height='60' rx='8' fill='url(#cap)'/><rect x='318' y='52' width='24' height='48' rx='12' fill='#3c2a22'/><rect x='282' y='200' width='96' height='74' rx='6' fill='#fbf1ea' opacity='.92'/><text x='330' y='236' text-anchor='middle' font-family='Georgia,serif' font-size='22' letter-spacing='5' fill='#5a3527'>AURA</text><text x='330' y='258' text-anchor='middle' font-family='Georgia,serif' font-size='9' letter-spacing='3' fill='#8a5f4d'>GLOW SERUM</text><rect x='450' y='250' width='140' height='84' rx='16' fill='url(#gl)'/><rect x='446' y='226' width='148' height='34' rx='10' fill='url(#cap)'/><text x='520' y='300' text-anchor='middle' font-family='Georgia,serif' font-size='16' letter-spacing='4' fill='#5a3527'>AURA</text><path d='M150 330 C 150 270 170 230 205 205 M180 262 C 150 250 132 232 126 210 M190 240 C 214 222 236 220 252 226' stroke='#5b7a5a' stroke-width='5' fill='none' stroke-linecap='round'/><ellipse cx='126' cy='205' rx='18' ry='9' fill='#6f8f6b' transform='rotate(-40 126 205)'/><ellipse cx='254' cy='224' rx='18' ry='8' fill='#6f8f6b' transform='rotate(20 254 224)'/><ellipse cx='207' cy='198' rx='16' ry='8' fill='#6f8f6b' transform='rotate(-70 207 198)'/></svg>`);
+  const COVER_VANCE = svgToDataURI(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='bg' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#0a1424'/><stop offset='1' stop-color='#1b2c48'/></linearGradient><linearGradient id='au' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#f6e3b4'/><stop offset='.5' stop-color='#d4af6a'/><stop offset='1' stop-color='#9c7a3c'/></linearGradient><radialGradient id='gw' cx='.5' cy='.5' r='.5'><stop offset='0' stop-color='#d4af6a' stop-opacity='.35'/><stop offset='1' stop-color='#d4af6a' stop-opacity='0'/></radialGradient></defs><rect width='800' height='400' fill='url(#bg)'/><g stroke='#d4af6a' stroke-opacity='.08'><path d='M0 100H800M0 200H800M0 300H800M160 0V400M320 0V400M480 0V400M640 0V400'/></g><circle cx='420' cy='200' r='230' fill='url(#gw)'/><g transform='rotate(-10 400 210)'><rect x='250' y='150' width='300' height='172' rx='14' fill='#0c1628' stroke='#d4af6a' stroke-opacity='.35'/><rect x='232' y='120' width='300' height='172' rx='14' fill='#f4eee2'/><text x='262' y='176' font-family='Georgia,serif' font-size='13' letter-spacing='3' fill='#1b2c48'>VANCE CAPITAL</text><text x='262' y='262' font-family='Georgia,serif' font-size='10' fill='#6b7280'>julian@vance.co</text><circle cx='476' cy='218' r='34' fill='url(#au)'/><text x='476' y='230' text-anchor='middle' font-family='Georgia,serif' font-size='34' font-weight='700' fill='#0c1628'>V</text></g><g fill='url(#au)'><rect x='610' y='250' width='16' height='70' rx='3'/><rect x='636' y='220' width='16' height='100' rx='3'/><rect x='662' y='186' width='16' height='134' rx='3'/><rect x='688' y='150' width='16' height='170' rx='3'/></g><path d='M600 260 L640 228 L670 196 L712 140' stroke='#f6e3b4' stroke-width='3' fill='none' stroke-linecap='round'/><circle cx='712' cy='140' r='6' fill='#f6e3b4'/></svg>`);
+  const COVER_MAISON = svgToDataURI(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 400' preserveAspectRatio='xMidYMid slice'><defs><linearGradient id='bg' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#f6efe3'/><stop offset='1' stop-color='#e4d3b8'/></linearGradient><linearGradient id='win' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='#fffaf0'/><stop offset='1' stop-color='#efdcbc'/></linearGradient><linearGradient id='bag' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#1d1a16'/><stop offset='1' stop-color='#3a332a'/></linearGradient></defs><rect width='800' height='400' fill='url(#bg)'/><path d='M470 400V170A110 110 0 0 1 690 170V400Z' fill='url(#win)' stroke='#cdb48e' stroke-width='3'/><path d='M580 60V400M470 230H690' stroke='#cdb48e' stroke-width='3'/><rect x='0' y='330' width='800' height='70' fill='#cfb592'/><rect x='0' y='326' width='800' height='6' fill='#b89b74'/><rect x='170' y='176' width='160' height='154' rx='6' fill='url(#bag)'/><path d='M210 180 C 210 130 290 130 290 180' stroke='#c9a66b' stroke-width='7' fill='none'/><text x='250' y='258' text-anchor='middle' font-family='Georgia,serif' font-size='40' fill='#e3c68c'>MB</text><text x='250' y='284' text-anchor='middle' font-family='Georgia,serif' font-size='10' letter-spacing='4' fill='#c9a66b'>MAISON BLANC</text><rect x='340' y='236' width='104' height='94' rx='6' fill='#f7f1e6' stroke='#d9c6a6'/><path d='M362 240 C 362 212 422 212 422 240' stroke='#b89b74' stroke-width='5' fill='none'/><text x='392' y='292' text-anchor='middle' font-family='Georgia,serif' font-size='24' fill='#8a6d45'>MB</text><rect x='96' y='270' width='44' height='60' rx='6' fill='#d9c6a6'/><path d='M118 270 C 100 220 80 200 64 190 M118 270 C 122 214 140 186 162 170 M118 270 C 112 230 118 206 128 188' stroke='#5c7355' stroke-width='5' fill='none' stroke-linecap='round'/><ellipse cx='66' cy='190' rx='16' ry='8' fill='#6c8764'/><ellipse cx='162' cy='170' rx='16' ry='8' fill='#6c8764'/><ellipse cx='128' cy='186' rx='14' ry='7' fill='#6c8764' transform='rotate(-60 128 186)'/></svg>`);
+  s.settings={...s.settings,business:"Maison Design Co.",email:"hello@maisondesign.co"};
+  s.clients=[
+    {id:"c1",name:"Isabella Rossi",company:"Aura Skincare",email:"hello@aura.co",status:"Active",notes:"Prefers minimal, type-led work."},
+    {id:"c2",name:"Julian Vance",company:"Vance Capital",email:"j@vance.co",status:"Active",notes:"Brand refresh, NYC."},
+    {id:"c3",name:"Elara Santos",company:"Maison Blanc",email:"elara@maisonblanc.co",status:"Lead",notes:"E-commerce build."}
+  ];
+  s.projects=[
+    {id:"p1",name:"Aura Full Identity",clientId:"c1",budget:95000,due:d(14),status:"Active",notes:"Logo, type, colour and packaging.",image:COVER_AURA},
+    {id:"p2",name:"Vance Rebrand",clientId:"c2",budget:78000,due:d(28),status:"Active",notes:"Modernise the visual identity.",image:COVER_VANCE},
+    {id:"p3",name:"Maison Blanc Store",clientId:"c3",budget:64000,due:d(7),status:"On hold",notes:"Waiting on photography.",image:COVER_MAISON}
+  ];
+  const T=(n,p,due,pr,done,rep="none")=>({id:uid(),name:n,projectId:p,due,priority:pr,done,doneAt:done?due:null,repeat:rep});
+  s.tasks=[
+    T("Brand strategy","p1",d(-8),"High",true),T("Moodboard","p1",d(-4),"Medium",true),
+    T("Logo concepts","p1",d(-1),"Urgent",false),T("Packaging type","p1",d(3),"High",false),
+    T("Wireframes","p2",d(2),"High",false),T("Design system","p2",d(8),"Medium",false),
+    T("Weekly invoicing review","",t,"Medium",false,"weekly")
+  ];
+  const P=(a,dt)=>({id:uid(),amount:a,date:dt});
+  s.invoices=[
+    {id:"i1",clientId:"c1",number:"INV-001",desc:"Identity, 50% deposit",amount:19000,issued:d(-15),due:d(1),payments:[P(9500,d(-2))]},
+    {id:"i2",clientId:"c2",number:"INV-002",desc:"Rebrand strategy",amount:32000,issued:d(-20),due:d(-10),payments:[P(12000,d(-11))]},
+    {id:"i3",clientId:"c1",number:"INV-003",desc:"Strategy workshop",amount:48000,issued:d(-45),due:d(-30),payments:[P(48000,d(-32))]}
+  ];
+  s.expenses=[
+    {id:"x1",name:"Figma",category:"Software",amount:1500,date:d(-5),projectId:""},
+    {id:"x2",name:"Stock photography",category:"Marketing",amount:4900,date:d(-8),projectId:"p3"}
+  ];
+  s.entries=[
+    {id:"e1",projectId:"p1",seconds:18000,date:d(-1),note:"Logo exploration"},
+    {id:"e2",projectId:"p2",seconds:12600,date:t,note:"Wireframing"}
+  ];
+  s.events=[
+    {id:"ev1",name:"Kickoff call · Aura",date:d(1),time:"10:00",type:"Call",location:"Zoom",recurrence:"none",notes:"Walk through brand direction."},
+    {id:"ev2",name:"Vance Capital review",date:d(3),time:"14:30",type:"Meeting",location:"Client office",recurrence:"weekly"},
+    {id:"ev3",name:"Maison Blanc photos due",date:d(6),time:"",type:"Deadline",recurrence:"none",notes:"Final product shots."},
+    {id:"ev4",name:"Studio admin block",date:d(9),time:"09:00",type:"Personal",recurrence:"weekly"}
+  ];
+  return s;
+}
+view=location.hash.slice(1)||"overview";
+(async()=>{S=await load();render()})();
+</script>
+</body>
+</html>
