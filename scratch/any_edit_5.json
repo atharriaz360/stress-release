@@ -1,0 +1,30 @@
+{
+  "name": "ask_question",
+  "args": {
+    "questions": [
+      {
+        "options": [
+          "(Recommended) Career Hub app is the product. Rewire build/test/manifest/sw/listing to it. Keep old CalmStudio file untouched as archive.",
+          "CalmStudio Desk is the product. Career Hub index.html was a mistake."
+        ],
+        "question": "Boss. Repo mixed. index.html = Career Hub (resume/job app). But build.js, sw.js, manifest, tests, guide, listing images = CalmStudio Desk (freelance app). build.js would OVERWRITE your Career Hub index.html with old CalmStudio file. Listing kit says 'Career Command Center' + features app not have (PDF Documents, Ink/Midnight palettes). Which product is the one to sell?"
+      },
+      {
+        "options": [
+          "(Recommended) Career Hub",
+          "Career Command Center"
+        ],
+        "question": "Product name for app + listing?"
+      },
+      {
+        "options": [
+          "(Recommended) Keep current calm indigo/light UI + 5 accents (fix contrast only)",
+          "Switch app to Noir & Gold brand tokens from 4-BRAND"
+        ],
+        "question": "Brand look?"
+      }
+    ],
+    "toolAction": "Asking boss",
+    "toolSummary": "Product decision"
+  }
+}

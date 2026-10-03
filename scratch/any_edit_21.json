@@ -1,0 +1,10 @@
+{
+  "name": "view_file",
+  "args": {
+    "AbsolutePath": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "EndLine": 475,
+    "StartLine": 460,
+    "toolAction": "Viewing index.html lines 460-475",
+    "toolSummary": "View index.html"
+  }
+}

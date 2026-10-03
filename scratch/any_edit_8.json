@@ -1,0 +1,10 @@
+{
+  "name": "grep_search",
+  "args": {
+    "MatchPerLine": true,
+    "Query": "body></html>",
+    "SearchPath": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "toolAction": "Locating lines",
+    "toolSummary": "Edit targets"
+  }
+}

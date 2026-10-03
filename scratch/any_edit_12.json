@@ -1,0 +1,15 @@
+{
+  "name": "replace_file_content",
+  "args": {
+    "AllowMultiple": false,
+    "Description": "Update sw.js to Career Hub",
+    "EndLine": 2,
+    "Instruction": "Update comments and cache string",
+    "ReplacementContent": "// Career Hub offline cache. Caches the app only; your data never leaves this device.\nconst C=\"career-hub-v1.0.0\",FILES=['./','./index.html','./manifest.webmanifest','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png'];",
+    "StartLine": 1,
+    "TargetContent": "// CalmStudio Desk offline cache. Caches the app only; your data never leaves this device.\nconst C=\"calmstudio-desk-v2.0.3\",FILES=['./','./index.html','./manifest.webmanifest','./icons/icon-180.png','./icons/icon-192.png','./icons/icon-512.png','./icons/icon-maskable-512.png'];",
+    "TargetFile": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/sw.js",
+    "toolAction": "Editing sw.js",
+    "toolSummary": "Edit sw.js"
+  }
+}

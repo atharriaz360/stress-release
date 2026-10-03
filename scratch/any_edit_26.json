@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "python3 -c '\nimport json\nlatest_code = \"\"\nwith open(\"/Users/macbook/.gemini/antigravity-ide/brain/9a2e2a11-e5ed-42d3-9395-6c7cfb24f791/.system_generated/logs/transcript_full.jsonl\") as f:\n    for line in f:\n        try:\n            d = json.loads(line)\n            if \"tool_calls\" in d:\n                for tc in d[\"tool_calls\"]:\n                    if tc.get(\"name\") == \"default_api:write_to_file\":\n                        args = tc.get(\"args\", {})\n                        if args.get(\"TargetFile\") == \"/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html\":\n                            latest_code = args.get(\"CodeContent\", \"\")\n        except:\n            pass\nif latest_code:\n    with open(\"scratch/recovered_index.html\", \"w\") as out:\n        out.write(latest_code)\n    print(\"Recovered!\")\nelse:\n    print(\"Not found\")\n'",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Extracting with Python",
+    "toolSummary": "Extract with Python"
+  }
+}

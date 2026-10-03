@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "grep '\"TargetFile\":\"/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html\"' /Users/macbook/.gemini/antigravity-ide/brain/9a2e2a11-e5ed-42d3-9395-6c7cfb24f791/.system_generated/logs/transcript_full.jsonl | tail -n 1 | jq '.tool_calls[] | select(.name == \"default_api:replace_file_content\" or .name == \"default_api:write_to_file\") | .args' > scratch/recovered_index.json",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Recovering index.html from transcript",
+    "toolSummary": "Recover index.html"
+  }
+}

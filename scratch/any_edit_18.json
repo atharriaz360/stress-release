@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "node -c 2-HOST-ONLINE/index.html",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Checking index.html syntax",
+    "toolSummary": "Syntax check index.html"
+  }
+}

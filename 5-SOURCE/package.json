@@ -1,8 +1,8 @@
 {
- "name": "stress-release",
+ "name": "resume-planner",
  "version": "1.1.0",
  "private": true,
- "description": "Stress Release System: make new release folder, files, script.",
+ "description": "Resume Planner System: make new release folder, files, script.",
  "scripts": {
   "build": "node build.js",
   "guide": "node guide/make-guide.js",

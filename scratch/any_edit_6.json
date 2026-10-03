@@ -1,0 +1,215 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "Description": "Fix Live Server injection bug, storage fallback, versioned migrations, integer-cent salary, SCH-driven forms, data-act dialogs, escaping, WCAG contrast, a11y, backup/restore.",
+    "Instruction": "Audit fixes: live-server-safe strings, storage chain, migrations, cents, SCH forms, data-act, escaping, contrast, a11y, backup.",
+    "ReplacementChunks": [
+      {
+        "AllowMultiple": false,
+        "EndLine": 14,
+        "ReplacementContent": "<script>(function(){var e=document.documentElement,s=null;try{s=JSON.parse(localStorage.getItem('careerhub.ui')||'null');if(!s){var r=JSON.parse(localStorage.getItem('careerhub.v1')||'null');s=r&&r.settings}}catch(x){}s=s||{};var a=['indigo','emerald','amber','rose','slate'];var dk=s.theme?s.theme==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);e.dataset.theme=dk?'dark':'light';e.dataset.accent=a.indexOf(s.accent)>=0?s.accent:'indigo';if(s.focus)e.dataset.focus='true'})();</script>",
+        "StartLine": 14,
+        "TargetContent": "<script>(function(){try{var r=localStorage.getItem('careerhub.v1');if(!r)return;var s=(JSON.parse(r)||{}).settings||{};var a=['indigo','emerald','amber','rose','slate'];var e=document.documentElement;e.dataset.theme=s.theme==='dark'?'dark':'light';e.dataset.accent=a.indexOf(s.accent)>=0?s.accent:'indigo';if(s.focus)e.dataset.focus='true';}catch(e){}})();</script>"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 16,
+        "ReplacementContent": "--ok:#047857;--ok-soft:rgba(16,185,129,.12);--warn:#b45309;--warn-soft:rgba(245,158,11,.14);--bad:#b91c1c;--bad-soft:rgba(239,68,68,.10);",
+        "StartLine": 16,
+        "TargetContent": "--ok:#10b981;--ok-soft:rgba(16,185,129,.10);--warn:#f59e0b;--warn-soft:rgba(245,158,11,.12);--bad:#ef4444;--bad-soft:rgba(239,68,68,.10);"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 20,
+        "ReplacementContent": "[data-accent=emerald]{--brand:#047857;--brand-2:#059669;",
+        "StartLine": 20,
+        "TargetContent": "[data-accent=emerald]{--brand:#059669;--brand-2:#10b981;"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 22,
+        "ReplacementContent": "[data-accent=amber]{--brand:#b45309;--brand-2:#d97706;",
+        "StartLine": 22,
+        "TargetContent": "[data-accent=amber]{--brand:#d97706;--brand-2:#f59e0b;"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 38,
+        "ReplacementContent": "box-shadow:0 1px 2px rgba(15,23,42,.16)}",
+        "StartLine": 38,
+        "TargetContent": "box-shadow:0 1px 2px rgba(79,70,229,.24)}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 54,
+        "ReplacementContent": "box-shadow:0 2px 6px rgba(15,23,42,.18)}",
+        "StartLine": 54,
+        "TargetContent": "box-shadow:0 2px 6px rgba(79,70,229,.28)}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 84,
+        "ReplacementContent": ".hero{padding:4px 0 24px}\n.hero-title{font-size:clamp(24px,3vw,32px)}\n.hero-eyebrow{font:600 11px/1 var(--fu);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}\n.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}\n.action-card{background:var(--brand);color:var(--on-brand);border-radius:var(--r);padding:26px 28px;box-shadow:0 12px 32px -14px rgba(15,23,42,.35);position:relative;overflow:hidden}\n.action-card::after{content:\"\";position:absolute;top:-40%;right:-10%;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}\n.action-eyebrow{font:600 11px/1 var(--fu);letter-spacing:.16em;text-transform:uppercase;margin:0 0 10px;position:relative}\n.action-card h2{font:600 22px/1.25 var(--fu);letter-spacing:-.02em;color:var(--on-brand);margin:0 0 8px;position:relative}\n.action-card p{margin:0 0 16px;font-size:14px;line-height:1.5;position:relative}\n.action-card .row-actions{display:flex;gap:8px;flex-wrap:wrap;position:relative}\n.action-card button{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.24);color:var(--on-brand)}\n.action-card button:hover{background:rgba(255,255,255,.28)}\n.action-card button.solid{background:var(--on-brand);color:var(--brand);border-color:transparent}\n.action-card button.solid:hover{background:var(--on-brand);filter:brightness(1.04)}",
+        "StartLine": 73,
+        "TargetContent": ".hero{padding:4px 0 24px}\n.hero-eyebrow{font:600 11px/1 var(--fu);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}\n.hero-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:20px;align-items:center}\n.action-card{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-2) 100%);color:var(--on-brand);border-radius:var(--r);padding:26px 28px;box-shadow:0 12px 32px -12px rgba(79,70,229,.4);position:relative;overflow:hidden}\n.action-card::after{content:\"\";position:absolute;top:-40%;right:-10%;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.08)}\n.action-eyebrow{font:600 11px/1 var(--fu);letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin:0 0 10px}\n.action-card h2{font:600 22px/1.25 var(--fu);letter-spacing:-.02em;color:var(--on-brand);margin:0 0 8px;position:relative}\n.action-card p{margin:0 0 16px;font-size:14px;opacity:.9;line-height:1.5;position:relative}\n.action-card .row-actions{display:flex;gap:8px;flex-wrap:wrap;position:relative}\n.action-card button{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.24);color:var(--on-brand)}\n.action-card button:hover{background:rgba(255,255,255,.28)}\n.action-card button.solid{background:#fff;color:var(--brand);border-color:transparent}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 104,
+        "ReplacementContent": ".pill.bad{color:var(--bad);background:var(--bad-soft)}\n.pill.brand{color:var(--brand);background:var(--brand-soft)}\n.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}.fgrid .full{grid-column:1/-1}\n.kcard:focus-visible{outline:2px solid var(--brand);outline-offset:2px}",
+        "StartLine": 101,
+        "TargetContent": ".pill.bad{color:var(--bad);background:var(--bad-soft)}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 199,
+        "ReplacementContent": ".two,.fgrid{grid-template-columns:1fr}main{",
+        "StartLine": 198,
+        "TargetContent": ".two{grid-template-columns:1fr}main{"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 199,
+        "ReplacementContent": "@media(max-width:620px){.hero-title{font-size:22px}",
+        "StartLine": 199,
+        "TargetContent": "@media(max-width:620px){.hero h1{font-size:22px}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 253,
+        "ReplacementContent": "// Storage: IndexedDB -> localStorage -> memory. DBV = IndexedDB schema version (never lower it). VER = data version (bump + add MIG step).\nvar KEY=\"careerhub.v1\",UIKEY=\"careerhub.ui\",DBN=\"careerhub\",STN=\"data\",DBV=3,VER=4;\nvar ACCENTS={indigo:\"Indigo\",emerald:\"Emerald\",amber:\"Amber\",rose:\"Rose\",slate:\"Slate\"};\nvar CURRENCIES=[\"USD\",\"EUR\",\"GBP\",\"CAD\",\"AUD\",\"INR\"];\nvar STATUSES=[\"Wishlist\",\"Applied\",\"Interviewing\",\"Offer\",\"Rejected\"];\nvar STATUS_COLORS={Wishlist:\"#94a3b8\",Applied:\"#6366f1\",Interviewing:\"#f59e0b\",Offer:\"#10b981\",Rejected:\"#ef4444\"};\nvar STATUS_PILL={Wishlist:\"\",Applied:\"brand\",Interviewing:\"warn\",Offer:\"ok\",Rejected:\"bad\"};\n// Money = integer cents. Parse \"140k\", \"140,000\", \"$140,000.50\".\nfunction moneyNums(t){var m=String(t==null?\"\":t).match(/\\d[\\d,]*(\\.\\d+)?\\s*[km]?/gi)||[];return m.slice(0,2).map(function(s){var mul=/k$/i.test(s)?1e3:/m$/i.test(s)?1e6:1;return Math.round(parseFloat(s.replace(/[,\\sKkMm]/g,\"\"))*mul*100)}).filter(function(n){return isFinite(n)})}\nfunction toCents(v){var n=moneyNums(v);return n.length?n[0]:null}\nfunction centsPlain(c){return Number.isInteger(c)?String(c/100):\"\"}\nfunction fmtMoney(c,cur,compact){if(!Number.isInteger(c))return \"\";try{return new Intl.NumberFormat(undefined,compact?{style:\"currency\",currency:cur||\"USD\",notation:\"compact\",maximumFractionDigits:1}:{style:\"currency\",currency:cur||\"USD\",minimumFractionDigits:0,maximumFractionDigits:c%100?2:0}).format(c/100)}catch(e){return (c/100).toFixed(2)}}\nfunction salaryText(a,compact){var c=S.settings.currency,x=fmtMoney(a.salaryMin,c,compact),y=fmtMoney(a.salaryMax,c,compact);return x&&y?x+\"\\u2013\"+y:(x||y)}",
+        "StartLine": 247,
+        "TargetContent": "var KEY=\"careerhub.v1\",DBN=\"careerhub\",STN=\"data\",VER=3;\nvar ACCENTS={indigo:\"Indigo\",emerald:\"Emerald\",amber:\"Amber\",rose:\"Rose\",slate:\"Slate\"};\nvar STATUSES=[\"Wishlist\",\"Applied\",\"Interviewing\",\"Offer\",\"Rejected\"];\nvar STATUS_COLORS={Wishlist:\"#94a3b8\",Applied:\"#6366f1\",Interviewing:\"#f59e0b\",Offer:\"#10b981\",Rejected:\"#ef4444\"};"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 256,
+        "ReplacementContent": "r=indexedDB.open(DBN,DBV)",
+        "StartLine": 256,
+        "TargetContent": "r=indexedDB.open(DBN,VER)"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 262,
+        "ReplacementContent": "function idbSet(d){return idb().then(function(db){return new Promise(function(ok){var tx=db.transaction(STN,\"readwrite\");tx.objectStore(STN).put(d,KEY);tx.oncomplete=function(){ok(true)};tx.onerror=tx.onabort=function(){ok(false)}})}).catch(function(){return false})}",
+        "StartLine": 258,
+        "TargetContent": "function idbSet(d){return idb().then(function(db){var tx=db.transaction(STN,\"readwrite\");tx.objectStore(STN).put(d,KEY);return true}).catch(function(){return false})}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 262,
+        "ReplacementContent": "function uiSet(){try{localStorage.setItem(UIKEY,JSON.stringify({theme:S.settings.theme,accent:S.settings.accent,focus:!!S.settings.focus}))}catch(e){}}\nfunction osDark(){try{return matchMedia(\"(prefers-color-scheme: dark)\").matches}catch(e){return false}}\nfunction blank(){return{version:VER,settings:{theme:osDark()?\"dark\":\"light\",accent:\"indigo\",focus:false,currency:\"USD\"},",
+        "StartLine": 262,
+        "TargetContent": "function blank(){return{version:VER,settings:{theme:\"light\",accent:\"indigo\",focus:false},"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 289,
+        "ReplacementContent": "salaryMin:14000000,salaryMax:16000000,",
+        "StartLine": 285,
+        "TargetContent": "salary:\"$140k-$160k\","
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 289,
+        "ReplacementContent": "salaryMin:13500000,salaryMax:15500000,",
+        "StartLine": 285,
+        "TargetContent": "salary:\"$135k-$155k\","
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 289,
+        "ReplacementContent": "status:\"Wishlist\",location:\"San Francisco, CA\",salaryMin:null,salaryMax:null,",
+        "StartLine": 285,
+        "TargetContent": "status:\"Wishlist\",location:\"San Francisco, CA\",salary:\"\","
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 289,
+        "ReplacementContent": "status:\"Rejected\",location:\"San Francisco, CA\",salaryMin:null,salaryMax:null,",
+        "StartLine": 285,
+        "TargetContent": "status:\"Rejected\",location:\"San Francisco, CA\",salary:\"\","
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 289,
+        "ReplacementContent": "salaryMin:15000000,salaryMax:null,applied:shift(iso(),-35),followUp:\"\",url:\"\",contact:\"Jonas\",notes:\"Offer received. Base + equity.\"}",
+        "StartLine": 285,
+        "TargetContent": "salary:\"$150k + equity\",applied:shift(iso(),-35),followUp:\"\",url:\"\",contact:\"Jonas\",notes:\"Offer received.\"}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 305,
+        "ReplacementContent": "// Versioned migrations: MIG[n] upgrades data from version n-1 to n. Never edit old steps, only add new ones.\nvar MIG={\n3:function(r){r.contacts=Array.isArray(r.contacts)?r.contacts:[];r.badges=Array.isArray(r.badges)?r.badges:[];r.resume=r.resume||{template:\"mint\",accent:\"mint\",inc:{}};r.resume.inc=r.resume.inc||{};return r},\n4:function(r){(Array.isArray(r.applications)?r.applications:[]).forEach(function(a){if(!a||typeof a!==\"object\"||a.salary==null)return;var t=String(a.salary).trim(),n=moneyNums(t);if(a.salaryMin==null)a.salaryMin=n.length>0?n[0]:null;if(a.salaryMax==null)a.salaryMax=n.length>1?n[1]:null;var rest=t.replace(/\\d[\\d.,]*\\s*[km]?/gi,\"\").replace(/[\\s$\\u20ac\\u00a3\\u20b9\\-\\u2013\\u2014+\\/~]|usd|eur|gbp|cad|aud|inr/gi,\"\");if(t&&rest)a.notes=\"Salary: \"+t+(a.notes?\"\\n\"+a.notes:\"\");delete a.salary});r.settings=r.settings||{};if(!r.settings.currency)r.settings.currency=\"USD\";return r}\n};\nfunction migrate(r){if(!r||typeof r!==\"object\"||Array.isArray(r))return blank();var v=Math.floor(+r.version)||1;if(v>VER)return r;for(var n=v+1;n<=VER;n++){if(MIG[n])r=MIG[n](r)||r;r.version=n}return r}",
+        "StartLine": 298,
+        "TargetContent": "function migrate(r){if(!r||typeof r!==\"object\")return blank();if(!r.version||r.version<3){r.contacts=Array.isArray(r.contacts)?r.contacts:[];r.badges=Array.isArray(r.badges)?r.badges:[];r.resume=r.resume||{template:\"mint\",accent:\"mint\",inc:{}};r.resume.inc=r.resume.inc||{};r.version=3}return r}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 306,
+        "ReplacementContent": "if(RESUME_TEMPLATES.indexOf(s.resume.template)<0)s.resume.template=\"mint\";if(CURRENCIES.indexOf(s.settings.currency)<0)s.settings.currency=\"USD\";s.settings.theme=s.settings.theme===\"dark\"?\"dark\":\"light\";s.settings.focus=s.settings.focus===true;COLLECTIONS.forEach(function(k){s[k]=Array.isArray(s[k])?s[k].filter(function(x){return x&&typeof x===\"object\"}).map(function(x){var o=Object.assign({},x);o.id=String(o.id||uid());return o}):[]});var bl=function(x){x.bullets=(Array.isArray(x.bullets)?x.bullets:(x.bullets?String(x.bullets).split(\"\\n\"):[])).map(String).filter(Boolean)};s.experiences.forEach(bl);s.projects.forEach(bl);s.applications.forEach(function(a){if(STATUSES.indexOf(a.status)<0)a.status=\"Wishlist\";a.salaryMin=Number.isInteger(a.salaryMin)?a.salaryMin:null;a.salaryMax=Number.isInteger(a.salaryMax)?a.salaryMax:null});s.contacts.forEach(function(c){if(CONTACT_METHODS.indexOf(c.method)<0)c.method=\"Other\"});s.version=VER;return s}",
+        "StartLine": 299,
+        "TargetContent": "if(RESUME_TEMPLATES.indexOf(s.resume.template)<0)s.resume.template=\"mint\";COLLECTIONS.forEach(function(k){s[k]=Array.isArray(s[k])?s[k].map(function(x){var o=Object.assign({},x);o.id=o.id||uid();return o}):[]});s.experiences.forEach(function(x){x.bullets=Array.isArray(x.bullets)?x.bullets:(x.bullets?String(x.bullets).split(\"\\n\").filter(Boolean):[])});s.projects.forEach(function(x){x.bullets=Array.isArray(x.bullets)?x.bullets:(x.bullets?String(x.bullets).split(\"\\n\").filter(Boolean):[])});s.version=VER;return s}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 310,
+        "ReplacementContent": "var S=blank(),view=\"hub\",bankTab=\"profile\",toastT,sampleMode=false,bannerHidden=false,memWarned=false,dlgSave=null,dlgDel=null;",
+        "StartLine": 301,
+        "TargetContent": "var S=blank(),view=\"hub\",bankTab=\"profile\",toastT,sampleMode=false,bannerHidden=false;"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 312,
+        "ReplacementContent": "function save(){if(sampleMode)return Promise.resolve(true);var snap=JSON.parse(JSON.stringify(S));uiSet();return idbSet(snap).then(function(a){if(a)return true;if(lsSet(snap))return true;memStore=snap;if(!memWarned){memWarned=true;toast(\"Browser storage blocked - export a backup before closing\")}return false})}\nfunction load(){sampleMode=false;return idbGet().then(function(r){if(!r)r=lsGet();if(!r)r=memStore;if(r&&+r.version>VER)toast(\"Data is from a newer version of Career Hub\");S=norm(migrate(r));render()})}\nfunction loadSample(){var keep=Object.assign({},S.settings);sampleMode=true;bannerHidden=false;S=norm(sampleData());S.settings=keep;render();toast(\"Sample loaded\")}",
+        "StartLine": 303,
+        "TargetContent": "function save(){if(sampleMode)return Promise.resolve();var snap=JSON.parse(JSON.stringify(S));return idbSet(snap).then(function(a){if(!a)lsSet(snap)})}\nfunction load(){sampleMode=false;return idbGet().then(function(r){if(!r)r=lsGet();if(!r)r=memStore;S=norm(migrate(r));render()})}\nfunction loadSample(){sampleMode=true;bannerHidden=false;S=norm(sampleData());render();toast(\"Sample loaded\")}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 330,
+        "ReplacementContent": "applications:{one:\"Application\",f:[[\"company\",\"Company\",\"text\",1],[\"role\",\"Role\",\"text\",1],[\"status\",\"Status\",\"select\",0,STATUSES],[\"location\",\"Location\",\"text\"],[\"salaryMin\",\"Salary min\",\"money\",0,null,\"e.g. 70000\"],[\"salaryMax\",\"Salary max\",\"money\",0,null,\"e.g. 85000\"],",
+        "StartLine": 313,
+        "TargetContent": "applications:{one:\"Application\",f:[[\"company\",\"Company\",\"text\",1],[\"role\",\"Role\",\"text\",1],[\"status\",\"Status\",\"select\",0,STATUSES],[\"location\",\"Location\",\"text\"],[\"salary\",\"Salary target\",\"text\"],"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 330,
+        "ReplacementContent": "[\"next\",\"Follow up on\",\"date\"],[\"notes\",\"Notes\",\"textarea\"]]},\nprofile:{one:\"Profile\",f:[[\"name\",\"Full name\",\"text\",0,null,\"Jordan Lee\"],[\"headline\",\"Headline\",\"text\",0,null,\"CS Senior\"],[\"email\",\"Email\",\"email\"],[\"phone\",\"Phone\",\"tel\"],[\"location\",\"Location\",\"text\",0,null,\"Boston, MA\"],[\"links\",\"Links\",\"text\",0,null,\"linkedin.com/in/you\"],[\"summary\",\"Short bio - feeds every resume\",\"textarea\",0,null,\"One or two sentences about who you are.\"]]},\nsettings:{one:\"Settings\",f:[[\"theme\",\"Theme\",\"select\",0,[[\"light\",\"Light\"],[\"dark\",\"Dark\"]]],[\"accent\",\"Accent colour\",\"select\",0,Object.keys(ACCENTS).map(function(k){return [k,ACCENTS[k]]})],[\"currency\",\"Currency\",\"select\",0,CURRENCIES],[\"focus\",\"Focus Mode\",\"select\",0,[[\"off\",\"Off\"],[\"on\",\"On - hide sidebar\"]]]]}\n};",
+        "StartLine": 314,
+        "TargetContent": "[\"next\",\"Follow up on\",\"date\"],[\"notes\",\"Notes\",\"textarea\"]]}\n};"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 345,
+        "ReplacementContent": "// Field tuple: [key, label, type, required, options, placeholder]. Types: text,email,tel,date,month,select,textarea,money(cents).\nfunction input(f,v){var k=f[0],l=f[1],t=f[2]||\"text\",r=f[3]?\" required\":\"\",opts=f[4],p=f[5]?\" placeholder=\\\"\"+E(f[5])+\"\\\"\":\"\",nm=\" name=\\\"\"+E(k)+\"\\\"\",body;\nif(t===\"select\")body=\"<select\"+nm+r+\">\"+(opts||[]).map(function(x){var val=Array.isArray(x)?x[0]:x,lab=Array.isArray(x)?x[1]:x;return \"<option value=\\\"\"+E(val)+\"\\\"\"+(String(val)===String(v)?\" selected\":\"\")+\">\"+E(lab)+\"</option>\"}).join(\"\")+\"</select>\";\nelse if(t===\"textarea\")body=\"<textarea\"+nm+\" rows=\\\"4\\\"\"+r+p+\">\"+E(v)+\"</textarea>\";\nelse if(t===\"money\")body=\"<input\"+nm+\" inputmode=\\\"decimal\\\" autocomplete=\\\"off\\\" value=\\\"\"+E(v)+\"\\\"\"+r+p+\">\";\nelse body=\"<input\"+nm+\" type=\\\"\"+E(t)+\"\\\" value=\\\"\"+E(v)+\"\\\"\"+r+p+\">\";\nreturn \"<label\"+(t===\"textarea\"?\" class=\\\"full\\\"\":\"\")+\">\"+E(l)+(f[3]?\" <span aria-hidden=\\\"true\\\">*</span>\":\"\")+body+\"</label>\"}\nfunction formVals(col,rec){var v=Object.assign({},rec);SCH[col].f.forEach(function(f){var k=f[0];if(f[2]===\"money\")v[k]=centsPlain(v[k]);else if(Array.isArray(v[k]))v[k]=v[k].join(\"\\n\");if(v[k]==null)v[k]=\"\"});return v}\nfunction clean(col,d){var o=Object.assign({},d);SCH[col].f.forEach(function(f){var k=f[0];if(f[2]===\"money\")o[k]=toCents(o[k]);else if(typeof o[k]===\"string\"&&f[2]!==\"textarea\")o[k]=o[k].trim()});(LISTF[col]||[]).forEach(function(k){o[k]=String(o[k]||\"\").split(\"\\n\").map(function(s){return s.trim()}).filter(Boolean)});return o}\nfunction schForm(id,col,vals,btn){return \"<form id=\\\"\"+id+\"\\\" class=\\\"fgrid\\\">\"+SCH[col].f.map(function(f){return input(f,vals[f[0]])}).join(\"\")+\"<div class=\\\"foot full\\\">\"+btn+\"</div></form>\"}",
+        "StartLine": 327,
+        "TargetContent": "function input(f,v){var k=f[0],l=f[1],t=f[2]||\"text\",req=f[3],opts=f[4],body;if(t===\"select\"){body=\"<select name=\\\"\"+k+\"\\\">\"+(opts||[]).map(function(x){return \"<option \"+(x===v?\"selected\":\"\")+\">\"+E(x)+\"</option>\"}).join(\"\")+\"</select>\"}else if(t===\"textarea\"){body=\"<textarea name=\\\"\"+k+\"\\\" rows=\\\"5\\\">\"+E(v)+\"</textarea>\"}else{body=\"<input name=\\\"\"+k+\"\\\" type=\\\"\"+t+\"\\\" value=\\\"\"+E(v)+\"\\\" \"+(req?\"required\":\"\")+\">\"}return \"<label>\"+l+(req?\" *\":\"\")+body+\"</label>\"}\nfunction formVals(col,rec){var v=Object.assign({},rec);SCH[col].f.forEach(function(f){var k=f[0];if(Array.isArray(v[k]))v[k]=v[k].join(\"\\n\");if(v[k]==null)v[k]=\"\"});return v}\nfunction clean(col,d){var o=Object.assign({},d);(LISTF[col]||[]).forEach(function(k){o[k]=String(o[k]||\"\").split(\"\\n\").map(function(s){return s.trim()}).filter(Boolean)});return o}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 345,
+        "ReplacementContent": "function openDlg(title,body,onSave,onDelete){$(\"#dt\").textContent=title;dlgSave=onSave;dlgDel=onDelete||null;var delBtn=onDelete?\"<button type=\\\"button\\\" class=\\\"bad\\\" data-act=\\\"dlgdel\\\" style=\\\"margin-right:auto\\\">Delete</button>\":\"\";$(\"#db\").innerHTML=\"<form id=\\\"dlgform\\\" class=\\\"fgrid\\\">\"+body+\"<div class=\\\"foot full\\\">\"+delBtn+\"<button type=\\\"button\\\" data-act=\\\"close\\\">Cancel</button><button class=\\\"primary\\\">Save</button></div></form>\";showDlg();var first=$(\"#db input,#db select,#db textarea\");if(first)first.focus()}\nfunction openInfo(title,html){$(\"#dt\").textContent=title;dlgSave=dlgDel=null;$(\"#db\").innerHTML=html;showDlg()}",
+        "StartLine": 332,
+        "TargetContent": "function openDlg(title,body,onSave,onDelete){$(\"#dt\").textContent=title;var delBtn=onDelete?\"<button type=\\\"button\\\" class=\\\"bad\\\" data-act=\\\"dlgdel\\\" style=\\\"margin-right:auto\\\">Delete</button>\":\"\";$(\"#db\").innerHTML=\"<form>\"+body+\"<div class=\\\"foot\\\">\"+delBtn+\"<button type=\\\"button\\\" data-act=\\\"close\\\">Cancel</button><button class=\\\"primary\\\">Save</button></div></form>\";$(\"#db form\").onsubmit=function(e){e.preventDefault();onSave(Object.fromEntries(new FormData(e.target)));$(\"#dlg\").close()};var del=$(\"#db [data-act=dlgdel]\");if(del&&onDelete)del.onclick=function(){if(confirm(\"Delete this item?\")){onDelete();$(\"#dlg\").close()}};showDlg()}\nfunction openInfo(title,html){$(\"#dt\").textContent=title;$(\"#db\").innerHTML=html;showDlg()}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 345,
+        "ReplacementContent": "function ed(col,id){return \"<button class=\\\"ico\\\" data-act=\\\"edit\\\" data-col=\\\"\"+col+\"\\\" data-id=\\\"\"+E(id)+\"\\\" aria-label=\\\"Edit\\\">&#9998;</button><button class=\\\"ico\\\" data-act=\\\"del\\\" data-col=\\\"\"+col+\"\\\" data-id=\\\"\"+E(id)+\"\\\" aria-label=\\\"Delete\\\">&#10005;</button>\"}\nfunction empty(emoji,t,s,btn){return \"<div class=\\\"empty\\\"><div class=\\\"emoji\\\" aria-hidden=\\\"true\\\">\"+emoji+\"</div>",
+        "StartLine": 337,
+        "TargetContent": "function ed(col,id){return \"<button class=\\\"ico\\\" data-act=\\\"edit\\\" data-col=\\\"\"+col+\"\\\" data-id=\\\"\"+id+\"\\\" aria-label=\\\"Edit\\\">&#9998;</button><button class=\\\"ico\\\" data-act=\\\"del\\\" data-col=\\\"\"+col+\"\\\" data-id=\\\"\"+id+\"\\\" aria-label=\\\"Delete\\\">&#10005;</button>\"}\nfunction empty(emoji,t,s,btn){return \"<div class=\\\"empty\\\"><div class=\\\"emoji\\\">\"+emoji+\"</div>"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 345,
+        "ReplacementContent": "function confetti(){var c=$(\"#confetti\");if(!c)return;try{if(matchMedia(\"(prefers-reduced-motion: reduce)\").matches)return}catch(e){}",
+        "StartLine": 342,
+        "TargetContent": "function confetti(){var c=$(\"#confetti\");if(!c)return;"
+      }
+    ],
+    "TargetFile": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "toolAction": "Editing app",
+    "toolSummary": "Core fixes part 1"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "node -e 'const fs = require(\"fs\"); let html = fs.readFileSync(\"2-HOST-ONLINE/index.html\", \"utf8\"); html = html.replace(/h\\+=\"(.*?)\";/g, (match, p1) => { return \"h+=`\" + p1.replace(/\\\\\"/g, \"\\\"\") + \"`;\" }); fs.writeFileSync(\"2-HOST-ONLINE/index.html\", html);'",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Fixing string escapes in index.html",
+    "toolSummary": "Fix escapes"
+  }
+}

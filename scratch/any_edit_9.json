@@ -1,0 +1,96 @@
+{
+  "name": "multi_replace_file_content",
+  "args": {
+    "Description": "Split closing tags in JS strings so dev servers can't inject into them; SCH-driven profile/settings; status pills with themed contrast; backup export/restore; keyboard-operable kanban cards; dialog via data-act.",
+    "Instruction": "Part 2: live-server-safe DOC string, views, actions, backup, keyboard a11y.",
+    "ReplacementChunks": [
+      {
+        "AllowMultiple": false,
+        "EndLine": 425,
+        "ReplacementContent": "// Closing tags are written as <\\/tag> so dev servers (Live Server) never inject their reload script inside this string.\nvar html=\"<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>\"+E(S.profile.name||\"Resume\")+\"<\\/title><style>\"+styles+\"<\\/style><\\/head><body>\"+paper.innerHTML+\"<\\/body><\\/html>\";",
+        "StartLine": 425,
+        "TargetContent": "var html=\"<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>\"+E(S.profile.name||\"Resume\")+\"</title><style>\"+styles+\"</style></head><body>\"+paper.innerHTML+\"</body></html>\";"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 445,
+        "ReplacementContent": "profile:function(){return schForm(\"profile\",\"profile\",formVals(\"profile\",S.profile),\"<button class=\\\"primary\\\">Save profile</button>\")},",
+        "StartLine": 440,
+        "TargetContent": "profile:function(){var p=S.profile;return \"<form id=\\\"profile\\\"><div class=\\\"two\\\"><label>Full name<input name=\\\"name\\\" value=\\\"\"+E(p.name)+\"\\\" placeholder=\\\"Jordan Lee\\\"></label><label>Headline<input name=\\\"headline\\\" value=\\\"\"+E(p.headline)+\"\\\" placeholder=\\\"CS Senior\\\"></label></div><div class=\\\"two\\\"><label>Email<input name=\\\"email\\\" type=\\\"email\\\" value=\\\"\"+E(p.email)+\"\\\"></label><label>Phone<input name=\\\"phone\\\" value=\\\"\"+E(p.phone)+\"\\\"></label></div><div class=\\\"two\\\"><label>Location<input name=\\\"location\\\" value=\\\"\"+E(p.location)+\"\\\" placeholder=\\\"Boston, MA\\\"></label><label>Links<input name=\\\"links\\\" value=\\\"\"+E(p.links)+\"\\\" placeholder=\\\"linkedin.com/in/you\\\"></label></div><label>Short bio - feeds every resume<textarea name=\\\"summary\\\" rows=\\\"4\\\" placeholder=\\\"One or two sentences about who you are.\\\">\"+E(p.summary)+\"</textarea></label><button class=\\\"primary\\\">Save profile</button></form>\"},"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 462,
+        "ReplacementContent": "var h=\"<section class=\\\"hero\\\"><p class=\\\"hero-eyebrow\\\">\"+new Date().toLocaleDateString(undefined,{weekday:\"long\",month:\"long\",day:\"numeric\"})+\"</p><h2 class=\\\"hero-title\\\">\"+greet()+(name?\", \"+E(name):\"\")+\" <span aria-hidden=\\\"true\\\">\\ud83d\\udc4b</span></h2>\";\nh+=\"<div class=\\\"hero-grid\\\" style=\\\"margin-top:20px\\\"><div class=\\\"action-card\\\"><p class=\\\"action-eyebrow\\\">Next best action</p><h2>\"+E(na.title)+\"</h2><p>\"+E(na.body)+\"</p><div class=\\\"row-actions\\\"><button class=\\\"solid\\\" data-act=\\\"\"+E(na.act)+\"\\\" \"+(na.id?\"data-id=\\\"\"+E(na.id)+\"\\\"\":\"\")+\">\"+E(na.cta)+\"</button></div></div>\";",
+        "StartLine": 455,
+        "TargetContent": "var h=\"<section class=\\\"hero\\\"><p class=\\\"hero-eyebrow\\\">\"+new Date().toLocaleDateString(undefined,{weekday:\"long\",month:\"long\",day:\"numeric\"})+\"</p><h1>\"+greet()+(name?\", \"+E(name):\"\")+\" \\ud83d\\udc4b</h1>\";\nh+=\"<div class=\\\"hero-grid\\\" style=\\\"margin-top:20px\\\"><div class=\\\"action-card\\\"><p class=\\\"action-eyebrow\\\">Next best action</p><h2>\"+E(na.title)+\"</h2><p>\"+E(na.body)+\"</p><div class=\\\"row-actions\\\"><button class=\\\"solid\\\" data-act=\\\"\"+na.act+\"\\\" \"+(na.id?\"data-id=\\\"\"+na.id+\"\\\"\":\"\")+\">\"+E(na.cta)+\"</button></div></div>\";"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 465,
+        "ReplacementContent": "steps done\"+(badge?\" \\u00b7 \"+E(badge.emoji)+\" \"+E(badge.label):\"\")+",
+        "StartLine": 460,
+        "TargetContent": "steps done\"+(badge?\" \\u00b7 \"+badge.emoji+\" \"+E(badge.label):\"\")+"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 472,
+        "ReplacementContent": "<div class=\\\"row\\\"><span class=\\\"pill \"+STATUS_PILL[a.status]+\"\\\">\"+E(a.status)+\"</span>",
+        "StartLine": 468,
+        "TargetContent": "<div class=\\\"row\\\"><span class=\\\"pill\\\" style=\\\"background:\"+STATUS_COLORS[a.status]+\"22;color:\"+STATUS_COLORS[a.status]+\";border-color:transparent\\\">\"+E(a.status)+\"</span>"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 492,
+        "ReplacementContent": "return \"<article class=\\\"kcard\\\" draggable=\\\"true\\\" tabindex=\\\"0\\\" role=\\\"button\\\" aria-label=\\\"\"+E(a.role+\" at \"+a.company+\", \"+s+\". Open to edit\")+\"\\\" data-act=\\\"edit\\\" data-col=\\\"applications\\\" data-id=\\\"\"+E(a.id)+\"\\\"><b>\"+E(a.role)+\"</b><small>\"+E(a.company)+\"</small><div class=\\\"kmeta\\\">\"+(salaryText(a,true)?\"<span class=\\\"pill\\\">\"+E(salaryText(a,true))+\"</span>\":\"\")+f+\"</div></article>\"",
+        "StartLine": 488,
+        "TargetContent": "return \"<article class=\\\"kcard\\\" draggable=\\\"true\\\" data-act=\\\"edit\\\" data-col=\\\"applications\\\" data-id=\\\"\"+a.id+\"\\\"><b>\"+E(a.role)+\"</b><small>\"+E(a.company)+\"</small><div class=\\\"kmeta\\\">\"+(a.salary?\"<span class=\\\"pill\\\">\"+E(a.salary)+\"</span>\":\"\")+f+\"</div></article>\""
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 510,
+        "ReplacementContent": "settings:function(){\nvar s=S.settings,v=Object.assign({},s,{focus:s.focus?\"on\":\"off\"});\nreturn \"<section class=\\\"card\\\"><header><h2>Preferences</h2></header>\"+schForm(\"set\",\"settings\",v,\"<button class=\\\"primary\\\">Save</button>\")+\"</section>\"+\n\"<section class=\\\"card\\\" style=\\\"margin-top:16px\\\"><header><h2>Badges</h2></header>\"+(S.badges.length?S.badges.map(function(b){return \"<div class=\\\"row\\\"><div class=\\\"grow\\\"><b>\"+E(b.emoji||\"\\ud83c\\udfc6\")+\" \"+E(b.label)+\"</b><small>Unlocked \"+E(new Date(b.date).toLocaleDateString())+\"</small></div></div>\"}).join(\"\"):\"<p class=\\\"muted\\\" style=\\\"margin:0;font-size:13px\\\">Complete the readiness checklist to unlock badges.</p>\")+\"</section>\"+\n\"<section class=\\\"card\\\" style=\\\"margin-top:16px\\\"><header><h2>Backup</h2></header><div class=\\\"acts\\\"><button class=\\\"primary\\\" data-act=\\\"export\\\">Export backup</button><button data-act=\\\"import\\\">Restore backup</button><input type=\\\"file\\\" id=\\\"importfile\\\" accept=\\\"application/json,.json\\\" hidden aria-label=\\\"Choose backup file\\\"></div><p class=\\\"muted\\\" style=\\\"margin:14px 0 0;font-size:12.5px;line-height:1.5\\\">Your data lives only in this browser. Export a backup weekly - it is one small .json file you keep.</p></section>\"+\n\"<section class=\\\"card\\\" style=\\\"margin-top:16px\\\"><header><h2>Data</h2></header><div class=\\\"acts\\\"><button data-act=\\\"sample\\\">\"+(sampleMode?\"Exit sample\":\"Load sample data\")+\"</button><button class=\\\"bad\\\" data-act=\\\"reset\\\">Reset everything</button></div><p class=\\\"muted\\\" style=\\\"margin:16px 0 0;font-size:12.5px;line-height:1.5\\\">Sample data is temporary - refresh and it is gone.</p></section>\";\n}",
+        "StartLine": 503,
+        "TargetContent": "settings:function(){\nvar s=S.settings,aOpts=Object.keys(ACCENTS).map(function(k){return \"<option value=\\\"\"+k+\"\\\" \"+(k===s.accent?\"selected\":\"\")+\">\"+ACCENTS[k]+\"</option>\"}).join(\"\");\nreturn \"<section class=\\\"card\\\"><h2>Preferences</h2><br><form id=\\\"set\\\"><div class=\\\"two\\\"><label>Theme<select name=\\\"theme\\\"><option value=\\\"light\\\" \"+(s.theme===\"light\"?\"selected\":\"\")+\">Light</option><option value=\\\"dark\\\" \"+(s.theme===\"dark\"?\"selected\":\"\")+\">Dark</option></select></label><label>Accent colour<select name=\\\"accent\\\">\"+aOpts+\"</select></label></div><label>Focus Mode<select name=\\\"focus\\\"><option value=\\\"off\\\" \"+(s.focus!==true?\"selected\":\"\")+\">Off</option><option value=\\\"on\\\" \"+(s.focus===true?\"selected\":\"\")+\">On - hide sidebar</option></select></label><button class=\\\"primary\\\">Save</button></form></section>\"+\n\"<section class=\\\"card\\\" style=\\\"margin-top:16px\\\"><header><h2>Badges</h2></header>\"+(S.badges.length?S.badges.map(function(b){return \"<div class=\\\"row\\\"><div class=\\\"grow\\\"><b>\"+(b.emoji||\"\\ud83c\\udfc6\")+\" \"+E(b.label)+\"</b><small>Unlocked \"+new Date(b.date).toLocaleDateString()+\"</small></div></div>\"}).join(\"\"):\"<p class=\\\"muted\\\" style=\\\"margin:0;font-size:13px\\\">Complete the readiness checklist to unlock badges.</p>\")+\"</section>\"+\n\"<section class=\\\"card\\\" style=\\\"margin-top:16px\\\"><header><h2>Data</h2></header><div class=\\\"acts\\\"><button data-act=\\\"sample\\\">\"+(sampleMode?\"Exit sample\":\"Load sample data\")+\"</button><button class=\\\"bad\\\" data-act=\\\"reset\\\">Reset everything</button></div><p class=\\\"muted\\\" style=\\\"margin:16px 0 0;font-size:12.5px;line-height:1.5\\\">Sample data is temporary - refresh and it is gone.</p></section>\";\n}"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 550,
+        "ReplacementContent": "el.dataset.theme=S.settings.theme;el.dataset.accent=S.settings.accent;\nvar tc=$(\"meta[name=theme-color]\");if(tc)tc.content=S.settings.theme===\"dark\"?\"#0f172a\":\"#f9f9f8\";",
+        "StartLine": 545,
+        "TargetContent": "el.dataset.theme=S.settings.theme;el.dataset.accent=S.settings.accent;"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 560,
+        "ReplacementContent": "return \"<span class=\\\"badge-chip\\\">\"+E(b.emoji||\"\\ud83c\\udfc6\")+\" \"+E(b.label)+\"</span>\"",
+        "StartLine": 552,
+        "TargetContent": "return \"<span class=\\\"badge-chip\\\">\"+(b.emoji||\"\\ud83c\\udfc6\")+\" \"+E(b.label)+\"</span>\""
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 566,
+        "ReplacementContent": "close:function(){$(\"#dlg\").close()},\ndlgdel:function(){if(dlgDel&&confirm(\"Delete this item?\")){var fn=dlgDel;$(\"#dlg\").close();fn()}},\nexport:function(){var snap=JSON.parse(JSON.stringify(S));snap.app=\"careerhub\";snap.exported=new Date().toISOString();dlBlob(\"career-hub-backup-\"+iso()+\".json\",new Blob([JSON.stringify(snap,null,2)],{type:\"application/json\"}));toast(\"Backup downloaded\")},\nimport:function(){if(sampleMode){toast(\"Exit sample first\");return}var f=$(\"#importfile\");if(f){f.value=\"\";f.click()}},",
+        "StartLine": 565,
+        "TargetContent": "close:function(){$(\"#dlg\").close()},"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 610,
+        "ReplacementContent": "document.addEventListener(\"submit\",function(e){\nif(e.target.id===\"dlgform\"){e.preventDefault();var fn=dlgSave,d=Object.fromEntries(new FormData(e.target));$(\"#dlg\").close();if(fn)fn(d)}\nif(e.target.id===\"set\"){e.preventDefault();var d2=clean(\"settings\",Object.fromEntries(new FormData(e.target)));var was=sampleMode;S.settings=Object.assign({},S.settings,{theme:d2.theme,accent:d2.accent,currency:d2.currency,focus:d2.focus===\"on\"});if(was)uiSet();save();render();toast(was?\"Saved for this session\":\"Saved\")}\nif(e.target.id===\"profile\"){e.preventDefault();S.profile=Object.assign({},S.profile,clean(\"profile\",Object.fromEntries(new FormData(e.target))));save();render();toast(\"Profile saved\")}\n});\ndocument.addEventListener(\"keydown\",function(e){if(e.key!==\"Enter\"&&e.key!==\" \")return;var t=e.target;if(!t.matches||!t.matches(\"[data-act][role=button]\"))return;e.preventDefault();var fn=A[t.dataset.act];if(fn)fn(t)});\ndocument.addEventListener(\"change\",function(e){var t=e.target;if(t.id!==\"importfile\"||!t.files||!t.files[0])return;var file=t.files[0];if(file.size>20*1024*1024){toast(\"File too large\");return}var rd=new FileReader();rd.onload=function(){var r;try{r=JSON.parse(rd.result)}catch(x){toast(\"Not a valid backup file\");return}if(!r||typeof r!==\"object\"||Array.isArray(r)||!(\"profile\" in r||\"applications\" in r||\"experiences\" in r)){toast(\"Not a Career Hub backup\");return}if(!confirm(\"Replace all current data with this backup?\"))return;S=norm(migrate(r));save();render();toast(\"Backup restored\")};rd.onerror=function(){toast(\"Could not read file\")};rd.readAsText(file)});",
+        "StartLine": 604,
+        "TargetContent": "document.addEventListener(\"submit\",function(e){\nif(e.target.id===\"set\"){e.preventDefault();var d=Object.fromEntries(new FormData(e.target));S.settings=Object.assign({},S.settings,{theme:d.theme,accent:d.accent,focus:d.focus===\"on\"});save();render();toast(\"Saved\")}\nif(e.target.id===\"profile\"){e.preventDefault();S.profile=Object.assign({},S.profile,Object.fromEntries(new FormData(e.target)));save();render();toast(\"Profile saved\")}\n});"
+      },
+      {
+        "AllowMultiple": false,
+        "EndLine": 625,
+        "ReplacementContent": "function flushLS(){if(sampleMode)return;var snap=JSON.parse(JSON.stringify(S));if(!lsSet(snap))memStore=snap}\naddEventListener(\"pagehide\",flushLS);\ndocument.addEventListener(\"visibilitychange\",function(){if(document.visibilityState===\"hidden\")flushLS()});",
+        "StartLine": 612,
+        "TargetContent": "addEventListener(\"beforeunload\",function(){if(!sampleMode)lsSet(JSON.parse(JSON.stringify(S)))});\ndocument.addEventListener(\"visibilitychange\",function(){if(document.visibilityState===\"hidden\"&&!sampleMode)lsSet(JSON.parse(JSON.stringify(S)))});"
+      }
+    ],
+    "TargetFile": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "toolAction": "Editing app",
+    "toolSummary": "Core fixes part 2"
+  }
+}

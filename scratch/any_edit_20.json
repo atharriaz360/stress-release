@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "git status && git checkout 2-HOST-ONLINE/index.html",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Checking git status and restoring index.html",
+    "toolSummary": "Git Status"
+  }
+}

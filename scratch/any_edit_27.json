@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "python3 -c '\nimport json, sys\ncount = 0\nwith open(\"/Users/macbook/.gemini/antigravity-ide/brain/9a2e2a11-e5ed-42d3-9395-6c7cfb24f791/.system_generated/logs/transcript_full.jsonl\") as f:\n    for line in f:\n        try:\n            d = json.loads(line)\n            if \"tool_calls\" in d:\n                for tc in d[\"tool_calls\"]:\n                    name = tc.get(\"name\", \"\")\n                    if name in [\"default_api:replace_file_content\", \"default_api:write_to_file\", \"replace_file_content\", \"write_to_file\"]:\n                        args = tc.get(\"args\", {})\n                        if \"index.html\" in args.get(\"TargetFile\", \"\"):\n                            count += 1\n                            out_name = f\"scratch/edit_{count}.json\"\n                            with open(out_name, \"w\") as out:\n                                json.dump(args, out, indent=2)\n                            print(f\"Saved {out_name}\")\n        except Exception as e:\n            pass\n'",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Extracting all edits to index.html",
+    "toolSummary": "Extract edits"
+  }
+}

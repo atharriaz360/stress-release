@@ -1,0 +1,11 @@
+{
+  "name": "grep_search",
+  "args": {
+    "CaseInsensitive": true,
+    "IsRegex": false,
+    "Query": "<svg",
+    "SearchPath": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "toolAction": "Searching for '<svg' in index.html",
+    "toolSummary": "Search SVGs"
+  }
+}

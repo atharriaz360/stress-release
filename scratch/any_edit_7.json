@@ -1,0 +1,11 @@
+{
+  "name": "grep_search",
+  "args": {
+    "IsRegex": true,
+    "MatchPerLine": true,
+    "Query": "body></html>|profile:function|settings:function|<h1>\"+greet|STATUS_COLORS\\[a.status\\]|badge.emoji|b.emoji|a.salary|data-id=\\\\\"\\\"+a.id|data-id=\\\\\"\\\"+na.id|close:function|document.addEventListener\\(\"submit\"|el.dataset.theme=S|addEventListener\\(\"beforeunload\"|visibilitychange|Sample data is temporary",
+    "SearchPath": "/Users/macbook/Documents/Etsy/Resume-planner/2-HOST-ONLINE/index.html",
+    "toolAction": "Locating lines",
+    "toolSummary": "Edit targets"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "node test-browser.js; grep -n \"<script\\|</script\\|<style\\|</style\" 2-HOST-ONLINE/index.html | cut -c1-200; cat 5-SOURCE/build.js 5-SOURCE/package.json 5-SOURCE/test.js 2-HOST-ONLINE/package.json; ls 5-SOURCE/guide 5-SOURCE/test 5-SOURCE/brand 3-ETSY-LISTING/images",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 10000,
+    "toolAction": "Running test",
+    "toolSummary": "Headless test"
+  }
+}

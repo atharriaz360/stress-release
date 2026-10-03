@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "jq -r 'if has(\"CodeContent\") then .CodeContent else .ReplacementContent end' scratch/recovered_index.json > 2-HOST-ONLINE/index.html && wc -l 2-HOST-ONLINE/index.html",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 500,
+    "toolAction": "Extracting recovered index.html",
+    "toolSummary": "Extract recovered index"
+  }
+}

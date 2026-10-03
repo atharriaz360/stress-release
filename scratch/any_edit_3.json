@@ -1,0 +1,10 @@
+{
+  "name": "run_command",
+  "args": {
+    "CommandLine": "head -c 1500 \"1-SELL-THIS/CalmStudio Desk.html\"; echo; echo ----; sed -n 1,14p 2-HOST-ONLINE/index.html | cut -c1-400; echo ----; cat 3-ETSY-LISTING/ETSY-LISTING-KIT.md | head -60; ls 5-SOURCE/guide; head -c 600 5-SOURCE/guide/make-guide.js",
+    "Cwd": "/Users/macbook/Documents/Etsy/Resume-planner",
+    "WaitMsBeforeAsync": 5000,
+    "toolAction": "Reading heads",
+    "toolSummary": "Product identity"
+  }
+}
