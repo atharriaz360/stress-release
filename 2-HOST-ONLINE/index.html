@@ -121,7 +121,7 @@ ul.bullets{margin:9px 0 0;padding-left:18px;font-size:13.5px;line-height:1.55}ul
 .kcard small{display:block;color:var(--muted);margin:3px 0 9px;font-size:12.5px}
 .kmeta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
 .builder{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:18px;align-items:start}
-.builder-side{display:grid;gap:14px}
+.builder-side{display:grid;grid-template-columns:minmax(0,1fr);min-width:0;gap:14px}
 .builder-side .card{padding:16px}
 .builder-side h3{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 .check-row{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:9px;cursor:pointer;transition:background .13s var(--ease);border:1px solid transparent}
@@ -137,7 +137,7 @@ ul.bullets{margin:9px 0 0;padding-left:18px;font-size:13.5px;line-height:1.55}ul
 .swatch-row{display:flex;gap:8px;flex-wrap:wrap}
 .swatch{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;min-height:28px;box-shadow:0 1px 2px rgba(0,0,0,.15)}
 .swatch[aria-pressed=true]{border-color:var(--text);box-shadow:0 0 0 2px var(--panel) inset,0 0 0 2px var(--text)}
-.preview-sticky{position:sticky;top:16px}
+.preview-sticky{position:sticky;top:16px;min-width:0}
 .paper-wrap{background:var(--raise);border-radius:var(--r);padding:20px;border:1px solid var(--line);overflow:auto;max-height:calc(100vh - 60px)}
 .paper{background:#fff;color:#111;border-radius:6px;box-shadow:0 20px 50px -20px rgba(15,23,42,.25);max-width:820px;margin:0 auto;min-height:1100px}
 .tpl-mint{font:13.5px/1.55 var(--fu);padding:48px 52px;color:#111}
@@ -192,7 +192,7 @@ html[data-focus="true"] aside:focus-within{transform:translateX(0);box-shadow:20
 html[data-focus="true"] .edge{display:block;position:fixed;left:0;top:0;bottom:0;width:14px;z-index:25}
 html[data-focus="true"] aside:hover,html[data-focus="true"] .edge:hover~aside{transform:translateX(0);box-shadow:20px 0 50px rgba(0,0,0,.35)}
 html[data-focus="true"] main{max-width:820px;margin:0 auto}
-@media(max-width:1100px){.builder{grid-template-columns:1fr}.preview-sticky{position:static}}
+@media(max-width:1100px){.builder{grid-template-columns:minmax(0,1fr)}.preview-sticky{position:static}}
 @media(max-width:1020px){.kanban{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
 @media(max-width:820px){
@@ -258,8 +258,67 @@ main{padding:0!important;max-width:none!important;margin:0!important;width:100%!
 .tpl-mint .contact-line{border-bottom:1px solid #bbb;padding-bottom:6px;font-size:11px}
 .tpl-mint .contact-line:last-child{border:0}.tpl-mint p{white-space:pre-line}
 .job{break-inside:avoid} .paper h2{break-after:avoid}
-@media(max-width:900px){.builder{grid-template-columns:1fr}.preview-sticky{position:static}.paper-wrap{max-height:none}}
+@media(max-width:900px){.builder{grid-template-columns:minmax(0,1fr)}.preview-sticky{position:static}.paper-wrap{max-height:none}}
 @media print{.focus-toggle{display:none!important}.paper{width:100%!important}.tpl-mint{padding:0 12mm 12mm!important}.tpl-executive{padding:15mm 17mm!important} .resume-columns td{padding-top:8mm;padding-bottom:8mm}.resume-left{padding-right:8mm}.resume-right{padding-left:9mm} .paper-wrap{overflow:visible!important}}
+
+/* Shared template polish, also copied into the PDF print frame. */
+.paper{--resume-row-gap:24px;--resume-left-gap:28px;--resume-right-gap:30px}
+.tpl-executive{padding:52px 60px;line-height:1.5}
+.tpl-executive .resume-header{padding:4px 0 14px;margin-bottom:22px;border-bottom-width:2px}
+.tpl-executive h1{font-size:35px;letter-spacing:.035em;margin:0 0 7px}
+.tpl-executive .ph{font-size:12px;letter-spacing:.19em;margin:0 0 9px}
+.tpl-executive .pc{display:flex;flex-wrap:wrap;justify-content:center;gap:5px 13px;font-size:11px;line-height:1.5;margin:0;color:#505968}
+.tpl-executive h2{font-size:14px;letter-spacing:.075em;margin:17px 0 8px;padding-bottom:5px;border-color:#bca16b}
+.tpl-executive .job{margin-bottom:12px}
+.tpl-executive .job-head{gap:16px;flex-wrap:wrap}
+.tpl-executive .job-head b{font-size:13.5px}
+.tpl-executive .meta{font-size:11px;color:#626b77;white-space:normal}
+.tpl-executive .sub{font-size:12.5px;color:#9b792f;margin:2px 0 4px}
+.tpl-executive p{font-size:12.5px;line-height:1.5;margin:0 0 7px}
+.tpl-executive ul{font-size:12.5px;line-height:1.5;margin:4px 0 0;padding-left:18px}
+.tpl-executive li{margin-bottom:3px}
+.tpl-mint{border-top-width:18px;line-height:1.5}
+.tpl-mint .resume-header{padding:40px 0 30px;border-bottom:1.5px solid #42474b}
+.tpl-mint h1{font-size:37px;line-height:1.2;letter-spacing:.12em;margin-bottom:10px}
+.tpl-mint .ph{font-size:11px;letter-spacing:.23em}
+.resume-columns td{padding-top:var(--resume-row-gap);padding-bottom:var(--resume-row-gap)}
+.resume-columns tr+tr{border-top:1.5px solid #42474b}
+.resume-left{padding-right:var(--resume-left-gap)}
+.resume-right{padding-left:var(--resume-right-gap)}
+.resume-columns .resume-left{border-right:1px solid #737a7e}
+.tpl-mint h2{font-size:13px;letter-spacing:.2em;border-bottom:1.25px solid #737a7e;padding-bottom:5px;margin-bottom:17px}
+.tpl-mint section+section{margin-top:25px}
+.tpl-mint .job{margin-bottom:18px}
+.tpl-mint .job-head b{font-size:12px;line-height:1.45;letter-spacing:.09em}
+.tpl-mint .job>.meta,.tpl-mint .resume-left .meta{font-size:10.5px;line-height:1.45;margin-bottom:5px}
+.tpl-mint .sub{font-size:13px;line-height:1.4;color:#697177;margin:3px 0 7px}
+.tpl-mint p{margin:0 0 8px;line-height:1.5}
+.tpl-mint ul{margin:5px 0 0;padding-left:17px;line-height:1.5}
+.tpl-mint li{margin-bottom:3px}
+.tpl-mint .resume-left ul{padding-left:0}
+.tpl-mint .contact-line{display:flex;align-items:flex-start;justify-content:flex-end;gap:8px;border-bottom:1px solid #d0d5d7;font-size:10.5px;line-height:1.5;padding-bottom:8px;margin-bottom:8px}
+.contact-text{min-width:0;overflow-wrap:anywhere}
+.contact-item{display:inline-flex;align-items:flex-start;gap:5px;max-width:100%;text-align:left}
+.resume-contact-icon{width:12px;height:12px;min-width:12px;flex:none;margin-top:2px;color:#697177}
+.tpl-executive .resume-contact-icon{color:#9b792f}
+
+.top{align-items:center}.top h1{min-width:0;overflow-wrap:anywhere}.top-actions{display:flex;align-items:center;justify-content:flex-end;gap:12px;flex-wrap:wrap;margin-left:auto}.top-actions .acts:empty{display:none}
+.appearance{position:relative;display:flex;align-items:center;gap:6px;flex:none;padding:4px;border:1px solid var(--line);border-radius:15px;background:var(--panel);box-shadow:var(--sh);z-index:20}
+.mode-button{position:relative;width:40px;min-height:40px;padding:10px;border:0;border-radius:11px;background:transparent;color:var(--text-2)}.mode-button svg{width:20px;height:20px}.mode-button:hover,.mode-button[aria-pressed=true],.appearance-trigger[aria-expanded=true]{background:var(--brand-soft);color:var(--brand)}
+.accent-dot{position:absolute;right:6px;bottom:6px;width:7px;height:7px;border:1.5px solid var(--panel);border-radius:50%}
+.appearance-panel{position:absolute;right:0;top:calc(100% + 10px);width:min(310px,calc(100vw - 32px));padding:18px;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 16px 48px rgba(15,23,42,.16);color:var(--text)}.appearance-panel[hidden]{display:none}
+.appearance-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;font-size:13px}.appearance-heading>span{color:var(--muted);font-size:12px}
+.accent-options{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}.accent-option{display:flex;flex-direction:column;gap:8px;min-height:70px;padding:6px 2px;border:0;border-radius:10px;background:transparent;font-size:10px;color:var(--text-2)}.accent-option:hover,.accent-option[aria-pressed=true]{background:var(--raise)}
+.accent-circle{width:32px;height:32px;display:grid;place-items:center;border-radius:50%;background:var(--swatch);box-shadow:inset 0 1px 3px rgba(255,255,255,.25)}.accent-circle svg{width:18px;height:18px}.accent-option[aria-pressed=true] .accent-circle{outline:2px solid var(--swatch);outline-offset:3px}.appearance-panel p{font-size:11px;color:var(--muted);margin:14px 0 0}
+.kcard:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.row .grow{min-width:0;overflow-wrap:anywhere}.contact-row{flex-wrap:wrap}.kanban{min-width:0}.kan,.kan-col,.kcard{min-width:0}.kcard{overflow-wrap:anywhere}
+@media(max-width:620px){
+.top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}.top h1{font-size:22px;line-height:1.25}.top-actions{display:contents}.appearance{grid-column:2;grid-row:1}.top-actions .acts:not(:empty){grid-column:1/-1;justify-content:flex-end}
+.mode-button{width:40px;min-height:40px}.card{padding:16px}.chips{display:flex;flex-wrap:wrap;gap:6px}.chips button{min-height:44px;padding:8px 10px}.acts button{min-height:44px}.ico{min-width:40px;min-height:40px!important}dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px);margin:auto}dialog .foot{flex-wrap:wrap;gap:8px}input,select,textarea{font-size:16px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{overflow-wrap:anywhere}nav a{min-height:44px}.paper-wrap{padding:12px}.appearance-panel{max-height:calc(100dvh - 140px);overflow:auto}
+}
+@media(max-width:360px){.top h1{font-size:19px}.appearance{gap:2px;padding:3px}.mode-button{width:38px;min-height:40px}.stats{grid-template-columns:1fr}.accent-option{font-size:9px}}
+@media print{.appearance,.top-actions{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -283,12 +342,13 @@ main{padding:0!important;max-width:none!important;margin:0!important;width:100%!
 <div class="side-foot" id="sidefoot"></div>
 </aside>
 <main>
-<button class="focus-toggle noprint" data-act="focus-off">Show navigation</button><div class="top"><h1 id="title"></h1><div class="acts" id="acts"></div></div>
+<div class="top"><h1 id="title"></h1><div class="top-actions"><div class="appearance noprint" id="appearance" role="group" aria-label="Appearance controls"></div><div class="acts" id="acts"></div></div></div>
 <div id="view" tabindex="-1"></div>
 </main>
 </div>
 <dialog id="dlg" aria-labelledby="dt"><header><h2 id="dt"></h2><button class="ico" data-act="close" aria-label="Close">✕</button></header><div id="db"></div></dialog>
 <div id="toast" role="status" aria-live="polite" hidden></div>
+
 <script>
 "use strict";
 var $=function(s,r){return (r||document).querySelector(s)};
@@ -325,41 +385,41 @@ var COLLECTIONS=["experiences","projects","education","certs","skills","applicat
 
 function sampleData(){return{
 settings:{theme:"light",accent:"indigo",focus:false},
-profile:{name:"Jordan Lee",headline:"Computer Science Senior · Aspiring Product Engineer",email:"jordan.lee@university.edu",phone:"+1 (555) 010-4477",location:"Boston, MA",links:"linkedin.com/in/jordanlee · github.com/jordanlee",summary:"CS senior with three internships and a passion for building tools people actually want to use. Looking for a new-grad product engineering role."},
+profile:{name:"Jordan Lee",headline:"Operations & Client Services Professional",email:"jordan.lee@example.com",phone:"+1 (555) 010-4477",location:"Boston, MA",links:"linkedin.com/in/jordanlee-example",summary:"Operations and client services professional with 6 years of experience helping teams deliver reliable service. Improved turnaround times, supported staff development, and managed budgets with care. Brings clear communication, practical problem-solving, and a focus on customer needs."},
 experiences:[
-{id:uid(),role:"Software Engineering Intern",company:"Northstar Labs",location:"Remote",start:"2024-06",end:"2024-08",current:"No",stack:"TypeScript, React, Postgres",bullets:["Shipped internal dashboard used by 40+ teammates, cutting weekly reporting time by 3 hours per person.","Wrote test suite that caught 12 regressions in first month after launch.","Reduced API response time 40% by adding caching layer."]},
-{id:uid(),role:"Product Analyst Intern",company:"Bright Path",location:"Boston, MA",start:"2023-06",end:"2023-08",current:"No",stack:"SQL, Amplitude, Looker",bullets:["Built weekly retention dashboard adopted by product team of 8.","Ran 15 user interviews that informed roadmap for Q4."]},
-{id:uid(),role:"Teaching Assistant — Intro to CS",company:"State University",location:"On-campus",start:"2023-01",end:"2024-05",current:"No",stack:"Python, Java",bullets:["Held weekly office hours for 60+ students; average grade improved 8% vs prior semester.","Wrote 6 problem sets and grading rubric still in use."]}
+{id:uid(),role:"Operations Coordinator",company:"Meadowbrook Services (Demo)",location:"Boston, MA",start:"2023-02",end:"",current:"Yes",stack:"Team coordination, process improvement, budget tracking",bullets:["Coordinated schedules for 12 colleagues, increasing on-time service delivery from 86% to 96% over six months.","Introduced a shared handover checklist that reduced repeat work by 25% while maintaining quality checks.","Tracked a $60,000 annual supplies budget and reduced purchasing costs by 12% through supplier comparisons."]},
+{id:uid(),role:"Client Services Associate",company:"Harbor Community Centre (Demo)",location:"Boston, MA",start:"2020-08",end:"2023-01",current:"No",stack:"Customer care, record keeping, training",bullets:["Handled 40 client enquiries daily and maintained a 94% satisfaction score in quarterly feedback.","Created a clear welcome guide that helped new clients prepare for appointments and reduced missed visits by 18%.","Trained 5 new colleagues using practical examples and weekly check-ins."]},
+{id:uid(),role:"Volunteer Programme Lead",company:"Neighbourhood Learning Network (Demo)",location:"Boston, MA",start:"2019-06",end:"2020-07",current:"No",stack:"Event planning, community outreach",bullets:["Organised 8 community workshops for 160 participants with a team of 6 volunteers.","Collected participant feedback and added evening sessions to improve access for working adults."]}
 ],
 projects:[
-{id:uid(),name:"StudyMates",stack:"Next.js, Supabase, Tailwind",link:"studymates.app",summary:"Web app connecting students for group study sessions by course and time.",bullets:["Launched to 300 users in first semester.","Featured in university CS newsletter."]},
-{id:uid(),name:"Pocket Budget",stack:"React Native, SQLite",link:"github.com/jordanlee/pocket",summary:"Offline-first mobile budget tracker for students.",bullets:["4.8 stars on app store from 120 reviews.","Won 2nd place at campus hackathon 2024."]}
+{id:uid(),name:"Service Improvement Initiative",stack:"Process mapping, feedback analysis",link:"",summary:"Led a practical review of appointment booking and client handovers.",bullets:["Interviewed 15 clients and 6 colleagues to identify recurring delays.","Piloted a simpler booking checklist, reducing average processing time from 20 to 14 minutes."]},
+{id:uid(),name:"Community Skills Workshop",stack:"Planning, facilitation, budget management",link:"",summary:"Designed an affordable workshop series on communication and everyday financial planning.",bullets:["Delivered 4 sessions within a $1,200 budget; 92% of attendees rated the sessions useful.","Prepared reusable worksheets so volunteers could run future sessions independently."]}
 ],
-education:[{id:uid(),school:"State University",degree:"B.S.",field:"Computer Science",start:"2021-09",end:"2025-05",notes:"GPA 3.8 · Dean's List 6 semesters · CS Club VP"}],
-certs:[{id:uid(),name:"AWS Cloud Practitioner",issuer:"Amazon Web Services",date:"2024-03",link:""}],
+education:[{id:uid(),school:"Westbridge College (Demo)",degree:"Bachelor of Arts",field:"Business & Management",start:"2016-09",end:"2020-05",notes:"Dean's List · Student mentoring volunteer"}],
+certs:[{id:uid(),name:"Professional Communication Workshop",issuer:"Community Learning Centre (Demo)",date:"2025-04",link:""}],
 skills:[
-{id:uid(),group:"Languages",items:"Python, TypeScript, Java, SQL, HTML/CSS"},
-{id:uid(),group:"Frameworks",items:"React, Next.js, Node.js, Express"},
-{id:uid(),group:"Tools",items:"Git, Figma, Postman, VS Code, Jira"}
+{id:uid(),group:"People & Service",items:"Client care, active listening, teamwork, staff training"},
+{id:uid(),group:"Organisation",items:"Planning, budget tracking, record keeping, quality checks"},
+{id:uid(),group:"Professional Skills",items:"Written communication, presentations, problem-solving, spreadsheet reporting"}
 ],
 applications:[
-{id:uid(),company:"Stripe",role:"New Grad Software Engineer",status:"Interviewing",location:"Remote",salary:"$140k–$160k",applied:shift(iso(),-8),followUp:shift(iso(),2),url:"",contact:"Sarah (recruiter)",notes:"Technical screen passed."},
-{id:uid(),company:"Ramp",role:"Product Engineer — New Grad",status:"Applied",location:"New York, NY",salary:"$135k–$155k",applied:shift(iso(),-4),followUp:shift(iso(),3),url:"",contact:"",notes:""},
-{id:uid(),company:"Anthropic",role:"Software Engineer, New Grad",status:"Wishlist",location:"San Francisco, CA",salary:"",applied:"",followUp:"",url:"",contact:"",notes:"Applications open Oct 15."},
-{id:uid(),company:"Notion",role:"Product Engineering Associate",status:"Rejected",location:"San Francisco, CA",salary:"",applied:shift(iso(),-22),followUp:"",url:"",contact:"",notes:"Rejected at resume screen."},
-{id:uid(),company:"Linear",role:"New Grad Engineer",status:"Offer",location:"Remote",salary:"$150k + equity",applied:shift(iso(),-35),followUp:"",url:"",contact:"Jonas",notes:"Offer received."}
+{id:uid(),company:"Cedar Health Group (Demo)",role:"Patient Services Coordinator",status:"Interviewing",location:"Boston, MA",salary:"",applied:shift(iso(),-8),followUp:shift(iso(),2),url:"",contact:"Priya, recruitment team",notes:"First conversation completed. Prepare examples of client care, confidentiality, and handling busy periods."},
+{id:uid(),company:"Summit Learning Centre (Demo)",role:"Programme Coordinator",status:"Applied",location:"Hybrid",salary:"",applied:shift(iso(),-4),followUp:shift(iso(),3),url:"",contact:"",notes:"Tailored the resume to scheduling, learner support, and workshop delivery. Follow up politely next week."},
+{id:uid(),company:"Oak & Field Retail (Demo)",role:"Customer Experience Supervisor",status:"Wishlist",location:"Boston, MA",salary:"",applied:"",followUp:shift(iso(),4),url:"",contact:"",notes:"Review the role requirements and choose two relevant achievements before applying."},
+{id:uid(),company:"Riverbank Hospitality (Demo)",role:"Guest Services Coordinator",status:"Rejected",location:"Boston, MA",salary:"",applied:shift(iso(),-22),followUp:"",url:"",contact:"",notes:"Role filled internally. Keep the useful interview practice; this outcome does not define my ability."},
+{id:uid(),company:"Maple Professional Services (Demo)",role:"Office & Operations Coordinator",status:"Offer",location:"Hybrid",salary:"",applied:shift(iso(),-35),followUp:shift(iso(),2),url:"",contact:"Alex, hiring manager",notes:"Written offer received. Compare responsibilities, pay, flexibility, learning opportunities, and team fit before deciding."}
 ],
 contacts:[
-{id:uid(),name:"Priya Raman",company:"Stripe",role:"Senior Engineer (alum)",method:"LinkedIn",lastContact:shift(iso(),-10),next:shift(iso(),3),notes:"Send follow-up about onsite prep."},
-{id:uid(),name:"Marcus Chen",company:"Anthropic",role:"Product Manager",method:"Coffee chat",lastContact:shift(iso(),-5),next:shift(iso(),7),notes:"Send thank-you note."}
+{id:uid(),name:"Priya Raman (Demo)",company:"Cedar Health Group (Demo)",role:"Recruitment Coordinator",method:"Email",lastContact:shift(iso(),-3),next:shift(iso(),2),notes:"Thank her for explaining the role. Confirm the interview time and ask what to prepare."},
+{id:uid(),name:"Marcus Chen (Demo)",company:"Local Professional Network (Demo)",role:"Community Programme Manager",method:"Coffee chat",lastContact:shift(iso(),-5),next:shift(iso(),7),notes:"Send a short thank-you with one useful takeaway. Offer to share the workshop planning checklist."}
 ],
-notes:{},resume:{template:"mint",accent:"mint",inc:{}},badges:[]
+notes:{s1:"This week: choose one target role, strengthen two achievement bullets, and send one thoughtful application. Small, steady steps count.",star:"Example story: appointment delays. I gathered feedback, tested a simpler checklist, and reduced processing time from 20 to 14 minutes. Keep the real numbers and explain my own contribution.",bank:"Prepare examples of helping a client, improving a process, supporting a colleague, managing a deadline, learning from a mistake, and leading a small project.",r11:"Review what I can improve without blaming myself. Hiring outcomes also depend on timing, competition, and employer needs."},resume:{template:"mint",accent:"mint",inc:{}},badges:[]
 }}
 function migrate(r){if(!r||typeof r!=="object")return blank();if(!r.version||r.version<3){r.contacts=Array.isArray(r.contacts)?r.contacts:[];r.badges=Array.isArray(r.badges)?r.badges:[];r.resume=r.resume||{template:"mint",accent:"mint",inc:{}};r.resume.inc=r.resume.inc||{};r.version=3}return r}
 function norm(r){
 var b=blank(),s=Object.assign({},b,r&&typeof r==="object"?r:{});
 s.settings=Object.assign({},b.settings,s.settings||{});s.profile=Object.assign({},b.profile,s.profile||{});s.resume=Object.assign({},b.resume,s.resume||{});
-s.resume.inc=Object.assign({},s.resume.inc||{});s.notes=Object.assign({},s.notes||{});
+s.resume.inc=Object.assign({},s.resume.inc||{});s.notes={};if(r&&r.notes&&typeof r.notes==="object"&&!Array.isArray(r.notes))Object.keys(r.notes).forEach(function(k){if(k!=="__proto__"&&k!=="constructor"&&k!=="prototype")s.notes[k]=String(r.notes[k]||"")});
 s.settings.theme=s.settings.theme==="dark"?"dark":"light";s.settings.focus=s.settings.focus===true;
 if(!Object.prototype.hasOwnProperty.call(ACCENTS,s.settings.accent))s.settings.accent="indigo";
 if(!Object.prototype.hasOwnProperty.call(RESUME_ACCENTS,s.resume.accent))s.resume.accent="mint";
@@ -400,13 +460,13 @@ function input(f,v){var k=f[0],l=f[1],t=f[2]||"text",req=f[3],opts=f[4],body;if(
 function formVals(col,rec){var v=Object.assign({},rec);SCH[col].f.forEach(function(f){var k=f[0];if(Array.isArray(v[k]))v[k]=v[k].join("\n");if(v[k]==null)v[k]=""});return v}
 function clean(col,d){var o=Object.assign({},d);(LISTF[col]||[]).forEach(function(k){o[k]=String(o[k]||"").split("\n").map(function(s){return s.trim()}).filter(Boolean)});return o}
 
-function showDlg(){var d=$("#dlg");if(!d.open)d.showModal()}
+function showDlg(){var d=$("#dlg");if(!d.open)d.showModal();var first=d.querySelector("input,select,textarea,button");if(first)first.focus()}
 function openDlg(title,body,onSave,onDelete){$("#dt").textContent=title;var delBtn=onDelete?'<button type="button" class="bad" data-act="dlgdel" style="margin-right:auto">Delete</button>':"";$("#db").innerHTML='<form>'+body+'<div class="foot">'+delBtn+'<button type="button" data-act="close">Cancel</button><button class="primary">Save</button></div></form>';$("#db form").onsubmit=function(e){e.preventDefault();if(onSave(Object.fromEntries(new FormData(e.target)))!==false)$("#dlg").close()};var del=$("#db [data-act=dlgdel]");if(del&&onDelete)del.onclick=function(){if(confirm("Delete this item?")){onDelete();$("#dlg").close()}};showDlg()}
 function openInfo(title,html){$("#dt").textContent=title;$("#db").innerHTML=html;showDlg()}
 
 function edit(col,id,preset){var sc=SCH[col],rec=(S[col]||[]).filter(function(r){return r.id===id})[0];var v=formVals(col,Object.assign({},DEF[col](),rec||{},preset||{}));openDlg((rec?"Edit ":"New ")+sc.one,sc.f.map(function(f){return input(f,v[f[0]])}).join(""),function(d){var data=clean(col,d);if(data.start&&data.end&&data.current!=="Yes"&&data.end<data.start){toast("End date must follow start date");return false}if(rec)Object.assign(rec,data);else S[col].push(Object.assign({},DEF[col](),data,{id:uid()}));save();render();toast("Saved")},rec?function(){S[col]=S[col].filter(function(x){return x.id!==id});save();render();toast("Deleted")}:null)}
 
-function ed(col,id){return '<button class="ico" data-act="edit" data-col="'+col+'" data-id="'+id+'" aria-label="Edit">✎</button><button class="ico" data-act="del" data-col="'+col+'" data-id="'+id+'" aria-label="Delete">✕</button>'}
+function ed(col,id){var rec=(S[col]||[]).filter(function(x){return x.id===id})[0]||{};var label=rec.name||rec.role||rec.school||rec.group||"item";return '<button class="ico" data-act="edit" data-col="'+col+'" data-id="'+id+'" aria-label="'+E('Edit '+label)+'">✎</button><button class="ico" data-act="del" data-col="'+col+'" data-id="'+id+'" aria-label="'+E('Delete '+label)+'">✕</button>'}
 function empty(emoji,t,s,btn){return '<div class="empty"><div class="emoji">'+emoji+'</div><b>'+t+'</b><small>'+(s||"")+'</small>'+(btn||"")+'</div>'}
 
 function readiness(){
@@ -432,8 +492,13 @@ function resumeProjects(P){return P.length?'<section><h2>Projects</h2>'+P.map(fu
 function resumeCerts(show){return show&&S.certs.length?'<section><h2>Certifications</h2>'+S.certs.map(function(x){return '<div class="job"><b>'+E(x.name)+'</b><div class="sub">'+E(x.issuer)+'</div><div class="meta">'+E(fmonth(x.date))+'</div>'+(x.link?'<p>'+E(x.link)+'</p>':'')+'</div>'}).join('')+'</section>':''}
 function resumeEducation(show){return show&&S.education.length?'<section><h2>Education</h2>'+S.education.map(function(x){return '<div class="job"><div class="job-head"><b>'+E([x.degree,x.field].filter(Boolean).join(', '))+'</b><span class="meta">'+E([fmonth(x.start),fmonth(x.end)].filter(Boolean).join(' – '))+'</span></div><div class="sub">'+E(x.school)+'</div>'+(x.notes?'<p>'+E(x.notes)+'</p>':'')+'</div>'}).join('')+'</section>':''}
 function resumeExperience(X,mint){return X.length?'<section><h2>Experience</h2>'+X.map(function(x){var dates='<span class="meta">'+E(range(x.start,x.end,x.current))+'</span>';return '<div class="job">'+(mint?dates:'')+'<div class="job-head"><b>'+E(x.role)+'</b>'+(!mint?dates:'')+'</div><div class="sub">'+E([x.company,x.location].filter(Boolean).join(', '))+'</div>'+resumeBullets(x)+'</div>'}).join('')+'</section>':''}
-function buildResumeExecutive(p,X,P,G,showEdu,showCert){return '<div class="paper tpl-executive" id="paper"><header class="resume-header"><h1>'+E(p.name||'Your Name')+'</h1>'+(p.headline?'<div class="ph">'+E(p.headline)+'</div>':'')+'<div class="pc">'+[p.location,p.phone,p.email,p.links].filter(Boolean).map(E).join(' | ')+'</div></header>'+(p.summary?'<section><h2>Professional Summary</h2><p>'+E(p.summary)+'</p></section>':'')+resumeExperience(X,false)+resumeProjects(P)+resumeEducation(showEdu)+(G.length?'<section><h2>Skills</h2>'+G.map(function(g){return '<p><b>'+E(g.group)+':</b> '+E(g.items)+'</p>'}).join('')+'</section>':'')+resumeCerts(showCert)+'</div>'}
-function buildResumeMint(p,X,P,G,showEdu,showCert,rAccent){var contact=[p.phone,p.email,p.links,p.location].filter(Boolean);return '<div class="paper tpl-mint" style="--rc:'+rAccent+'" id="paper"><header class="resume-header"><h1>'+E(p.name||'Your Name')+'</h1>'+(p.headline?'<div class="ph">'+E(p.headline)+'</div>':'')+'</header><table class="resume-columns"><tbody><tr><td class="resume-left"><section><h2>Contact</h2>'+contact.map(function(c){return '<p class="contact-line">'+E(c)+'</p>'}).join('')+'</section></td><td class="resume-right">'+(p.summary?'<section><h2>Profile</h2><p>'+E(p.summary)+'</p></section>':'')+'</td></tr><tr><td class="resume-left">'+resumeEducation(showEdu)+(G.length?'<section><h2>Expertise</h2>'+G.map(function(g){return '<div class="job"><b>'+E(g.group)+'</b><ul>'+String(g.items||'').split(',').filter(function(v){return v.trim()}).map(function(v){return '<li>'+E(v.trim())+'</li>'}).join('')+'</ul></div>'}).join('')+'</section>':'')+resumeCerts(showCert)+'</td><td class="resume-right">'+resumeExperience(X,true)+resumeProjects(P)+'</td></tr></tbody></table></div>'}
+function resumeContactIcon(kind){
+var paths={phone:'<path d="M8 3H5a2 2 0 0 0-2 2c0 9 7 16 16 16a2 2 0 0 0 2-2v-3l-5-2-2 3a14 14 0 0 1-7-7l3-2-2-5Z"/>',email:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>',links:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c4 5 4 13 0 18-4-5-4-13 0-18Z"/>',location:'<path d="M19 10c0 5-7 11-7 11S5 15 5 10a7 7 0 1 1 14 0Z"/><circle cx="12" cy="10" r="2.5"/>'};
+return '<svg class="resume-contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'+paths[kind]+'</svg>';
+}
+function resumeContactItems(p,mint){return (mint?['phone','email','links','location']:['location','phone','email','links']).filter(function(k){return p[k]}).map(function(k){var text='<span class="contact-text">'+E(p[k])+'</span>';return mint?'<p class="contact-line">'+text+resumeContactIcon(k)+'</p>':'<span class="contact-item">'+resumeContactIcon(k)+text+'</span>'}).join('')}
+function buildResumeExecutive(p,X,P,G,showEdu,showCert){return '<div class="paper tpl-executive" id="paper"><header class="resume-header"><h1>'+E(p.name||'Your Name')+'</h1>'+(p.headline?'<div class="ph">'+E(p.headline)+'</div>':'')+'<div class="pc">'+resumeContactItems(p,false)+'</div></header>'+(p.summary?'<section><h2>Professional Summary</h2><p>'+E(p.summary)+'</p></section>':'')+resumeExperience(X,false)+resumeProjects(P)+resumeEducation(showEdu)+(G.length?'<section><h2>Skills</h2>'+G.map(function(g){return '<p><b>'+E(g.group)+':</b> '+E(g.items)+'</p>'}).join('')+'</section>':'')+resumeCerts(showCert)+'</div>'}
+function buildResumeMint(p,X,P,G,showEdu,showCert,rAccent){var contact=[p.phone,p.email,p.links,p.location].filter(Boolean);return '<div class="paper tpl-mint" style="--rc:'+rAccent+'" id="paper"><header class="resume-header"><h1>'+E(p.name||'Your Name')+'</h1>'+(p.headline?'<div class="ph">'+E(p.headline)+'</div>':'')+'</header><table class="resume-columns"><tbody><tr><td class="resume-left"><section><h2>Contact</h2>'+resumeContactItems(p,true)+'</section></td><td class="resume-right">'+(p.summary?'<section><h2>Profile</h2><p>'+E(p.summary)+'</p></section>':'')+'</td></tr><tr><td class="resume-left">'+resumeEducation(showEdu)+(G.length?'<section><h2>Expertise</h2>'+G.map(function(g){return '<div class="job"><b>'+E(g.group)+'</b><ul>'+String(g.items||'').split(',').filter(function(v){return v.trim()}).map(function(v){return '<li>'+E(v.trim())+'</li>'}).join('')+'</ul></div>'}).join('')+'</section>':'')+resumeCerts(showCert)+'</td><td class="resume-right">'+resumeExperience(X,true)+resumeProjects(P)+'</td></tr></tbody></table></div>'}
 function buildResume(){
 var p=S.profile,rAccent=RESUME_ACCENTS[S.resume.accent]||"#0d9488";
 var X=S.experiences.filter(function(x){return incOn("experiences",x.id)});
@@ -443,18 +508,66 @@ var showEdu=incOn("sections","education"),showCert=incOn("sections","certs");
 if(S.resume.template==="executive")return buildResumeExecutive(p,X,P,G,showEdu,showCert);
 return buildResumeMint(p,X,P,G,showEdu,showCert,rAccent);
 }
-function refreshPaper(){var w=$("#paper-wrap");if(w)w.innerHTML=buildResume()}
+var resumePreviewObserver=null;
+function fitResumePreview(){var wrap=document.querySelector('#paper-wrap'),paper=document.querySelector('#paper');if(wrap&&paper){var scale=Math.min(1,Math.max(.2,(wrap.clientWidth-parseFloat(getComputedStyle(wrap).paddingLeft)-parseFloat(getComputedStyle(wrap).paddingRight))/794));paper.style.zoom=String(scale)}}
+function watchResumePreview(){if(resumePreviewObserver)resumePreviewObserver.disconnect();fitResumePreview();var wrap=document.querySelector('#paper-wrap');if(wrap&&typeof ResizeObserver!=="undefined"){resumePreviewObserver=new ResizeObserver(fitResumePreview);resumePreviewObserver.observe(wrap)}}
+function refreshPaper(){var w=$("#paper-wrap");if(w){w.innerHTML=buildResume();fitResumePreview()}}
 
-function downloadPdf(){toast("Opening print dialog — choose Save as PDF");setTimeout(function(){window.print()},120)}
-function resumeName(){return (S.profile.name||"resume").replace(/\s+/g,"_").toLowerCase()}
-function downloadDoc(){
-var paper=$("#paper");if(!paper){toast("Nothing to export");return}
-var isExec=S.resume.template==="executive";
-var accent=RESUME_ACCENTS[S.resume.accent]||"#0d9488";
-var styles=document.querySelector("style").textContent+"body{background:white;color:#222}.paper{box-shadow:none;border-radius:0;max-width:none;min-height:0} .tpl-mint,.tpl-executive{padding:30pt} .resume-columns{width:100%} .tpl-mint{--rc:"+accent+"}";
-var html="<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>"+E(S.profile.name||"Resume")+"</title><style>"+styles+"</style></head><body>"+paper.outerHTML+"</body></html>";
-var blob=new Blob(["\ufeff",html],{type:"application/msword"});
-dlBlob(resumeName()+"_resume.doc",blob);toast("DOC downloaded");
+// Print the same HTML and CSS used by the preview, with page margins repeating.
+var resumePrintFrame=null;
+function resumeName(){return (S.profile.name||'resume').replace(/[<>:"/\\|?*\x00-\x1f]/g,'').trim().replace(/\s+/g,'_').toLowerCase()||'resume'}
+async function downloadPdf(){
+  if(resumePrintFrame)return;
+  var button=document.querySelector('[data-act="dl-pdf"]');
+  if(button)button.disabled=true;
+  try{
+    var paper=document.querySelector('#paper');
+    if(!paper){toast('Open the resume preview first');return}
+    if(document.fonts&&document.fonts.ready)await document.fonts.ready;
+    var mint=paper.classList.contains('tpl-mint');
+    var styles=Array.from(document.querySelectorAll('style')).map(function(s){return s.textContent}).join('\n');
+    var layout=getComputedStyle(paper);
+    var top=mint?getComputedStyle(paper.querySelector('.resume-header')).paddingTop:layout.paddingTop;
+    var pagePadding=[top,layout.paddingRight,layout.paddingBottom,layout.paddingLeft].join(' ');
+    var bandWidth=layout.borderTopWidth;
+    var accent=layout.getPropertyValue('--rc').trim()||'#0d9488';
+    var band=mint?'color-mix(in srgb,'+accent+' 23%,white)':'transparent';
+    var frame=document.createElement('iframe');
+    frame.title='Resume PDF';frame.setAttribute('aria-hidden','true');
+    // Keep a real, full-width layout: display:none produces blank printouts.
+    frame.style.cssText='position:fixed;left:-10000px;top:0;width:794px;height:1123px;border:0;pointer-events:none';
+    document.body.appendChild(frame);resumePrintFrame=frame;
+    var doc=frame.contentDocument;
+    doc.open();doc.write('<!doctype html><html><head><meta charset="utf-8"><title>'+E(resumeName()+'_resume')+'</title><style>'+styles+'</style></head><body>'+paper.outerHTML+'<\/body><\/html>');doc.close();
+    var printStyle=doc.createElement('style');
+    // No printer margins: Chrome has no margin area for its URL/date footer.
+    // Clone the resume's own border and padding at each page fragment instead.
+    printStyle.textContent='@page{size:794px 1123px;margin:0}'
+      +'html,body{margin:0!important;padding:0!important;background:white!important;color:#111!important;width:auto!important;min-height:0!important}'
+      +'*,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}'
+      +'#paper{zoom:1!important;width:794px!important;max-width:none!important;min-height:0!important;margin:0!important;padding:'+pagePadding+'!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;-webkit-box-decoration-break:clone!important;box-decoration-break:clone!important}'
+      +(mint?'#paper.tpl-mint{border-top:'+bandWidth+' solid '+band+'!important}#paper.tpl-mint .resume-header{padding-top:0!important}':'')
+      +'#paper .resume-columns td{padding-top:var(--resume-row-gap)!important;padding-bottom:var(--resume-row-gap)!important}'
+      +'#paper .resume-left{padding-right:var(--resume-left-gap)!important}'
+      +'#paper .resume-right{padding-left:var(--resume-right-gap)!important}'
+      +'#paper h2{break-after:avoid;page-break-after:avoid}'
+      +'#paper .job-head,#paper .job>.meta,#paper .job>.sub{break-after:avoid;page-break-after:avoid}'
+      +'#paper .job{break-inside:avoid;page-break-inside:avoid}'
+      +'#paper p,#paper li{orphans:2;widows:2}'
+      +'#paper section{break-inside:auto}';
+    doc.head.appendChild(printStyle);
+    if(doc.fonts&&doc.fonts.ready)await doc.fonts.ready;
+    await new Promise(function(resolve){frame.contentWindow.requestAnimationFrame(function(){frame.contentWindow.requestAnimationFrame(resolve)})});
+    var originalTitle=document.title;document.title=resumeName()+'_resume';
+    var cleanup=function(){if(resumePrintFrame===frame){frame.remove();resumePrintFrame=null;document.title=originalTitle}};
+    frame.contentWindow.addEventListener('afterprint',cleanup,{once:true});
+    toast('Choose Save as PDF. Keep scale at 100%.');
+    frame.contentWindow.focus();frame.contentWindow.print();
+    // Some browsers do not emit afterprint for child frames. The dialog is
+    // normally blocking; retain the frame briefly for engines that print later.
+    setTimeout(cleanup,60000);
+  }catch(e){console.error('Resume PDF failed',e);if(resumePrintFrame){resumePrintFrame.remove();resumePrintFrame=null}toast('Could not open PDF printing. Please try again.')}
+  finally{if(button)button.disabled=false}
 }
 
 function nextAction(){
@@ -477,7 +590,7 @@ if(col==="skills")return '<div class="row"><div class="grow"><b>'+E(x.group||"")
 return "";
 }
 var BANKVIEW={
-profile:function(){var p=S.profile;return '<form id="profile"><div class="two"><label>Full name<input name="name" value="'+E(p.name)+'" placeholder="Jordan Lee"></label><label>Headline<input name="headline" value="'+E(p.headline)+'" placeholder="CS Senior · Aspiring Product Engineer"></label></div><div class="two"><label>Email<input name="email" type="email" value="'+E(p.email)+'"></label><label>Phone<input name="phone" value="'+E(p.phone)+'"></label></div><div class="two"><label>Location<input name="location" value="'+E(p.location)+'" placeholder="Boston, MA"></label><label>Links<input name="links" value="'+E(p.links)+'" placeholder="linkedin.com/in/…"></label></div><label>Short bio — feeds every resume<textarea name="summary" rows="4" placeholder="One or two sentences about who you are.">'+E(p.summary)+'</textarea></label><button class="primary">Save profile</button></form>'},
+profile:function(){var p=S.profile;return '<form id="profile"><div class="two"><label>Full name<input name="name" value="'+E(p.name)+'" placeholder="Jordan Lee"></label><label>Headline<input name="headline" value="'+E(p.headline)+'" placeholder="Your profession · Your strongest skill"></label></div><div class="two"><label>Email<input name="email" type="email" value="'+E(p.email)+'"></label><label>Phone<input name="phone" value="'+E(p.phone)+'"></label></div><div class="two"><label>Location<input name="location" value="'+E(p.location)+'" placeholder="Boston, MA"></label><label>Links<input name="links" value="'+E(p.links)+'" placeholder="linkedin.com/in/…"></label></div><label>Short bio — feeds every resume<textarea name="summary" rows="4" placeholder="One or two sentences about who you are.">'+E(p.summary)+'</textarea></label><button class="primary">Save profile</button></form>'},
 experiences:function(){return S.experiences.map(function(x){return bankRow(x,"experiences")}).join("")||empty("🌱","No experience yet","Internships, jobs, volunteer — all count.","<button class='primary' data-act='new' data-col='experiences'>+ Add first role</button>")},
 projects:function(){return S.projects.map(function(x){return bankRow(x,"projects")}).join("")||empty("💡","No projects yet","Side projects show initiative.","<button class='primary' data-act='new' data-col='projects'>+ Add a project</button>")},
 education:function(){return S.education.map(function(x){return bankRow(x,"education")}).join("")||empty("🎓","No education added","Degree, bootcamp, coursework — all valid.","<button class='primary' data-act='new' data-col='education'>+ Add education</button>")},
@@ -516,7 +629,7 @@ var check=function(kind,id,label,sub){return '<label class="check-row"><input ty
 var h='<div class="builder"><div class="builder-side noprint">';
 h+='<section class="card"><h3>Template</h3><div class="tpl-row"><button class="tpl-btn" data-act="tpl" data-id="mint" aria-pressed="'+(S.resume.template==="mint")+'">Mint Modern</button><button class="tpl-btn" data-act="tpl" data-id="executive" aria-pressed="'+(S.resume.template==="executive")+'">Executive</button></div></section>';
 if(S.resume.template==="mint"){h+='<section class="card"><h3>Accent colour</h3><div class="swatch-row">'+Object.keys(RESUME_ACCENTS).map(function(k){return '<button class="swatch" data-act="raccent" data-id="'+k+'" aria-pressed="'+(S.resume.accent===k)+'" style="background:'+RESUME_ACCENTS[k]+'" aria-label="'+k+'" title="'+k+'"></button>'}).join("")+'</div></section>'}
-h+='<section class="card"><h3>Export</h3><div class="acts" style="gap:8px;flex-wrap:wrap"><button class="primary" data-act="dl-pdf">⬇ Download PDF</button><button data-act="dl-doc">⬇ Download DOC</button></div><p class="muted" style="margin:12px 0 0;font-size:12px;line-height:1.5">PDF opens print dialog — pick <b>Save as PDF</b>. DOC opens in Word or Google Docs.</p></section>';
+h+='<section class="card"><h3>Export</h3><div class="acts" style="gap:8px;flex-wrap:wrap"><button class="primary" data-act="dl-pdf">⬇ Download PDF</button></div><p class="muted" style="margin:12px 0 0;font-size:12px;line-height:1.5">Print the selected HTML template with its colors, fonts, and columns. Choose <b>Save as PDF</b>, use <b>100% scale</b>, and keep backgrounds on. For a clean resume, keep <b>Headers and footers</b> off. Resume padding repeats on every page.</p></section>';
 if(S.experiences.length)h+='<section class="card"><h3>Experience</h3>'+S.experiences.map(function(x){return check("experiences",x.id,x.role||"Untitled",x.company||"")}).join("")+'</section>';
 if(S.projects.length)h+='<section class="card"><h3>Projects</h3>'+S.projects.map(function(x){return check("projects",x.id,x.name||"Untitled",x.stack||"")}).join("")+'</section>';
 if(S.skills.length)h+='<section class="card"><h3>Skill groups</h3>'+S.skills.map(function(x){return check("skills",x.id,x.group||"Untitled",x.items||"")}).join("")+'</section>';
@@ -526,7 +639,7 @@ return h;
 },
 jobs:function(){
 var today=iso();
-var h='<div class="kanban">'+STATUSES.map(function(s){var items=S.applications.filter(function(a){return a.status===s});return '<section class="kan"><header><span><span class="dot" style="background:'+STATUS_COLORS[s]+'"></span>'+s+'</span><span class="pill">'+items.length+'</span></header><div class="kan-col" data-drop="'+s+'">'+(items.map(function(a){var f=a.followUp&&a.followUp<=today&&s!=="Offer"&&s!=="Rejected"?'<span class="pill bad">Follow up</span>':(a.followUp?'<span class="pill">'+fshort(a.followUp)+'</span>':"");return '<article class="kcard" draggable="true" data-act="edit" data-col="applications" data-id="'+a.id+'"><b>'+E(a.role)+'</b><small>'+E(a.company)+'</small><div class="kmeta">'+(a.salary?'<span class="pill">'+E(a.salary)+'</span>':"")+f+'</div></article>'}).join("")||'<div class="empty" style="padding:14px 6px;font-size:12.5px">Drop here</div>')+'</div></section>'}).join("")+'</div>';
+var h='<div class="kanban">'+STATUSES.map(function(s){var items=S.applications.filter(function(a){return a.status===s});return '<section class="kan"><header><span><span class="dot" style="background:'+STATUS_COLORS[s]+'"></span>'+s+'</span><span class="pill">'+items.length+'</span></header><div class="kan-col" data-drop="'+s+'">'+(items.map(function(a){var f=a.followUp&&a.followUp<=today&&s!=="Offer"&&s!=="Rejected"?'<span class="pill bad">Follow up</span>':(a.followUp?'<span class="pill">'+fshort(a.followUp)+'</span>':"");return '<article class="kcard" role="button" tabindex="0" aria-label="'+E('Edit application: '+a.role+' at '+a.company)+'" draggable="true" data-act="edit" data-col="applications" data-id="'+a.id+'"><b>'+E(a.role)+'</b><small>'+E(a.company)+'</small><div class="kmeta">'+(a.salary?'<span class="pill">'+E(a.salary)+'</span>':"")+f+'</div></article>'}).join("")||'<div class="empty" style="padding:14px 6px;font-size:12.5px">Drop here</div>')+'</div></section>'}).join("")+'</div>';
 if(!S.applications.length)h+='<section class="card">'+empty("📋","Job tracker is empty","Add roles you're considering, applied to, or interviewing for.","<button class='primary' data-act='new' data-col='applications'>+ Add first application</button>")+'</section>';
 return h;
 },
@@ -540,15 +653,13 @@ var groups=[];PLAYBOOK.forEach(function(x){if(groups.indexOf(x.g)<0)groups.push(
 return groups.map(function(g){return '<section class="card" style="margin-bottom:16px"><header><h2>'+E(g)+'</h2></header>'+PLAYBOOK.filter(function(x){return x.g===g}).map(function(x){return '<details class="pb"><summary>'+E(x.title)+'</summary><div class="pb-body">'+x.body+'<label style="margin-top:14px">Notes<textarea rows="2" data-note="'+x.id+'" placeholder="What change now?">'+E(S.notes[x.id]||"")+'</textarea></label></div></details>'}).join("")+'</section>'}).join("");
 },
 settings:function(){
-var s=S.settings,aOpts=Object.keys(ACCENTS).map(function(k){return '<option value="'+k+'" '+(k===s.accent?"selected":"")+'>'+ACCENTS[k]+'</option>'}).join("");
-return '<section class="card"><h2>Preferences</h2><br><form id="set"><div class="two"><label>Theme<select name="theme"><option value="light" '+(s.theme==="light"?"selected":"")+'>Light</option><option value="dark" '+(s.theme==="dark"?"selected":"")+'>Dark</option></select></label><label>Accent colour<select name="accent">'+aOpts+'</select></label></div><label>Focus Mode<select name="focus"><option value="off" '+(s.focus!==true?"selected":"")+'>Off</option><option value="on" '+(s.focus===true?"selected":"")+'>On — hide sidebar</option></select></label><button class="primary">Save</button></form></section>'+
-'<section class="card" style="margin-top:16px"><header><h2>Badges</h2></header>'+(S.badges.length?S.badges.map(function(b){return '<div class="row"><div class="grow"><b>'+E(b.emoji||"🏆")+' '+E(b.label)+'</b><small>Unlocked '+new Date(b.date).toLocaleDateString()+'</small></div></div>'}).join(""):'<p class="muted" style="margin:0;font-size:13px">Complete the readiness checklist to unlock badges.</p>')+'</section>'+
+return '<section class="card" style="margin-top:16px"><header><h2>Badges</h2></header>'+(S.badges.length?S.badges.map(function(b){return '<div class="row"><div class="grow"><b>'+E(b.emoji||"🏆")+' '+E(b.label)+'</b><small>Unlocked '+new Date(b.date).toLocaleDateString()+'</small></div></div>'}).join(""):'<p class="muted" style="margin:0;font-size:13px">Complete the readiness checklist to unlock badges.</p>')+'</section>'+
 '<section class="card" style="margin-top:16px"><header><h2>Data</h2></header><div class="acts"><button data-act="sample">'+(sampleMode?"Exit sample":"Load sample data")+'</button><button data-act="backup">Export backup</button><button data-act="restore">Restore backup</button><button class="bad" data-act="reset">Reset everything</button></div><p class="muted" style="margin:16px 0 0;font-size:12.5px;line-height:1.5">Sample data is temporary — refresh and it\'s gone.</p></section>';
 }
 };
 
 var PLAYBOOK=[
-{g:"Getting Started",id:"s1",title:"Your first week",body:"<p>Three things move the needle fastest for new grads:</p><ul><li><b>Fill the Experience Bank completely.</b> Every internship, project, club role.</li><li><b>Add 6–8 strong bullets with numbers.</b> \"Helped with event\" → \"Ran event for 120 students, raised $3,400.\"</li><li><b>Set up 3–5 applications in the Job Tracker.</b> Wishlist is fine.</li></ul>"},
+{g:"Getting Started",id:"s1",title:"Your first week",body:"<p>Three practical steps for your next career move:</p><ul><li><b>Fill the Experience Bank completely.</b> Relevant jobs, projects, volunteering, and training.</li><li><b>Add 6–8 strong bullets with numbers.</b> \"Helped with event\" → \"Ran event for 120 students, raised $3,400.\"</li><li><b>Set up 3–5 applications in the Job Tracker.</b> Wishlist is fine.</li></ul>"},
 {g:"Getting Started",id:"s2",title:"Writing a bullet that gets read",body:"<p>Formula: <b>Action verb + what you did + result</b>.</p><blockquote>\"Built dashboard used by 40 teammates, cutting weekly reporting time by 3 hours per person.\"</blockquote><p>Strong verbs: Built, Led, Shipped, Reduced, Launched, Automated, Coordinated, Designed.</p>"},
 {g:"Getting Started",id:"s3",title:"No internship? Add these",body:"<ul><li>Class projects — especially team ones</li><li>Hackathons and case competitions</li><li>Clubs, sports, student government</li><li>Part-time jobs — customer service is real experience</li><li>Freelance, tutoring, volunteering</li><li>Personal projects with users (even 20 users counts)</li></ul>"},
 {g:"The 12 Rules",id:"r1",title:"1 · Research before you apply",body:"<p>Know four things: what the company sells, what changed there recently, who your interviewer is, and what problem the role solves.</p><ul><li>Read the last two blog posts.</li><li>Look up interviewer on LinkedIn.</li><li>Write one sentence: <em>\"This role exists because ______.\"</em></li></ul>"},
@@ -575,6 +686,19 @@ var PLAYBOOK=[
 
 var NAV=[["hub","Hub","i-hub"],["bank","Experience Bank","i-bank"],["resume","Resume Builder","i-resume"],["jobs","Job Tracker","i-jobs"],["contacts","Contacts","i-contacts"],["playbook","Playbook","i-playbook"],["settings","Settings","i-settings"]];
 var TITLES={};NAV.forEach(function(n){TITLES[n[0]]=n[1]});
+var appearanceOpen=false;
+var ACCENT_COLORS={indigo:'#4f46e5',emerald:'#10b981',amber:'#f59e0b',rose:'#f43f5e',slate:'#64748b'};
+function modeIcon(kind){var paths={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',moon:'<path d="M20.5 14a8.5 8.5 0 0 1-10.5-10.5A8.5 8.5 0 1 0 20.5 14Z"/>',focus:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><circle cx="12" cy="12" r="3"/>',palette:'<circle cx="12" cy="12" r="9"/><circle cx="8" cy="9" r=".7"/><circle cx="13" cy="7" r=".7"/><circle cx="17" cy="11" r=".7"/><path d="M11 21v-4a2 2 0 0 1 2-2h3"/>'};return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+paths[kind]+'</svg>'}
+function renderAppearance(){var host=document.querySelector('#appearance');if(!host)return;var dark=S.settings.theme==='dark';host.innerHTML=
+'<button class="mode-button" data-act="theme-toggle" aria-label="Switch to '+(dark?'light':'dark')+' mode" title="Switch to '+(dark?'light':'dark')+' mode">'+modeIcon(dark?'sun':'moon')+'</button>'+
+'<button class="mode-button appearance-trigger" data-act="appearance-toggle" aria-label="Choose accent color" title="Accent: '+E(ACCENTS[S.settings.accent])+'" aria-expanded="'+appearanceOpen+'" aria-controls="appearance-panel">'+modeIcon('palette')+'<span class="accent-dot" style="background:'+ACCENT_COLORS[S.settings.accent]+'"></span></button>'+
+'<button class="mode-button" data-act="focus-toggle" aria-label="'+(S.settings.focus?'Show navigation':'Hide navigation')+'" title="Focus mode" aria-pressed="'+S.settings.focus+'">'+modeIcon('focus')+'</button>'+
+'<div id="appearance-panel" class="appearance-panel" '+(appearanceOpen?'':'hidden')+'><div class="appearance-heading"><strong>Accent color</strong><span>'+E(ACCENTS[S.settings.accent])+'</span></div><div class="accent-options">'+Object.keys(ACCENTS).map(function(k){var selected=k===S.settings.accent;return '<button class="accent-option" data-act="accent-set" data-id="'+k+'" aria-label="'+E(ACCENTS[k])+' accent" aria-pressed="'+selected+'"><span class="accent-circle" style="--swatch:'+ACCENT_COLORS[k]+'">'+(selected?'<svg viewBox="0 0 24 24" fill="none" stroke="'+(k==='amber'?'#1f2937':'white')+'" stroke-width="2.5" aria-hidden="true"><path d="m6 12 4 4 8-8"/></svg>':'')+'</span><span>'+E(ACCENTS[k])+'</span></button>'}).join('')+'</div><p>Changes save automatically.</p></div>'}
+function closeAppearance(returnFocus){appearanceOpen=false;var panel=document.querySelector('#appearance-panel'),trigger=document.querySelector('[data-act=appearance-toggle]');if(panel)panel.hidden=true;if(trigger){trigger.setAttribute('aria-expanded','false');if(returnFocus)trigger.focus()}}
+function setAppearance(key,value){S.settings[key]=value;save();render();var selector=key==='theme'?'[data-act=theme-toggle]':key==='focus'?'[data-act=focus-toggle]':'[data-act=accent-set][data-id="'+value+'"]';var b=document.querySelector(selector);if(b)b.focus()}
+document.addEventListener('click',function(e){if(appearanceOpen&&!e.target.closest('#appearance'))closeAppearance(false)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&appearanceOpen){closeAppearance(true);e.preventDefault()}});
+
 var ADD={
 bank:function(){if(bankTab==="profile")return null;var m={experiences:"Role",projects:"Project",education:"Education",certs:"Certification",skills:"Skill group"};return[bankTab,m[bankTab]]},
 jobs:function(){return["applications","Application"]},
@@ -593,6 +717,8 @@ var html=V[view]();
 $("#view").innerHTML=(sampleMode&&!bannerHidden)?'<div class="banner" id="sample-banner">Sample data — nothing saved. Refresh to clear.<button data-act="sample">Exit sample</button><button data-act="hide-banner">Hide</button></div>'+html:html;
 var r=readiness();
 $("#sidefoot").innerHTML=S.badges.length?S.badges.slice(-1).map(function(b){return '<span class="badge-chip">'+E(b.emoji||"🏆")+' '+E(b.label)+'</span>'}).join(""):'<span class="muted" style="font-size:12px">Readiness '+r.pct+'%</span>';
+renderAppearance();
+watchResumePreview();
 if(!sampleMode)checkBadges();
 }
 
@@ -601,9 +727,13 @@ function tabAfter(id){var prev=view;view=id;render();if(prev!==id)scrollTo(0,0)}
 
 var lastDrop=0;
 var A={
+"theme-toggle":function(){setAppearance('theme',S.settings.theme==='dark'?'light':'dark')},
+"focus-toggle":function(){setAppearance('focus',!S.settings.focus)},
+"appearance-toggle":function(){appearanceOpen=!appearanceOpen;renderAppearance();var target=document.querySelector(appearanceOpen?'[data-act=accent-set][aria-pressed=true]':'[data-act=appearance-toggle]');if(target)target.focus()},
+"accent-set":function(b){if(Object.prototype.hasOwnProperty.call(ACCENTS,b.dataset.id))setAppearance('accent',b.dataset.id)},
 "focus-off":function(){S.settings.focus=false;save();render()},
 "backup":function(){dlBlob("career-hub-backup.json",new Blob([JSON.stringify(S,null,2)],{type:"application/json"}));toast("Backup downloaded")},
-"restore":function(){var f=document.createElement("input");f.type="file";f.accept=".json,application/json";f.onchange=async function(){try{var raw=JSON.parse(await f.files[0].text());if(!raw||typeof raw!=="object"||!raw.profile||!Array.isArray(raw.experiences))throw new Error("Invalid backup");if(!confirm("Replace current data with this backup?"))return;sampleMode=false;S=norm(raw);save();render();toast("Backup restored")}catch(e){toast("Invalid backup — data unchanged")}};f.click()},
+"restore":function(){var f=document.createElement("input");f.type="file";f.accept=".json,application/json";f.onchange=async function(){try{var raw=JSON.parse(await f.files[0].text());if(!raw||typeof raw!=="object"||!raw.profile||typeof raw.profile!=="object"||Array.isArray(raw.profile)||!Array.isArray(raw.experiences))throw new Error("Invalid backup");if(COLLECTIONS.some(function(k){return raw[k]!=null&&(!Array.isArray(raw[k])||raw[k].some(function(x){return !x||typeof x!=="object"||Array.isArray(x)}))}))throw new Error("Invalid backup");if(raw.version>VER)throw new Error("Unsupported backup version");var restored=norm(migrate(raw));if(!confirm("Replace current data with this backup?"))return;sampleMode=false;S=restored;save();render();toast("Backup restored")}catch(e){toast("Invalid backup — data unchanged")}};f.click()},
 close:function(){$("#dlg").close()},
 new:function(b){edit(b.dataset.col,null)},
 edit:function(b){edit(b.dataset.col,b.dataset.id)},
@@ -619,7 +749,6 @@ inc:function(b){var k=b.dataset.kind+":"+b.dataset.id;S.resume.inc[k]=b.checked;
 tpl:function(b){S.resume.template=b.dataset.id;save();render()},
 raccent:function(b){S.resume.accent=b.dataset.id;save();render()},
 "dl-pdf":function(){downloadPdf()},
-"dl-doc":function(){downloadDoc()},
 "mark-applied":function(b){var a=S.applications.filter(function(x){return x.id===b.dataset.id})[0];if(!a)return;a.status="Applied";if(!a.applied)a.applied=iso();save();render();toast("Marked as applied")},
 "draft-email":function(b){var a=S.applications.filter(function(x){return x.id===b.dataset.id})[0]||{company:"[Company]",role:"[Role]"};var today=iso();var days=Math.floor((Date.now()-new Date((a.applied||today)+"T00:00"))/86400000);var tpl="Hi "+(a.contact||"[Name]")+",\n\nQuick follow-up on my application for the "+a.role+" role at "+a.company+(days>0?" — sent "+days+" day"+(days===1?"":"s")+" ago":"")+".\n\nI'm still very interested and would love to know if there's any update on timing. Happy to share additional work samples if useful.\n\nThanks for your time,\n"+(S.profile.name||"[Your name]");openInfo("Draft follow-up email",'<label>Copy and paste into your email<textarea id="emailtext" rows="12">'+E(tpl)+'</textarea></label><div class="foot"><button type="button" data-act="close">Close</button><button class="primary" data-act="copy-email">Copy</button></div>')},
 "copy-email":function(){var t=$("#emailtext");if(t)Promise.resolve().then(function(){if(!navigator.clipboard)throw new Error("Clipboard unavailable");return navigator.clipboard.writeText(t.value)}).then(function(){toast("Copied")}).catch(function(){toast("Copy failed")})},
@@ -638,8 +767,9 @@ if(t.type==="checkbox"&&t.dataset.act&&A[t.dataset.act]){A[t.dataset.act](t)}
 else if(t.tagName==="SELECT"&&t.dataset.act&&A[t.dataset.act]){A[t.dataset.act](t)}
 else if(t.dataset&&t.dataset.note){S.notes[t.dataset.note]=t.value;save()}
 });
+document.addEventListener("input",function(e){var t=e.target;if(t.dataset&&t.dataset.note){S.notes[t.dataset.note]=t.value;save()}});
+document.addEventListener("keydown",function(e){var card=e.target.closest&&e.target.closest(".kcard[data-act=edit]");if(card&&(e.key==="Enter"||e.key===" ")){e.preventDefault();A.edit(card)}});
 document.addEventListener("submit",function(e){
-if(e.target.id==="set"){e.preventDefault();var d=Object.fromEntries(new FormData(e.target));S.settings=Object.assign({},S.settings,{theme:d.theme,accent:d.accent,focus:d.focus==="on"});save();render();toast("Saved")}
 if(e.target.id==="profile"){e.preventDefault();S.profile=Object.assign({},S.profile,Object.fromEntries(new FormData(e.target)));save();render();toast("Profile saved")}
 });
 document.addEventListener("dragstart",function(e){var c=e.target.closest(".kcard");if(!c)return;e.dataTransfer.setData("text/plain",c.dataset.id);e.dataTransfer.effectAllowed="move";c.classList.add("drag")});
